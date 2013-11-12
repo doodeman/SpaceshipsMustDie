@@ -2,6 +2,7 @@ package server;
 
 import java.util.List;
 
+import shared.GameState;
 import network.Client;
 import network.TCPServer;
 import network.UDPSender;

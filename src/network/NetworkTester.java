@@ -3,7 +3,7 @@ package network;
 import java.io.IOException;
 
 import server.GameEngine;
-import server.GameState;
+import shared.GameState;
 
 public class NetworkTester 
 {
