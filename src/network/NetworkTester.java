@@ -9,12 +9,16 @@ public class NetworkTester
 {
 	public static void main(String arg[]) throws IOException
 	{
-		TCPServer server = new TCPServer(1234, new GameState(), new GameEngine());
-		Thread serverWorker = new Thread(server); 
-		serverWorker.start();
+		GameEngine ge = new GameEngine(1234);
+		Thread gameWorker = new Thread(ge); 
+		gameWorker.start();
 		
 		ClientTCPClient client = new ClientTCPClient("localhost", 1234); 
 		Thread clientWorker = new Thread(client); 
 		clientWorker.start();
+		
+		ClientUDPClient udpclient = new ClientUDPClient(1234);
+		Thread udpclientworker = new Thread(udpclient); 
+		udpclientworker.start();
 	}
 }

@@ -22,6 +22,7 @@ public class TCPServer implements Runnable
 	GameState state; 
 	GameEngine engine; 
 	List<Client> newClients; 
+	boolean newPlayer; 
 	
 	public TCPServer(int port, GameState state, GameEngine engine) throws IOException
 	{
@@ -29,6 +30,7 @@ public class TCPServer implements Runnable
 		this.state = state; 
 		this.engine = engine; 
 		newClients = new ArrayList<Client>();
+		newPlayer = false; 
 	}
 	
 	@Override
@@ -53,6 +55,7 @@ public class TCPServer implements Runnable
 				clientaddr = connectionSocket.getInetAddress();
 				String str = clientaddr.toString();
 				newClients.add(new Client(str));
+				newPlayer = true; 
 				System.out.println("SERVER: Gamestate sent, closing connection"); 
 				
 				connectionSocket.close();
@@ -80,6 +83,17 @@ public class TCPServer implements Runnable
 	{
 		List<Client> retval = newClients; 
 		newClients = new ArrayList<Client>(); 
+		setNewPlayer(false);
 		return retval; 
+	}
+	
+	public synchronized boolean newPlayer()
+	{
+		return newPlayer; 
+	}
+	
+	public synchronized void setNewPlayer(boolean tf)
+	{
+		newPlayer = tf; 
 	}
 }

@@ -1,22 +1,76 @@
 package server;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import shared.GameState;
 import network.Client;
 import network.TCPServer;
 import network.UDPSender;
-import network.UDPServer;
+import shared.GameState;
 
-public class GameEngine 
+public class GameEngine implements Runnable
 {
 	int port; 
-	UDPServer server; 
 	TCPServer tcpServer; 
 	
-	
 	List<Client> clients; 
-	GameState gameState; 
+	List<Client> newClients;
+	ServerGameState gameState; 
+	
+	public GameEngine(int port) throws IOException
+	{
+		gameState = new ServerGameState(); 
+		tcpServer = new TCPServer(1234, gameState, this);
+		clients = new ArrayList<Client>();
+		this.port = port; 
+	}
+	
+	/**
+	 * Runs the game server
+	 */
+	@Override
+	public void run()
+	{
+		Thread serverWorker = new Thread(tcpServer); 
+		serverWorker.start(); 
+		
+		while(true)
+		{
+			if (tcpServer.newPlayer() == true)
+			{
+				newClients = tcpServer.getNewClients();
+				for (Client client : newClients)
+				{
+					client.id = clients.size(); 
+					gameState.addPlayer(client); 
+					clients.add(client); 
+				}
+				newClients.clear();
+			}
+			
+			gameState.update();
+			
+			String gameString = gameState.toJson();
+			
+			for (Client client : clients)
+			{
+				UDPSender sender = new UDPSender(client, port, gameString);
+				Thread worker = new Thread(sender);
+				worker.start();
+			}
+			
+			try 
+			{
+				Thread.sleep(15);
+			} 
+			catch (InterruptedException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	/**
 	 * Sends gamestate update to all clients

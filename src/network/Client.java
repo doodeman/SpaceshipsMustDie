@@ -24,12 +24,12 @@ public class Client
 		this.address = InetAddress.getByName(address); 
 	}
 	
+	
 	public synchronized void update(UpdateMessage update)
 	{
 		setFacing(update.facing);
 		setFiring(update.isFiring);
 		setThrusting(update.isThrusting);
-		
 	}
 	
 	public synchronized boolean isThrusting()
