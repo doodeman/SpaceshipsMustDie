@@ -2,8 +2,8 @@ package network;
 
 import java.io.IOException;
 
-import game.GameEngine;
-import game.GameState;
+import server.GameEngine;
+import server.GameState;
 
 public class NetworkTester 
 {

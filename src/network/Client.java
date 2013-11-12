@@ -3,13 +3,15 @@ package network;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import com.badlogic.gdx.math.Vector3;
+
 public class Client 
 {
 	public InetAddress address; 
 	public int id; 
 	
 	public boolean isThrusting; 
-	public int facing; 
+	public Vector3 facing; 
 	public boolean isFiring; 
 	
 	public Client(String address) throws UnknownHostException
@@ -35,7 +37,7 @@ public class Client
 		return isThrusting; 
 	}
 	
-	public synchronized int getFacing()
+	public synchronized Vector3 getFacing()
 	{
 		return facing; 
 	}
@@ -45,7 +47,7 @@ public class Client
 		return isFiring; 
 	}
 	
-	public synchronized void setFacing(int facing)
+	public synchronized void setFacing(Vector3 facing)
 	{
 		this.facing = facing; 
 	}

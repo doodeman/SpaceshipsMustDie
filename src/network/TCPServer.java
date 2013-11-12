@@ -1,8 +1,5 @@
 package network;
 
-import game.GameEngine;
-import game.GameState;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -10,6 +7,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+
+import server.GameEngine;
+import server.GameState;
 
 /**
  * A TCP server that sends the gamestate to connecting clients and notifies the game engine. 

@@ -1,12 +1,12 @@
 package network;
 
-import game.GameState;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
+import server.GameState;
 
 import com.google.gson.Gson;
 
