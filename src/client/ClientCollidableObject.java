@@ -4,9 +4,9 @@ import java.nio.FloatBuffer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL11;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.BufferUtils;
+import shared.CollidableObject;
 
 /**
  * @author matti
@@ -14,7 +14,8 @@ import com.badlogic.gdx.utils.BufferUtils;
  *	It stores the size, direction and position of each asteroid (and color if I wanna go crazy).
  *	It also stores the buffer that keeps track of the asteroid shape.
  */
-class ClientCollidableObject{
+class ClientCollidableObject extends CollidableObject
+{
 	int radius;
 	private Vector3 location, direction;
 	private FloatBuffer vertexBuffer;
@@ -23,11 +24,8 @@ class ClientCollidableObject{
 	private int slices;
 	private int vertexCount;
 	
-	ClientCollidableObject(Vector3 location, Vector3 direction, Vector3 velocity, int radius, Circle orbit, FloatBuffer vertexBuffer){
-		this.location = location;
-		this.direction = direction;
-		this.radius = radius;
-		
+	ClientCollidableObject(Vector3 location, Vector3 direction, Vector3 velocity, int radius, FloatBuffer vertexBuffer){
+		super(location, direction, velocity, radius); 
 		//Drawing stuff
 		this.vertexBuffer = vertexBuffer;
     	stacks = 100;
