@@ -12,11 +12,29 @@ public class CollidableObject{
 	protected int radius;
 	protected Vector3 location;
 	protected Vector3 direction;
+	protected Vector3 velocity; 
 	
 	protected CollidableObject(Vector3 location, Vector3 direction, Vector3 velocity, int radius){
 		this.location = location;
 		this.direction = direction;
 		this.radius = radius;
+		this.velocity = velocity; 
 	}
 	
+	public void update()
+	{
+		
+	}
+	
+	/**
+	 * Returns a vector pointing from this object to another collidable object with specified length
+	 * @param that
+	 * @param length
+	 * @return
+	 */
+	public Vector3 vectorTo(CollidableObject that, float length)
+	{
+		Vector3 euclid =  new Vector3(that.location.sub(this.location));
+		return euclid.div(euclid.len()).mul(length);
+	}
 }

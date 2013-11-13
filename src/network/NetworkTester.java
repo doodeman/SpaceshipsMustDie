@@ -20,5 +20,9 @@ public class NetworkTester
 		ClientUDPClient udpclient = new ClientUDPClient(1234);
 		Thread udpclientworker = new Thread(udpclient); 
 		udpclientworker.start();
+		
+		//ClientUDPClient udpclient2 = new ClientUDPClient(1234);
+		//Thread udpclientworker2 = new Thread(udpclient2); 
+		//udpclientworker2.start();
 	}
 }

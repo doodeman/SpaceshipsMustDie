@@ -3,15 +3,17 @@ package shared;
 import java.util.ArrayList;
 import java.util.List;
 
+import server.ServerAsteroid;
+
+import com.badlogic.gdx.math.Vector3;
 import com.google.gson.Gson;
 
 public class GameState 
 {
-	List<CollidableObject> objects;
+	protected List<CollidableObject> objects;
 	
 	public String toJson()
 	{
-		objects = new ArrayList<CollidableObject>();
 		Gson gson = new Gson();
 		return gson.toJson(this);
 	}
@@ -20,4 +22,10 @@ public class GameState
 	{
 		
 	}
+	
+	public GameState()
+	{
+		objects = new ArrayList<CollidableObject>();
+	}
+	
 }

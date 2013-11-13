@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import server.GameEngine;
+import server.Logger;
 import shared.GameState;
 
 /**
@@ -22,6 +23,7 @@ public class TCPServer implements Runnable
 	GameState state; 
 	GameEngine engine; 
 	List<Client> newClients; 
+	private Logger log; 
 	boolean newPlayer; 
 	
 	public TCPServer(int port, GameState state, GameEngine engine) throws IOException
@@ -31,6 +33,7 @@ public class TCPServer implements Runnable
 		this.engine = engine; 
 		newClients = new ArrayList<Client>();
 		newPlayer = false; 
+		log = new Logger("Server.log", false);
 	}
 	
 	@Override
@@ -48,7 +51,7 @@ public class TCPServer implements Runnable
 				DataOutputStream outStream = new DataOutputStream(connectionSocket.getOutputStream());
 				
 				//Send gamestate
-				System.out.println("SERVER: Connection received, sending gamestate..."); 
+				log.log("TCP SERVER: Connection received, sending gamestate..."); 
 				outStream.writeBytes(state.toJson());
 				//Add client to list of new clients
 				InetAddress clientaddr; 
@@ -56,7 +59,7 @@ public class TCPServer implements Runnable
 				String str = clientaddr.toString();
 				newClients.add(new Client(str));
 				newPlayer = true; 
-				System.out.println("SERVER: Gamestate sent, closing connection"); 
+				log.log("TCP SERVER: Gamestate sent, closing connection"); 
 				
 				connectionSocket.close();
 			} 
@@ -70,7 +73,7 @@ public class TCPServer implements Runnable
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				System.out.println("SERVER: TCP server failed to send gamestate"); 
+				log.log("TCP SERVER: TCP server failed to send gamestate"); 
 			}  
 		}
 	}

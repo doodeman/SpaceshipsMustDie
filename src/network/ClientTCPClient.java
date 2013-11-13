@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import server.Logger;
 import shared.GameState;
 
 import com.google.gson.Gson;
@@ -16,11 +17,13 @@ public class ClientTCPClient implements Runnable
 	int port; 
 	GameState gameState; 
 	boolean done; 
+	Logger log; 
 	
-	public ClientTCPClient(String address, int port)
+	public ClientTCPClient(String address, int port) throws IOException
 	{
 		this.address = address; 
 		this.port = port; 
+		log = new Logger("Client.log", false);
 	}
 	
 	/**
@@ -33,15 +36,15 @@ public class ClientTCPClient implements Runnable
 	@Override
 	public void run() 
 	{
-		System.out.println("CLIENT: Connecting to " + address); 
+		log.log("UDP CLIENT: Connecting to " + address); 
 		Socket socket;
 		try 
 		{
 			socket = new Socket(address, port);
-			System.out.println("CLIENT: Connected, receiving gamestate..."); 
+			log.log("TCP CLIENT: Connected, receiving gamestate..."); 
 			BufferedReader fromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String in = fromServer.readLine();
-			System.out.println("CLIENT: Received gamestate. Closing connection.");
+			log.log("TCP CLIENT: Received gamestate. Closing connection.");
 			socket.close();
 			Gson gson = new Gson(); 
 			gameState = gson.fromJson(in, GameState.class);
@@ -51,7 +54,7 @@ public class ClientTCPClient implements Runnable
 		catch (Exception e) 
 		{
 			e.printStackTrace(); 
-			System.out.println("CLIENT: Failed to get gamestate from server");
+			log.log("TCP Client: Failed to get gamestate from server");
 		} 
 	}
 	

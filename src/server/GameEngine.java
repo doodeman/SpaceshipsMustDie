@@ -3,11 +3,9 @@ package server;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import network.Client;
 import network.TCPServer;
 import network.UDPSender;
-import shared.GameState;
 
 public class GameEngine implements Runnable
 {
@@ -18,12 +16,22 @@ public class GameEngine implements Runnable
 	List<Client> newClients;
 	ServerGameState gameState; 
 	
+	public static Logger log; 
+	
+	public static Logger getLogger()
+	{
+		return log; 
+	}
+	
 	public GameEngine(int port) throws IOException
 	{
 		gameState = new ServerGameState(); 
+		gameState.addAsteroid();
 		tcpServer = new TCPServer(1234, gameState, this);
 		clients = new ArrayList<Client>();
 		this.port = port; 
+		
+		log = new Logger("Server.log", true);
 	}
 	
 	/**
@@ -42,6 +50,7 @@ public class GameEngine implements Runnable
 				newClients = tcpServer.getNewClients();
 				for (Client client : newClients)
 				{
+					log.log("GameEngine: Adding new client #" + clients.size());
 					client.id = clients.size(); 
 					gameState.addPlayer(client); 
 					clients.add(client); 
@@ -55,6 +64,7 @@ public class GameEngine implements Runnable
 			
 			for (Client client : clients)
 			{
+				//System.out.println("Sending packet to " + client.toString()); 
 				UDPSender sender = new UDPSender(client, port, gameString);
 				Thread worker = new Thread(sender);
 				worker.start();

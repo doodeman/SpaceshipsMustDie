@@ -6,6 +6,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
+import server.Logger;
 import shared.GameState;
 
 import com.google.gson.Gson;
@@ -20,11 +21,13 @@ public class ClientUDPClient implements Runnable
 	private DatagramSocket socket; 
 	public Client client; 
 	public Gson gson; 
+	Logger log; 
 	
-	public ClientUDPClient(int port) throws SocketException
+	public ClientUDPClient(int port) throws IOException
 	{
 		socket = new DatagramSocket(port); 
 		gson = new Gson(); 
+		log = new Logger("Client.log", false);
 	}
 	
 	@Override
@@ -38,13 +41,12 @@ public class ClientUDPClient implements Runnable
 			{
 				socket.receive(in);
 				String instr = new String(in.getData());
-				System.out.println(instr);
+				log.log("UDP CLIENT: Received gamestate: " + instr);
 
 				JsonReader reader = new JsonReader(new StringReader(instr));
 				reader.setLenient(true);
 				
 				GameState update = new Gson().fromJson(reader, GameState.class); 
-				System.out.println("CLIENT: Received " + in.toString());
 			} 
 			catch (IOException e) 
 			{
