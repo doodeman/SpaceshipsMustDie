@@ -4,9 +4,10 @@ import java.nio.FloatBuffer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL11;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.BufferUtils;
+
 import shared.CollidableObject;
+import shared.Vector3D;
 
 /**
  * @author matti
@@ -22,7 +23,7 @@ class ClientAsteroid extends CollidableObject
 	private int slices;
 	private int vertexCount;
 	
-	ClientAsteroid(int id, Vector3 location, Vector3 direction, Vector3 velocity, int radius){
+	ClientAsteroid(int id, Vector3D location, Vector3D direction, Vector3D velocity, int radius){
 		super(id, 3, location, direction, velocity, radius); 
 		//Drawing stuff
     	stacks = 300;
@@ -60,7 +61,7 @@ class ClientAsteroid extends CollidableObject
 	/**
 	 * Changes the position, velocity and acceleration of the object.
 	 */
-	public void changePosition(Vector3 location, Vector3 direction, Vector3 velocity){
+	public void changePosition(Vector3D location, Vector3D direction, Vector3D velocity){
 		this.location = location;
 		this.direction = direction;
 	}

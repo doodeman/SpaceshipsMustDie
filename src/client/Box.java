@@ -3,6 +3,8 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import shared.Point3D;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.Texture;

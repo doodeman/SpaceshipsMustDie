@@ -4,9 +4,10 @@ import java.nio.FloatBuffer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL11;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.BufferUtils;
+
 import shared.CollidableObject;
+import shared.Vector3D;
 
 /**
  * @author matti
@@ -23,7 +24,7 @@ class ClientSun extends CollidableObject
 	private int vertexCount;
 	
 	ClientSun(int id, int radius){
-		super(id, 1, new Vector3(0f,0f,0f), new Vector3(0f,0f,0f), new Vector3(0f,0f,0f), radius); 
+		super(id, 1, new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), radius); 
 		//Drawing stuff
     	stacks = 100;
     	slices = 100;

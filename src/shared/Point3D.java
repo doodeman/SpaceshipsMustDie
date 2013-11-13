@@ -1,4 +1,5 @@
-package client;
+package shared;
+
 
 public class Point3D {
 	public float x;
