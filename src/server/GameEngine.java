@@ -28,7 +28,8 @@ public class GameEngine implements Runnable
 	public GameEngine(int port) throws IOException
 	{
 		gameState = new ServerGameState(); 
-		gameState.addAsteroid();
+		for (int i = 0; i < 1; i++)
+			gameState.addAsteroid();
 		tcpServer = new TCPServer(1234, gameState, this);
 		clients = new ArrayList<Client>();
 		this.port = port; 
@@ -73,7 +74,7 @@ public class GameEngine implements Runnable
 			
 			try 
 			{
-				Thread.sleep(100);
+				Thread.sleep(16);
 			} 
 			catch (InterruptedException e) 
 			{

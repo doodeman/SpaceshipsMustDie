@@ -4,7 +4,7 @@ package server;
 import shared.CollidableObject;
 import shared.Vector3D;
 
-public class ServerCollidableObject extends CollidableObject
+public abstract class ServerCollidableObject extends CollidableObject
 {
 	ServerSun sun; 
 	protected ServerCollidableObject(int id, int type, Vector3D location, Vector3D direction, Vector3D velocity, int radius, ServerSun sun) 
@@ -21,9 +21,11 @@ public class ServerCollidableObject extends CollidableObject
 		orbit(); 
 	}
 	
-	public void orbit()
+	public abstract void orbit();
+	
+	public void applyForce(Vector3D direction, float magnitude)
 	{
-		Vector3D gravity = this.vectorTo(sun, 1); 
-		this.location = Vector3D.sum(this.location, gravity);
+		//direction = Vector3D.unitVector(direction); 
+		this.velocity = Vector3D.sum(this.velocity, Vector3D.mult(magnitude, direction));
 	}
 }

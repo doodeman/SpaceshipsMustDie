@@ -28,9 +28,12 @@ public class ServerGameState extends GameState
 	}
 
 	public void addAsteroid() {
-		Vector3D location = new Vector3D(1,1,1);
-		Vector3D direction = new Vector3D(1,1,1); 
-		Vector3D velocity = new Vector3D(1,1,1); 
+		System.out.println("Adding asteroid");
+		Vector3D location = new Vector3D((float)Math.random()*40,(float)Math.random()*40,(float)Math.random()*3);
+		Vector3D direction = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random()); 
+		//Vector3D velocity = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random()); 
+		Vector3D velocity = new Vector3D((float)0.1,0,0); 
+
 		int id = objects.size(); 
 		this.objects.add(new ServerAsteroid(id, location, direction, velocity, 10, sun));
 	}
@@ -40,10 +43,10 @@ public class ServerGameState extends GameState
 	{
 		for (CollidableObject o : objects)
 		{
-			Logger.log("Server.log", "GAMESTATe: Updating: " + o);
-			Logger.log("Server.log", "GAMESTATE: Old values: " + o.location.x + " " + o.location.y + " " + o.location.z);
+			//Logger.log("Server.log", "GAMESTATe: Updating: " + o);
+			//Logger.log("Server.log", "GAMESTATE: Old values: " + o.location.x + " " + o.location.y + " " + o.location.z);
 			o.update(); 			
-			Logger.log("Server.log", "GAMESTATE: New values: " + o.location.x + " " + o.location.y + " " + o.location.z);
+			//Logger.log("Server.log", "GAMESTATE: New values: " + o.location.x + " " + o.location.y + " " + o.location.z);
 		}
 	}
 }
