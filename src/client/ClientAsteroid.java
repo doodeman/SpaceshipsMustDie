@@ -22,8 +22,8 @@ class ClientAsteroid extends CollidableObject
 	private int slices;
 	private int vertexCount;
 	
-	ClientAsteroid(Vector3 location, Vector3 direction, Vector3 velocity, int radius){
-		super(location, direction, velocity, radius); 
+	ClientAsteroid(int id, Vector3 location, Vector3 direction, Vector3 velocity, int radius){
+		super(id, 3, location, direction, velocity, radius); 
 		//Drawing stuff
     	stacks = 300;
     	slices = 100;
@@ -68,6 +68,7 @@ class ClientAsteroid extends CollidableObject
 	/**
 	 * Draws the object
 	 */
+	@Override
 	public void draw(){ 
 		//if(vertexBuffer != null) System.out.println("vertexBuffer ok");
 		//if(normalBuffer != null) System.out.println("normalbuffer ok");

@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 
 public class GameState 
 {
-	protected List<CollidableObject> objects;
+	public List<CollidableObject> objects;
 	
 	public String toJson()
 	{
@@ -28,4 +28,13 @@ public class GameState
 		objects = new ArrayList<CollidableObject>();
 	}
 	
+	public boolean contains(CollidableObject o)
+	{
+		for (CollidableObject object : objects)
+		{
+			if (object.id == o.id)
+				return true; 
+		}
+		return false; 
+	}
 }

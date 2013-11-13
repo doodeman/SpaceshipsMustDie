@@ -22,8 +22,8 @@ class ClientSun extends CollidableObject
 	private int slices;
 	private int vertexCount;
 	
-	ClientSun(int radius){
-		super(new Vector3(0f,0f,0f), new Vector3(0f,0f,0f), new Vector3(0f,0f,0f), radius); 
+	ClientSun(int id, int radius){
+		super(id, 1, new Vector3(0f,0f,0f), new Vector3(0f,0f,0f), new Vector3(0f,0f,0f), radius); 
 		//Drawing stuff
     	stacks = 100;
     	slices = 100;
@@ -61,6 +61,7 @@ class ClientSun extends CollidableObject
 	/**
 	 * Draws the object
 	 */
+	@Override
 	public void draw(){ 
 		Gdx.gl11.glEnableClientState(GL11.GL_NORMAL_ARRAY);	
     	

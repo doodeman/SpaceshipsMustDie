@@ -5,8 +5,8 @@ import com.badlogic.gdx.math.Vector3;
 
 public class ServerAsteroid extends ServerCollidableObject
 {
-	protected ServerAsteroid(Vector3 location, Vector3 direction, Vector3 velocity, int radius, ServerSun sun) 
+	protected ServerAsteroid(int id, Vector3 location, Vector3 direction, Vector3 velocity, int radius, ServerSun sun) 
 	{
-		super(location, direction, velocity, radius, sun);
+		super(id, 3, location, direction, velocity, radius, sun);
 	}
 }

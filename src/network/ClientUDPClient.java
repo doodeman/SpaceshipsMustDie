@@ -22,12 +22,14 @@ public class ClientUDPClient implements Runnable
 	public Client client; 
 	public Gson gson; 
 	Logger log; 
+	GameState gameState; 
 	
 	public ClientUDPClient(int port) throws IOException
 	{
 		socket = new DatagramSocket(port); 
 		gson = new Gson(); 
 		log = new Logger("Client.log", false);
+		gameState = new GameState(); 
 	}
 	
 	@Override
@@ -46,12 +48,18 @@ public class ClientUDPClient implements Runnable
 				JsonReader reader = new JsonReader(new StringReader(instr));
 				reader.setLenient(true);
 				
-				GameState update = new Gson().fromJson(reader, GameState.class); 
+				gameState = new Gson().fromJson(reader, GameState.class); 
 			} 
 			catch (IOException e) 
 			{
 				e.printStackTrace();
 			} 
 		}
+	}
+	
+	public synchronized GameState getState()
+	{
+		log.log("UDP CLIENT: Gamestate updating"); 
+		return gameState; 
 	}
 }

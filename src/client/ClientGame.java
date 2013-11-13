@@ -1,6 +1,12 @@
 package client;
 
+import java.io.IOException;
 import java.nio.FloatBuffer;
+
+import server.Logger;
+import shared.CollidableObject;
+import network.ClientTCPClient;
+import network.ClientUDPClient;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -16,6 +22,9 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 	private Camera cam;
 	ClientAsteroid asteroid;
 	ClientSun sun;
+	Logger log; 
+	ClientUDPClient udpClient; 
+	ClientGameState gameState; 
 	@Override
 	public void create() {
 
@@ -39,8 +48,40 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 		Gdx.gl11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 
 		this.cam = new Camera(new Point3D(3.5f, 1.0f, 2.0f), new Point3D(2.0f, 1.0f, 3.0f), new Vector3D(0.0f, 1.0f, 0.0f), this);
-		asteroid = new ClientAsteroid(new Vector3(5f,0f,0f),new Vector3(0f,0f,0f),new Vector3(0f,0f,0f),5);
-		sun = new ClientSun(2);
+		
+		try 
+		{
+			log = new Logger("Client.log", true);
+		} catch (IOException e1) 
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+		
+		ClientTCPClient client;
+		try 
+		{
+			client = new ClientTCPClient("localhost", 1234);
+			Thread clientWorker = new Thread(client); 
+			clientWorker.start();
+		} catch (IOException e2) 
+		{
+			log.log("Failed to launch TCP client");
+			e2.printStackTrace();
+		} 
+		
+		try 
+		{
+			udpClient = new ClientUDPClient(1234);
+			Thread udpclientworker = new Thread(udpClient); 
+			udpclientworker.start();
+		} catch (IOException e) 
+		{
+			log.log("Failed to launch UDP Client");
+			e.printStackTrace();
+		}
+		
+		gameState = new ClientGameState(udpClient);
 	}
 
 	@Override
@@ -62,8 +103,12 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 		//Gdx.gl11.glEnable(GL11.GL_LIGHT0);
 		cam.setModelViewMatrix();
 		
-		sun.draw();
-		asteroid.draw();
+		gameState.update(); 
+		
+		for (CollidableObject o : gameState.objects)
+		{
+			o.draw(); 
+		}
 		
 		float deltaTime = Gdx.graphics.getDeltaTime();
 		

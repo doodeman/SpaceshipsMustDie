@@ -9,19 +9,30 @@ import com.badlogic.gdx.math.Vector3;
  *	It also stores the buffer that keeps track of the asteroid shape.
  */
 public class CollidableObject{
-	protected int radius;
-	protected Vector3 location;
-	protected Vector3 direction;
-	protected Vector3 velocity; 
+	public int radius;
+	public Vector3 location;
+	public Vector3 direction;
+	public Vector3 velocity; 
+	//ID is shared on client and server
+	public int id; 
+	//1 - sun, 2 - player, 3 - asteroid
+	public int type; 
 	
-	protected CollidableObject(Vector3 location, Vector3 direction, Vector3 velocity, int radius){
+	protected CollidableObject(int id, int type, Vector3 location, Vector3 direction, Vector3 velocity, int radius){
+		this.id = id; 
 		this.location = location;
 		this.direction = direction;
 		this.radius = radius;
 		this.velocity = velocity; 
+		this.type = type; 
 	}
 	
 	public void update()
+	{
+		
+	}
+	
+	public void draw()
 	{
 		
 	}
