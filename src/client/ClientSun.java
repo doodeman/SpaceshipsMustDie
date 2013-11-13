@@ -1,11 +1,9 @@
 package client;
 
-import java.nio.FloatBuffer;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL11;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.BufferUtils;
+import com.badlogic.gdx.graphics.g3d.loaders.wavefront.ObjLoader;
+import com.badlogic.gdx.graphics.g3d.model.still.StillModel;
 
 import shared.CollidableObject;
 import shared.Vector3D;
@@ -21,7 +19,7 @@ class ClientSun extends CollidableObject
 	private StillModel model;
 		
 	ClientSun(int id, int radius){
-		super(id, 1, new Vector3(0f,0f,0f), new Vector3(0f,0f,0f), new Vector3(0f,0f,0f), radius); 
+		super(id, 1, new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), radius); 
 		
 		ObjLoader loader = new ObjLoader();
 		 
@@ -41,15 +39,6 @@ class ClientSun extends CollidableObject
 		Gdx.gl11.glScalef((float)this.radius, (float)this.radius, (float)this.radius);
 		model.render();
     	Gdx.gl11.glPopMatrix();
-   	}
-    	
-    	Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
-    	Gdx.gl11.glNormalPointer(GL11.GL_FLOAT, 0, normalBuffer);
-    	Gdx.gl11.glTranslatef(location.x, location.y, location.z);
-    	Gdx.gl11.glScalef((float)this.radius, (float)this.radius, (float)this.radius);
-    	for(int i = 0; i < vertexCount; i += (slices+1)*2) {
-    		Gdx.gl11.glDrawArrays(GL11.GL_LINE_LOOP, i, (slices+1)*2);
-    	}
     	
 	}
 
