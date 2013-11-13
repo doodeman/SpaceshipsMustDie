@@ -14,25 +14,22 @@ import shared.CollidableObject;
  *	It stores the size, direction and position of each asteroid (and color if I wanna go crazy).
  *	It also stores the buffer that keeps track of the asteroid shape.
  */
-class ClientCollidableObject extends CollidableObject
+class ClientSun extends CollidableObject
 {
-	int radius;
-	private Vector3 location, direction;
 	private FloatBuffer vertexBuffer;
 	private FloatBuffer normalBuffer;
 	private int stacks;
 	private int slices;
 	private int vertexCount;
 	
-	ClientCollidableObject(Vector3 location, Vector3 direction, Vector3 velocity, int radius, FloatBuffer vertexBuffer){
-		super(location, direction, velocity, radius); 
+	ClientSun(int radius){
+		super(new Vector3(0f,0f,0f), new Vector3(0f,0f,0f), new Vector3(0f,0f,0f), radius); 
 		//Drawing stuff
-		this.vertexBuffer = vertexBuffer;
     	stacks = 100;
     	slices = 100;
     	vertexCount = 0;
     	
-    	float[] array = new float[(100)*(1+1)*6];
+    	float[] array = new float[(stacks)*(slices+1)*6];
     	float stackInterval = (float)Math.PI / (float)stacks;
     	float sliceInterval = 2.0f*(float)Math.PI / (float)slices;
     	float stackAngle, sliceAngle;
@@ -59,14 +56,7 @@ class ClientCollidableObject extends CollidableObject
     	normalBuffer.rewind();
 		
 	}
-	
-	/**
-	 * Changes the position, velocity and acceleration of the object.
-	 */
-	public void changePosition(Vector3 location, Vector3 direction, Vector3 velocity){
-		this.location = location;
-		this.direction = direction;
-	}
+
 	
 	/**
 	 * Draws the object
@@ -77,10 +67,11 @@ class ClientCollidableObject extends CollidableObject
     	Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
     	Gdx.gl11.glNormalPointer(GL11.GL_FLOAT, 0, normalBuffer);
     	Gdx.gl11.glTranslatef(location.x, location.y, location.z);
-    	Gdx.gl11.glScalef(0.2f, 0.2f, 0.2f);
+    	Gdx.gl11.glScalef((float)this.radius, (float)this.radius, (float)this.radius);
     	for(int i = 0; i < vertexCount; i += (slices+1)*2) {
     		Gdx.gl11.glDrawArrays(GL11.GL_LINE_LOOP, i, (slices+1)*2);
     	}
+    	
 	}
 
 }
