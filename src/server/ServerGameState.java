@@ -27,12 +27,12 @@ public class ServerGameState extends GameState
 		
 	}
 
-	public void addAsteroid() {
+	public void addAsteroid(float x, float y, float z) {
 		System.out.println("Adding asteroid");
-		Vector3D location = new Vector3D((float)Math.random()*40,(float)Math.random()*40,(float)Math.random()*3);
+		Vector3D location = new Vector3D(x, y, z);
 		Vector3D direction = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random()); 
 		//Vector3D velocity = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random()); 
-		Vector3D velocity = new Vector3D((float)0.1,0,0); 
+		Vector3D velocity = new Vector3D((float)0,(float)0.1,0); 
 
 		int id = objects.size(); 
 		this.objects.add(new ServerAsteroid(id, location, direction, velocity, 10, sun));

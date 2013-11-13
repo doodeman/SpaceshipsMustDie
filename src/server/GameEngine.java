@@ -28,8 +28,11 @@ public class GameEngine implements Runnable
 	public GameEngine(int port) throws IOException
 	{
 		gameState = new ServerGameState(); 
-		for (int i = 0; i < 1; i++)
-			gameState.addAsteroid();
+		gameState.addAsteroid(25,25,25);
+		gameState.addAsteroid(25,0,25);
+		gameState.addAsteroid(25,25,0);
+		gameState.addAsteroid(25,0,0);
+			
 		tcpServer = new TCPServer(1234, gameState, this);
 		clients = new ArrayList<Client>();
 		this.port = port; 

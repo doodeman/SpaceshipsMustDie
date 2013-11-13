@@ -76,6 +76,8 @@ class ClientAsteroid extends CollidableObject
 		//if(location != null) System.out.println("location ok");
 		Gdx.gl11.glEnableClientState(GL11.GL_NORMAL_ARRAY);	
     	
+		Gdx.gl11.glPushMatrix();
+		
     	Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
     	Gdx.gl11.glNormalPointer(GL11.GL_FLOAT, 0, normalBuffer);
     	Gdx.gl11.glTranslatef(location.x, location.y, location.z);
@@ -83,6 +85,8 @@ class ClientAsteroid extends CollidableObject
     	for(int i = 0; i < vertexCount; i += (slices+1)*2) {
     		Gdx.gl11.glDrawArrays(GL11.GL_LINE_LOOP, i, (slices+1)*2);
     	}
+    	
+    	Gdx.gl11.glPopMatrix();
 	}
 
 }
