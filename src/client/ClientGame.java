@@ -29,7 +29,7 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 	public void create() {
 
 		Gdx.input.setInputProcessor(this);
-
+		Gdx.gl11.glEnable(GL10.GL_TEXTURE_2D);
 		// turns on lighting
 
 		Gdx.gl11.glEnable(GL11.GL_LIGHTING);
