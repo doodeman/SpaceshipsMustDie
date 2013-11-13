@@ -1,10 +1,11 @@
 package client;
 
 import java.io.IOException;
-import java.nio.FloatBuffer;
 
 import shared.CollidableObject;
 import shared.Logger;
+import shared.Point3D;
+import shared.Vector3D;
 import network.ClientTCPClient;
 import network.ClientUDPClient;
 
@@ -14,8 +15,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL11;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.BufferUtils;
 
 public class ClientGame implements ApplicationListener, InputProcessor {
 

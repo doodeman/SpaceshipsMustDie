@@ -1,6 +1,5 @@
 package shared;
 
-import com.badlogic.gdx.math.Vector3;
 
 /**
  * @author matti
@@ -10,15 +9,15 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class CollidableObject{
 	public int radius;
-	public Vector3 location;
-	public Vector3 direction;
-	public Vector3 velocity; 
+	public Vector3D location;
+	public Vector3D direction;
+	public Vector3D velocity; 
 	//ID is shared on client and server
 	public int id; 
 	//1 - sun, 2 - player, 3 - asteroid
 	public int type; 
 	
-	protected CollidableObject(int id, int type, Vector3 location, Vector3 direction, Vector3 velocity, int radius){
+	protected CollidableObject(int id, int type, Vector3D location, Vector3D direction, Vector3D velocity, int radius){
 		this.id = id; 
 		this.location = location;
 		this.direction = direction;
@@ -43,10 +42,11 @@ public class CollidableObject{
 	 * @param length
 	 * @return
 	 */
-	public Vector3 vectorTo(CollidableObject that, float length)
+	public Vector3D vectorTo(CollidableObject that, float length)
 	{
-		Vector3 euclid =  new Vector3(that.location.sub(this.location));
-		return euclid.div(euclid.len()).mul(length);
+		Vector3D euclid = Vector3D.difference2(that.location, this.location);
+		euclid = Vector3D.divide(euclid, euclid.length());
+		return Vector3D.mult(length, euclid); 
 	}
 	
 	/**

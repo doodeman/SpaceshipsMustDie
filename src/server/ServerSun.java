@@ -1,13 +1,12 @@
 package server;
 
-import com.badlogic.gdx.math.Vector3;
 
-import shared.CollidableObject;
+import shared.Vector3D;
 
 public class ServerSun extends ServerCollidableObject
 {
 
-	protected ServerSun(int id, Vector3 location, Vector3 direction, Vector3 velocity, int radius) 
+	protected ServerSun(int id, Vector3D location, Vector3D direction, Vector3D velocity, int radius) 
 	{
 		super(id, 1, location, direction, velocity, radius, null);
 		// TODO Auto-generated constructor stub

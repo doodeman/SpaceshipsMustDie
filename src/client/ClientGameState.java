@@ -1,7 +1,6 @@
 package client;
 
 import network.ClientUDPClient;
-import server.ServerAsteroid;
 import shared.CollidableObject;
 import shared.GameState;
 

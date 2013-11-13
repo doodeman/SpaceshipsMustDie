@@ -1,13 +1,13 @@
 package server;
 
-import com.badlogic.gdx.math.Vector3;
 
 import shared.CollidableObject;
+import shared.Vector3D;
 
 public class ServerCollidableObject extends CollidableObject
 {
 	ServerSun sun; 
-	protected ServerCollidableObject(int id, int type, Vector3 location, Vector3 direction, Vector3 velocity, int radius, ServerSun sun) 
+	protected ServerCollidableObject(int id, int type, Vector3D location, Vector3D direction, Vector3D velocity, int radius, ServerSun sun) 
 	{
 		super(id, type, location, direction, velocity, radius);
 		this.sun = sun; 
@@ -17,13 +17,13 @@ public class ServerCollidableObject extends CollidableObject
 	@Override
 	public void update()
 	{
-		this.location.add(velocity);
+		this.location = Vector3D.sum(this.location, velocity);
 		orbit(); 
 	}
 	
 	public void orbit()
 	{
-		Vector3 gravity = this.vectorTo(sun, 1); 
-		this.location.add(gravity); 
+		Vector3D gravity = this.vectorTo(sun, 1); 
+		this.location = Vector3D.sum(this.location, gravity);
 	}
 }

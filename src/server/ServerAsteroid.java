@@ -1,11 +1,12 @@
 package server;
 
-import com.badlogic.gdx.math.Vector3;
+import shared.Vector3D;
+
 
 
 public class ServerAsteroid extends ServerCollidableObject
 {
-	protected ServerAsteroid(int id, Vector3 location, Vector3 direction, Vector3 velocity, int radius, ServerSun sun) 
+	protected ServerAsteroid(int id, Vector3D location, Vector3D direction, Vector3D velocity, int radius, ServerSun sun) 
 	{
 		super(id, 3, location, direction, velocity, radius, sun);
 	}

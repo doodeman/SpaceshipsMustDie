@@ -1,5 +1,8 @@
 package client;
 
+import shared.Point3D;
+import shared.Vector3D;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL11;
 
