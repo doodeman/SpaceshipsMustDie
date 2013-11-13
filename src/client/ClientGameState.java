@@ -17,6 +17,7 @@ public class ClientGameState extends GameState
 	
 	public void update()
 	{
+		//Add new objects
 		for (CollidableObject o:  client.getState().objects)
 		{
 			if (!this.contains(o))
@@ -30,6 +31,13 @@ public class ClientGameState extends GameState
 					objects.add(new ClientAsteroid(o.id, o.location, o.direction, o.velocity, o.radius));
 				}
 			}
+		}
+		
+		//update old objects
+		for (CollidableObject o: client.getState().objects)
+		{
+			CollidableObject oldObject = this.getById(o.id);
+			oldObject.copy(o); 
 		}
 	}
 }

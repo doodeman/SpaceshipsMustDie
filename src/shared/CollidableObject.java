@@ -48,4 +48,15 @@ public class CollidableObject{
 		Vector3 euclid =  new Vector3(that.location.sub(this.location));
 		return euclid.div(euclid.len()).mul(length);
 	}
+	
+	/**
+	 * Sets all state related values of this to that
+	 * @param that
+	 */
+	public void copy(CollidableObject that)
+	{
+		this.location = that.location; 
+		this.velocity = that.velocity; 
+		this.direction = that.direction; 
+	}
 }

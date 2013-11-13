@@ -37,4 +37,14 @@ public class GameState
 		}
 		return false; 
 	}
+	
+	public CollidableObject getById(int id)
+	{
+		for (CollidableObject object : objects)
+		{
+			if (object.id == id)
+				return object; 
+		}
+		return null; 
+	}
 }

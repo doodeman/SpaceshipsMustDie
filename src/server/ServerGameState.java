@@ -41,6 +41,7 @@ public class ServerGameState extends GameState
 	{
 		for (CollidableObject o : objects)
 		{
+			Logger.log("Server.log", "GAMESTATe: Updating: " + o);
 			Logger.log("Server.log", "GAMESTATE: Old values: " + o.location.x + " " + o.location.y + " " + o.location.z);
 			o.update(); 			
 			Logger.log("Server.log", "GAMESTATE: New values: " + o.location.x + " " + o.location.y + " " + o.location.z);
