@@ -1,16 +1,19 @@
 package server;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.math.Vector3;
 
 import network.Client;
 import shared.CollidableObject;
 import shared.GameState;
+import shared.Logger;
 
 public class ServerGameState extends GameState
 {
 	ServerSun sun; 
 	
-	public ServerGameState()
+	public ServerGameState() throws IOException
 	{
 		super();
 		Vector3 location = new Vector3(0,0,0);
@@ -38,7 +41,9 @@ public class ServerGameState extends GameState
 	{
 		for (CollidableObject o : objects)
 		{
-			o.update(); 
+			Logger.log("Server.log", "GAMESTATE: Old values: " + o.location.x + " " + o.location.y + " " + o.location.z);
+			o.update(); 			
+			Logger.log("Server.log", "GAMESTATE: New values: " + o.location.x + " " + o.location.y + " " + o.location.z);
 		}
 	}
 }

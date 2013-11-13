@@ -3,8 +3,8 @@ package client;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 
-import server.Logger;
 import shared.CollidableObject;
+import shared.Logger;
 import network.ClientTCPClient;
 import network.ClientUDPClient;
 

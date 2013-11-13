@@ -3,6 +3,8 @@ package server;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import shared.Logger;
 import network.Client;
 import network.TCPServer;
 import network.UDPSender;
@@ -62,17 +64,16 @@ public class GameEngine implements Runnable
 			
 			String gameString = gameState.toJson();
 			
-			for (Client client : clients)
-			{
-				//System.out.println("Sending packet to " + client.toString()); 
-				UDPSender sender = new UDPSender(client, port, gameString);
-				Thread worker = new Thread(sender);
-				worker.start();
-			}
+			try {
+				sendUpdate(gameString);
+			} catch (IOException e1) {
+				log.log("Failed to send update to clients");
+				e1.printStackTrace();
+			} 
 			
 			try 
 			{
-				Thread.sleep(15);
+				Thread.sleep(100);
 			} 
 			catch (InterruptedException e) 
 			{
@@ -84,15 +85,22 @@ public class GameEngine implements Runnable
 	
 	/**
 	 * Sends gamestate update to all clients
+	 * @throws IOException 
 	 */
-	private void sendUpdate()
+	private void sendUpdate(String gameString) throws IOException
 	{
-		String updateString = gameState.toJson(); 
 		for (Client client : clients)
 		{
-			Runnable task = new UDPSender(client, port, updateString);
-			Thread worker = new Thread(task); 
-			worker.start(); 
+			//System.out.println("Sending packet to " + client.toString()); 
+			UDPSender sender;
+			try {
+				sender = new UDPSender(client, port, gameString);
+				Thread worker = new Thread(sender);
+				worker.start();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

@@ -6,8 +6,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-import server.Logger;
 import shared.GameState;
+import shared.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;

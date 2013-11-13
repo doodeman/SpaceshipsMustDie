@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import server.GameEngine;
-import server.Logger;
 import shared.GameState;
+import shared.Logger;
 
 /**
  * A TCP server that sends the gamestate to connecting clients and notifies the game engine. 

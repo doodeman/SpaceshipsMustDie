@@ -1,4 +1,4 @@
-package server;
+package shared;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -35,6 +35,21 @@ public class Logger
 	{
 		try {
 			File file = new File(name);
+			writer = new BufferedWriter(new FileWriter(file.getAbsoluteFile(), true)); 
+			writer.write(content + '\n');
+			writer.close();
+		} catch (IOException e) {
+			//TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void log(String filename, String content)
+	{
+		BufferedWriter writer; 
+
+		try {
+			File file = new File(filename);
 			writer = new BufferedWriter(new FileWriter(file.getAbsoluteFile(), true)); 
 			writer.write(content + '\n');
 			writer.close();

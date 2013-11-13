@@ -23,10 +23,7 @@ public class ServerCollidableObject extends CollidableObject
 	
 	public void orbit()
 	{
-		if (sun != null)
-		{
-			Vector3 gravity = this.vectorTo(sun, 1); 
-			this.location.add(gravity); 
-		}
+		Vector3 gravity = this.vectorTo(sun, 1); 
+		this.location.add(gravity); 
 	}
 }

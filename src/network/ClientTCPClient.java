@@ -6,8 +6,8 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import server.Logger;
 import shared.GameState;
+import shared.Logger;
 
 import com.google.gson.Gson;
 
