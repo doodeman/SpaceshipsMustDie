@@ -33,17 +33,20 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 		// turns on lighting
 
 		Gdx.gl11.glEnable(GL11.GL_LIGHTING);
-		Gdx.gl11.glEnable(GL11.GL_LIGHT1);
+		Gdx.gl11.glEnable(GL11.GL_LIGHT0);
+		//Gdx.gl11.glEnable(GL11.GL_LIGHT1);
      	// setting diffuse light color like a bulb or neon tube
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_DIFFUSE, new float[]{1f, 1f, 1f, 1f}, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_SPECULAR, new float[]{1f, 1f, 1f, 1f}, 0);
-		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, new float[] { 0f,0f,0f,1f }, 0); 
+		Gdx.gl11.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, new float[]{1f, 1f, 1f, 1f}, 0);
+//
+//		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_DIFFUSE, new float[]{1f, 1f, 1f, 1f}, 0);
+//		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_SPECULAR, new float[]{1f, 1f, 1f, 1f}, 0);
+//		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, new float[] { 0f,0f,0f,1f }, 0); 
 
 		Gdx.gl11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		Gdx.gl11.glEnable(GL11.GL_TEXTURE_2D);
 		Gdx.gl11.glMatrixMode(GL11.GL_PROJECTION);
 		Gdx.gl11.glLoadIdentity();
-		Gdx.glu.gluPerspective(Gdx.gl11, 90, 1.333333f, 0.001f, 30.0f);
+		Gdx.glu.gluPerspective(Gdx.gl11, 90, 1.333333f, 0.001f, 3000.0f);
 
 		Gdx.gl11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 
