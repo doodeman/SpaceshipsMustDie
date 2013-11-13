@@ -127,16 +127,16 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 			cam.pitch(90.0f * deltaTime);
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.W)) 
-			cam.slide(0.0f, 0.0f, -2.0f * deltaTime);
+			cam.slide(0.0f, 0.0f, -40.0f * deltaTime);
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.S)) 
-			cam.slide(0.0f, 0.0f, 2.0f * deltaTime);
+			cam.slide(0.0f, 0.0f, 40.0f * deltaTime);
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
-			cam.slide(-5.0f * deltaTime, 0.0f, 0.0f);
+			cam.slide(-20.0f * deltaTime, 0.0f, 0.0f);
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.D)) 
-			cam.slide(5.0f * deltaTime, 0.0f, 0.0f);
+			cam.slide(20.0f * deltaTime, 0.0f, 0.0f);
 		if(Gdx.input.isKeyPressed(Input.Keys.R)) 
 			cam.slide(0.0f, 10.0f * deltaTime, 0.0f);
 		
