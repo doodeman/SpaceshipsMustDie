@@ -43,7 +43,7 @@ public class ClientUDPClient implements Runnable
 			{
 				socket.receive(in);
 				String instr = new String(in.getData());
-				log.log("UDP CLIENT: Received gamestate: " + instr);
+				//log.log("UDP CLIENT: Received gamestate: " + instr);
 
 				JsonReader reader = new JsonReader(new StringReader(instr));
 				reader.setLenient(true);
@@ -59,7 +59,7 @@ public class ClientUDPClient implements Runnable
 	
 	public synchronized GameState getState()
 	{
-		log.log("UDP CLIENT: Gamestate updating"); 
+		//log.log("UDP CLIENT: Gamestate updating"); 
 		return gameState; 
 	}
 }

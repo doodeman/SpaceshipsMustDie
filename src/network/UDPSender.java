@@ -27,7 +27,7 @@ public class UDPSender implements Runnable
 		} 
 		catch (SocketException e) {
 			e.printStackTrace();
-			log.log("UDP CLIENT: Failed to send update to client " + serverAddress.toString()); 
+			//log.log("UDP CLIENT: Failed to send update to client " + serverAddress.toString()); 
 		} 
 		this.message = message; 
 	}
@@ -45,12 +45,12 @@ public class UDPSender implements Runnable
 		try 
 		{
 			socket.send(outPacket);
-			log.log("UDP CLIENT: Gamestate sent");
+			//log.log("UDP CLIENT: Gamestate sent");
 		} catch (IOException e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			log.log("UDP CLIENT: Failed to send update to client " + serverAddress.toString()); 
+			//log.log("UDP CLIENT: Failed to send update to client " + serverAddress.toString()); 
 		} 
 		socket.close(); 
 		return; 

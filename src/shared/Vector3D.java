@@ -59,4 +59,9 @@ public class Vector3D {
 	{
 		return new Vector3D(v1.x/x, v1.y/x, v1.z/x);
 	}
+	
+	public static Vector3D unitVector(Vector3D v)
+	{
+		return divide(v, v.length());
+	}
 }
