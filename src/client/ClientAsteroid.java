@@ -1,10 +1,9 @@
 package client;
 
-import java.nio.FloatBuffer;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL11;
-import com.badlogic.gdx.utils.BufferUtils;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g3d.loaders.wavefront.ObjLoader;
+import com.badlogic.gdx.graphics.g3d.model.still.StillModel;
 
 import shared.CollidableObject;
 import shared.Vector3D;
