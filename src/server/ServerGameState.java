@@ -15,6 +15,7 @@ public class ServerGameState extends GameState
 	public ServerGameState() throws IOException
 	{
 		super();
+		sequenceNumber = 0; 
 		Vector3D location = new Vector3D(0,0,0);
 		Vector3D direction = new Vector3D(0,0,0); 
 		Vector3D velocity = new Vector3D(0,0,0); 
@@ -41,12 +42,29 @@ public class ServerGameState extends GameState
 	@Override
 	public void update()
 	{
+		sequenceNumber++; 
 		for (CollidableObject o : objects)
 		{
 			//Logger.log("Server.log", "GAMESTATe: Updating: " + o);
 			//Logger.log("Server.log", "GAMESTATE: Old values: " + o.location.x + " " + o.location.y + " " + o.location.z);
 			o.update(); 			
 			//Logger.log("Server.log", "GAMESTATE: New values: " + o.location.x + " " + o.location.y + " " + o.location.z);
+		}
+		checkForCollisionsAndThenFixThem();
+	}
+	
+	//The greatest function name in the world 
+	private void checkForCollisionsAndThenFixThem()
+	{
+		for (CollidableObject o : objects)
+		{
+			for (CollidableObject o1 : objects)
+			{
+				if (o != o1)
+				{
+					o.hasCollided(o1);
+				}
+			}
 		}
 	}
 }

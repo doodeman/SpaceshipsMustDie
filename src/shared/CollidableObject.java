@@ -59,4 +59,9 @@ public class CollidableObject{
 		this.velocity = that.velocity; 
 		this.direction = that.direction; 
 	}
+	
+	public boolean hasCollided(CollidableObject o)
+	{
+		return false; 
+	}
 }

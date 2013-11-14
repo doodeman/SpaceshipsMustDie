@@ -24,7 +24,7 @@ public class UDPServer implements Runnable
 	@Override
 	public void run()
 	{
-		byte[] data = new byte[5096]; 
+		byte[] data = new byte[10000]; 
 		while (true)
 		{
 			DatagramPacket in = new DatagramPacket(data, data.length); 

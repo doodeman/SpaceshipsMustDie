@@ -9,11 +9,13 @@ import com.google.gson.Gson;
 public class GameState 
 {
 	public List<CollidableObject> objects;
-	
+	public int sequenceNumber; 
+
 	public String toJson()
 	{
 		Gson gson = new Gson();
-		return gson.toJson(this);
+		String json =  gson.toJson(this);
+		return json; 
 	}
 	
 	public void update()
