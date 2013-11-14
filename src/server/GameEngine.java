@@ -28,10 +28,10 @@ public class GameEngine implements Runnable
 	public GameEngine(int port) throws IOException
 	{
 		gameState = new ServerGameState(); 
-		gameState.addAsteroid(25,25,25);
-		gameState.addAsteroid(25,0,25);
-		gameState.addAsteroid(25,25,0);
-		gameState.addAsteroid(25,0,0);
+		for (int i = 0; i < 20; i++)
+		{
+			gameState.addAsteroid((float)Math.random()*25, (float)Math.random()*25, (float)Math.random()*25); 
+		}
 			
 		tcpServer = new TCPServer(1234, gameState, this);
 		clients = new ArrayList<Client>();
@@ -67,9 +67,9 @@ public class GameEngine implements Runnable
 			gameState.update();
 			
 			String gameString = gameState.toJson();
-			
+			//System.out.println("gameString length: " + gameString.length());
 			try {
-				sendUpdate(gameString);
+				sendUpdate(gameString, gameState.sequenceNumber);
 			} catch (IOException e1) {
 				log.log("Failed to send update to clients");
 				e1.printStackTrace();
@@ -77,7 +77,7 @@ public class GameEngine implements Runnable
 			
 			try 
 			{
-				Thread.sleep(16);
+				Thread.sleep(15);
 			} 
 			catch (InterruptedException e) 
 			{
@@ -91,14 +91,14 @@ public class GameEngine implements Runnable
 	 * Sends gamestate update to all clients
 	 * @throws IOException 
 	 */
-	private void sendUpdate(String gameString) throws IOException
+	private void sendUpdate(String gameString, int sequenceNo) throws IOException
 	{
 		for (Client client : clients)
 		{
 			//System.out.println("Sending packet to " + client.toString()); 
 			UDPSender sender;
 			try {
-				sender = new UDPSender(client, port, gameString);
+				sender = new UDPSender(client, port, gameString, sequenceNo);
 				Thread worker = new Thread(sender);
 				worker.start();
 			} catch (IOException e) {

@@ -17,11 +17,9 @@ public class ServerAsteroid extends ServerCollidableObject
 		 * Orbital mechanics courtesy of http://www.emanueleferonato.com/2012/03/28/simulate-radial-gravity-also-know-as-planet-gravity-with-box2d-as-seen-on-angry-birds-space/
 		 */
 		//Gets debris position
-		Vector3D currPos = this.location; 
 		//I need to know the mass of the planet because the bigger the mass, the more intense the gravity attraction. 
 		float gravity = 1; 
 		//Gets planet position
-		Vector3D sunPos = this.sun.location; 
 		//Creates a new b2Vec2 variable which will store the distance between the planet and the debris
 		//Calculates the distance between the planet and the debris
 		//Inverts planet distance, so that the force will move the debris in the direction of the planet origin
