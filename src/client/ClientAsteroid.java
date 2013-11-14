@@ -4,6 +4,9 @@ import java.nio.FloatBuffer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL11;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g3d.loaders.wavefront.ObjLoader;
+import com.badlogic.gdx.graphics.g3d.model.still.StillModel;
 import com.badlogic.gdx.utils.BufferUtils;
 
 import shared.CollidableObject;
@@ -17,44 +20,16 @@ import shared.Vector3D;
  */
 class ClientAsteroid extends CollidableObject
 {
-	private FloatBuffer vertexBuffer;
-	private FloatBuffer normalBuffer;
-	private int stacks;
-	private int slices;
-	private int vertexCount;
+	private StillModel model;
+	private Texture texture;
 	
 	ClientAsteroid(int id, Vector3D location, Vector3D direction, Vector3D velocity, int radius){
 		super(id, 3, location, direction, velocity, radius); 
 		//Drawing stuff
-    	stacks = 300;
-    	slices = 100;
-    	vertexCount = 0;
-    	
-    	float[] array = new float[(stacks)*(slices+1)*6];
-    	float stackInterval = (float)Math.PI / (float)stacks;
-    	float sliceInterval = 2.0f*(float)Math.PI / (float)slices;
-    	float stackAngle, sliceAngle;
-    	for(int stackCount = 0; stackCount < stacks; stackCount++) {
-    		stackAngle = stackCount * stackInterval;
-    		for(int sliceCount = 0; sliceCount < slices+1; sliceCount++) {
-    			sliceAngle = sliceCount * sliceInterval;
-    			array[vertexCount*3] =          (float)Math.sin(stackAngle) * (float)Math.cos(sliceAngle);
-    			array[vertexCount*3 + 1] = (float)Math.cos(stackAngle);
-    			array[vertexCount*3 + 2] = (float)Math.sin(stackAngle) * (float)Math.sin(sliceAngle);
-
-    			array[vertexCount*3 + 3] = (float)Math.sin(stackAngle + stackInterval) * (float)Math.cos(sliceAngle);
-    			array[vertexCount*3 + 4] = (float)Math.cos(stackAngle + stackInterval);
-    			array[vertexCount*3 + 5] = (float)Math.sin(stackAngle + stackInterval) * (float)Math.sin(sliceAngle);
-
-    			vertexCount += 2;
-    		}
-    	}
-    	vertexBuffer = BufferUtils.newFloatBuffer(vertexCount*3);
-    	vertexBuffer.put(array);
-    	vertexBuffer.rewind();
-    	normalBuffer = BufferUtils.newFloatBuffer(vertexCount*3);
-    	normalBuffer.put(array);
-    	normalBuffer.rewind();
+		ObjLoader loader = new ObjLoader();
+		
+	    model = loader.loadObj(Gdx.files.internal("lib/asteroid.obj"));
+	    texture = new Texture(Gdx.files.internal("lib/RockSmoothErosion0042_3_M.png"));
 		
 	}
 	
@@ -71,18 +46,13 @@ class ClientAsteroid extends CollidableObject
 	 */
 	@Override
 	public void draw(){ 
-		//if(vertexBuffer != null) System.out.println("vertexBuffer ok");
-		//if(normalBuffer != null) System.out.println("normalbuffer ok");
-		//if(location != null) System.out.println("location ok");
-		Gdx.gl11.glEnableClientState(GL11.GL_NORMAL_ARRAY);	
-    	
-    	Gdx.gl11.glVertexPointer(3, GL11.GL_FLOAT, 0, vertexBuffer);
-    	Gdx.gl11.glNormalPointer(GL11.GL_FLOAT, 0, normalBuffer);
-    	Gdx.gl11.glTranslatef(location.x, location.y, location.z);
-    	Gdx.gl11.glScalef(0.2f, 0.2f, 0.2f);
-    	for(int i = 0; i < vertexCount; i += (slices+1)*2) {
-    		Gdx.gl11.glDrawArrays(GL11.GL_LINE_LOOP, i, (slices+1)*2);
-    	}
+		Gdx.gl11.glPushMatrix();
+    	texture.bind();
+		Gdx.gl11.glTranslatef(location.x, location.y, location.z);
+		Gdx.gl11.glScalef(0.1f, 0.1f, 0.1f);
+		Gdx.gl11.glScalef((float)this.radius, (float)this.radius, (float)this.radius);
+		model.render();
+    	Gdx.gl11.glPopMatrix();
 	}
 
 }

@@ -2,6 +2,7 @@ package client;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.loaders.wavefront.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.model.still.StillModel;
 
@@ -17,13 +18,15 @@ import shared.Vector3D;
 class ClientSun extends CollidableObject
 {
 	private StillModel model;
+	private Texture texture;
 		
 	ClientSun(int id, int radius){
 		super(id, 1, new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), radius); 
 		
 		ObjLoader loader = new ObjLoader();
-		 
-		model = loader.loadObj(Gdx.files.internal("lib/asteroid.obj"));
+		
+	    model = loader.loadObj(Gdx.files.internal("lib/asteroid.obj"));
+	    texture = new Texture(Gdx.files.internal("lib/RockSmoothErosion0042_3_M.png"));
 		
 	}
 
@@ -34,6 +37,7 @@ class ClientSun extends CollidableObject
 	@Override
 	public void draw(){ 
     	Gdx.gl11.glPushMatrix();
+    	texture.bind();
 		Gdx.gl11.glTranslatef(location.x, location.y, location.z);
 		Gdx.gl11.glScalef(0.1f, 0.1f, 0.1f);
 		Gdx.gl11.glScalef((float)this.radius, (float)this.radius, (float)this.radius);
