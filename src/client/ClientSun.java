@@ -2,9 +2,17 @@ package client;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.ModelLoader;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g3d.loaders.wavefront.ObjLoader;
-import com.badlogic.gdx.graphics.g3d.model.still.StillModel;
+import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
+
 
 import shared.CollidableObject;
 import shared.Vector3D;
@@ -17,16 +25,23 @@ import shared.Vector3D;
  */
 class ClientSun extends CollidableObject
 {
-	private StillModel model;
+	private Model model;
 	private Texture texture;
+	private ModelInstance instance;
+	private ModelBatch modelBatch;
+	private Environment environment;
+	private Camera cam;
 		
-	ClientSun(int id, int radius){
+	private float rotation = 0.9f;
+	ClientSun(int id, int radius, Environment env, Camera cam){
 		super(id, 1, new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), radius); 
 		
-		ObjLoader loader = new ObjLoader();
-		
-	    model = loader.loadObj(Gdx.files.internal("lib/asteroid.obj"));
-	    texture = new Texture(Gdx.files.internal("lib/RockSmoothErosion0042_3_M.png"));
+		environment = env;
+		this.cam = cam;
+		modelBatch = new ModelBatch();
+		ModelLoader loader = new ObjLoader();
+        model = loader.loadModel(Gdx.files.internal("lib/sun.obj"));
+        instance = new ModelInstance(model);
 		
 	}
 
@@ -36,13 +51,16 @@ class ClientSun extends CollidableObject
 	 */
 	@Override
 	public void draw(){ 
-    	Gdx.gl11.glPushMatrix();
-    	texture.bind();
-		Gdx.gl11.glTranslatef(location.x, location.y, location.z);
-		Gdx.gl11.glScalef(0.1f, 0.1f, 0.1f);
-		Gdx.gl11.glScalef((float)this.radius, (float)this.radius, (float)this.radius);
-		model.render();
-    	Gdx.gl11.glPopMatrix();
+		modelBatch.begin(cam);
+		
+		//instance.transform.scale((float)this.radius, (float)this.radius, (float)this.radius);
+		
+		instance.transform.setToScaling(radius, radius, radius);
+		instance.transform.setToTranslation(location.x, location.y, location.z);
+		
+		instance.calculateTransforms();
+		modelBatch.render(instance, environment);
+	    modelBatch.end();
     	
 	}
 

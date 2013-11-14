@@ -13,44 +13,46 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL11;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.environment.PointLight;
+import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 
 public class ClientGame implements ApplicationListener, InputProcessor {
 
-	private Camera cam;
+	private Camera camera;
 	ClientAsteroid asteroid;
 	ClientSun sun;
 	Logger log; 
 	ClientUDPClient udpClient; 
 	ClientGameState gameState; 
+    private Environment environment;
+	private CameraInputController camController;
+	
 	@Override
 	public void create() {
 
-		Gdx.input.setInputProcessor(this);
-		Gdx.gl11.glEnable(GL10.GL_TEXTURE_2D);
-		// turns on lighting
-
-		Gdx.gl11.glEnable(GL11.GL_LIGHTING);
-		Gdx.gl11.glEnable(GL11.GL_LIGHT0);
-		//Gdx.gl11.glEnable(GL11.GL_LIGHT1);
-     	// setting diffuse light color like a bulb or neon tube
-		Gdx.gl11.glLightfv(GL10.GL_LIGHT0, GL10.GL_AMBIENT, new float[]{1f, 1f, 1f, 1f}, 0);
-//
-//		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_DIFFUSE, new float[]{1f, 1f, 1f, 1f}, 0);
-//		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_SPECULAR, new float[]{1f, 1f, 1f, 1f}, 0);
-//		Gdx.gl11.glLightfv(GL11.GL_LIGHT1, GL11.GL_POSITION, new float[] { 0f,0f,0f,1f }, 0); 
-
-		Gdx.gl11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		Gdx.gl11.glEnable(GL11.GL_TEXTURE_2D);
-		Gdx.gl11.glMatrixMode(GL11.GL_PROJECTION);
-		Gdx.gl11.glLoadIdentity();
-		Gdx.glu.gluPerspective(Gdx.gl11, 90, 1.333333f, 0.001f, 3000.0f);
-
+		environment = new Environment();
+        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
+        environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
+        environment.add(new PointLight().set(1f, 1f, 1f, 0, 0, 0, 1000));
+        
 		Gdx.gl11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
-
-		this.cam = new Camera(new Point3D(3.5f, 1.0f, 2.0f), new Point3D(2.0f, 1.0f, 3.0f), new Vector3D(0.0f, 1.0f, 0.0f), this);
-		
+		camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera.position.set(40f, 40f, 40f);
+	    camera.lookAt(0,0,0);
+	    camera.near = 0.1f;
+	    camera.far = 300f;
+	    camera.update();
+		//this.cam = new Camera1(new Point3D(3.5f, 1.0f, 2.0f), new Point3D(2.0f, 1.0f, 3.0f), new Vector3D(0.0f, 1.0f, 0.0f), this);
+	    camController = new CameraInputController(camera);
+        Gdx.input.setInputProcessor(camController);
+        
 		try 
 		{
 			log = new Logger("Client.log", true);
@@ -83,7 +85,7 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 			e.printStackTrace();
 		}
 		
-		gameState = new ClientGameState(udpClient);
+		gameState = new ClientGameState(udpClient, environment, camera);
 	}
 
 	@Override
@@ -100,47 +102,48 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
-		Gdx.gl11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
-		//Gdx.gl11.glEnable(GL11.GL_LIGHT0);
-		cam.setModelViewMatrix();
-		
+		camController.update();
+        
 		gameState.update(); 
 		
+		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+        
 		for (CollidableObject o : gameState.objects)
 		{
-			o.draw(); 
+				o.draw();
+	
 		}
 		
 		float deltaTime = Gdx.graphics.getDeltaTime();
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
-			cam.yaw(-90.0f * deltaTime);
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) 
-			cam.yaw(90.0f * deltaTime);
-		if(Gdx.input.isKeyPressed(Input.Keys.UP)) 
-			cam.pitch(-90.0f * deltaTime);
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) 
-			cam.pitch(90.0f * deltaTime);
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.W)) 
-			cam.slide(0.0f, 0.0f, -40.0f * deltaTime);
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.S)) 
-			cam.slide(0.0f, 0.0f, 40.0f * deltaTime);
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
-			cam.slide(-20.0f * deltaTime, 0.0f, 0.0f);
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.D)) 
-			cam.slide(20.0f * deltaTime, 0.0f, 0.0f);
-		if(Gdx.input.isKeyPressed(Input.Keys.R)) 
-			cam.slide(0.0f, 10.0f * deltaTime, 0.0f);
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.F)) 
-			cam.slide(0.0f, -10.0f * deltaTime, 0.0f);
+//		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
+//			cam.yaw(-90.0f * deltaTime);
+//		
+//		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) 
+//			cam.yaw(90.0f * deltaTime);
+//		if(Gdx.input.isKeyPressed(Input.Keys.UP)) 
+//			cam.pitch(-90.0f * deltaTime);
+//		
+//		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) 
+//			cam.pitch(90.0f * deltaTime);
+//		
+//		if(Gdx.input.isKeyPressed(Input.Keys.W)) 
+//			cam.slide(0.0f, 0.0f, -40.0f * deltaTime);
+//		
+//		if(Gdx.input.isKeyPressed(Input.Keys.S)) 
+//			cam.slide(0.0f, 0.0f, 40.0f * deltaTime);
+//		
+//		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
+//			cam.slide(-20.0f * deltaTime, 0.0f, 0.0f);
+//		
+//		if(Gdx.input.isKeyPressed(Input.Keys.D)) 
+//			cam.slide(20.0f * deltaTime, 0.0f, 0.0f);
+//		if(Gdx.input.isKeyPressed(Input.Keys.R)) 
+//			cam.slide(0.0f, 10.0f * deltaTime, 0.0f);
+//		
+//		if(Gdx.input.isKeyPressed(Input.Keys.F)) 
+//			cam.slide(0.0f, -10.0f * deltaTime, 0.0f);
 		
 	}
 

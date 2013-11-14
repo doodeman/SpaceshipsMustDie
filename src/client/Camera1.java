@@ -6,7 +6,7 @@ import shared.Vector3D;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL11;
 
-public class Camera
+public class Camera1
 {
 	Point3D eye;
 	Vector3D u;
@@ -19,7 +19,7 @@ public class Camera
 	Point3D old; 
 	ClientGame core; 
 
-	public Camera(Point3D pEye, Point3D pCenter, Vector3D up, ClientGame core) {
+	public Camera1(Point3D pEye, Point3D pCenter, Vector3D up, ClientGame core) {
 		eye = pEye;
 		n = Vector3D.difference(pEye, pCenter);
 		n.normalize();
