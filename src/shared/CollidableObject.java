@@ -16,6 +16,7 @@ public class CollidableObject{
 	public int id; 
 	//1 - sun, 2 - player, 3 - asteroid
 	public int type; 
+	public boolean hasCollided; 
 	
 	protected CollidableObject(int id, int type, Vector3D location, Vector3D direction, Vector3D velocity, int radius){
 		this.id = id; 
@@ -24,6 +25,7 @@ public class CollidableObject{
 		this.radius = radius;
 		this.velocity = velocity; 
 		this.type = type; 
+		hasCollided = false; 
 	}
 	
 	public void update()
