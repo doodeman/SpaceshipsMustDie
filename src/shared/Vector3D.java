@@ -64,4 +64,9 @@ public class Vector3D {
 	{
 		return divide(v, v.length());
 	}
+	
+	public static float distanceBetween(Vector3D v1, Vector3D v2)
+	{
+		return Vector3D.difference2(v1, v2).length();
+	}
 }

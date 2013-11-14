@@ -50,5 +50,21 @@ public class ServerGameState extends GameState
 			o.update(); 			
 			//Logger.log("Server.log", "GAMESTATE: New values: " + o.location.x + " " + o.location.y + " " + o.location.z);
 		}
+		checkForCollisionsAndThenFixThem();
+	}
+	
+	//The greatest function name in the world 
+	private void checkForCollisionsAndThenFixThem()
+	{
+		for (CollidableObject o : objects)
+		{
+			for (CollidableObject o1 : objects)
+			{
+				if (o != o1)
+				{
+					o.hasCollided(o1);
+				}
+			}
+		}
 	}
 }

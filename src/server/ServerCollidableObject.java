@@ -28,4 +28,18 @@ public abstract class ServerCollidableObject extends CollidableObject
 		//direction = Vector3D.unitVector(direction); 
 		this.velocity = Vector3D.sum(this.velocity, Vector3D.mult(magnitude, direction));
 	}
+	
+	@Override
+	public boolean hasCollided(CollidableObject that)
+	{
+		float distance = Vector3D.distanceBetween(this.location, that.location); 
+		distance = distance - this.radius; 
+		distance = distance - that.radius; 
+		if (distance <= 0)
+		{
+			System.out.println("collission!");
+			return true; 
+		}
+		return false; 
+	}
 }

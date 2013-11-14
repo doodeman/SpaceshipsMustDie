@@ -15,7 +15,6 @@ public class GameState
 	{
 		Gson gson = new Gson();
 		String json =  gson.toJson(this);
-		//Logger.log("ServerGamestate.log", sequenceNumber + " " + json); 
 		return json; 
 	}
 	
