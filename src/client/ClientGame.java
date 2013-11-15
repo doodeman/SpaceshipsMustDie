@@ -4,28 +4,24 @@ import java.io.IOException;
 
 import shared.CollidableObject;
 import shared.Logger;
-import shared.Point3D;
-import shared.Vector3D;
 import network.ClientTCPClient;
 import network.ClientUDPClient;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Vector3;
 
 public class ClientGame implements ApplicationListener, InputProcessor {
 
@@ -38,7 +34,8 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 	ClientGameState gameState; 
     private Environment environment;
 	private CameraInputController camController;
-	String host; 
+	String host;
+	private AssetManager assets; 
 	
 	public ClientGame(String host)
 	{
@@ -61,16 +58,18 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 	    camera.far = 300f;
 	    camera.update();
 	    
+	    assets = new AssetManager();
+		assets.load("lib/spaceship.g3db", Model.class);
+		assets.load("lib/ast1.obj", Model.class);
+		assets.load("lib/ast3.obj", Model.class);
+		assets.load("lib/ast4.obj", Model.class);
+		assets.load("lib/ast5.obj", Model.class);
+		assets.load("lib/sun.obj", Model.class);
 	    controller = new ClientController(this.host,1234);
 	    Thread controlWorker = new Thread(controller);
 	    controlWorker.start();
-		//this.cam = new Camera1(new Point3D(3.5f, 1.0f, 2.0f), new Point3D(2.0f, 1.0f, 3.0f), new Vector3D(0.0f, 1.0f, 0.0f), this);
-//	    camController = new CameraInputController(camera);
-//        camController.forwardButton = Keys.SHIFT_LEFT;
-//        
-//        camController.rotateLeftKey = Keys.A;
-//        camController.rotateRightKey = Keys.D;
-//        Gdx.input.setInputProcessor(camController);
+		//camController = new CameraInputController(camera);
+        //Gdx.input.setInputProcessor(camController);
         
         
 		try 
@@ -105,7 +104,7 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 			e.printStackTrace();
 		}
 		
-		gameState = new ClientGameState(udpClient, environment, camera);
+		gameState = new ClientGameState(udpClient, environment, camera, assets);
 	}
 
 	@Override
@@ -122,21 +121,10 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 
 	@Override
 	public void render() {
-		//camController.update();
-        
+		
 		gameState.update(); 
 		
-		if(Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
-			camera.rotate(2f, 1f,0f,0f);
-			//camera.rotate(2f, -1f,0f,0f);
-//			camera.rotate(2f, 0f,1f,0f);
-//			camera.rotate(2f, 0f,-1f,0f);
-//			camera.rotate(2f, 0f,0f,1f);
-			camera.rotate(2f, 0f,0f,-1f);
-				
-		}
-		
-		//angle, x, y, z
+//		//angle, x, y, z
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
 			controller.left();
 		if(Gdx.input.isKeyPressed(Input.Keys.D))
