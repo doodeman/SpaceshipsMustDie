@@ -22,6 +22,8 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class ClientGame implements ApplicationListener, InputProcessor {
 
@@ -114,7 +116,7 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 				o.draw();
 	
 		}
-		
+
 		//float deltaTime = Gdx.graphics.getDeltaTime();
 		
 //		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 

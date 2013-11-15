@@ -29,7 +29,7 @@ public class GameEngine implements Runnable
 	{
 		gameState = new ServerGameState(); 
 
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			gameState.addAsteroid((float)Math.random()*25, (float)Math.random()*25, (float)Math.random()*25); 
 		}
