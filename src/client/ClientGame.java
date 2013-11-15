@@ -68,11 +68,10 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 		assets.load("lib/ast4.obj", Model.class);
 		assets.load("lib/ast5.obj", Model.class);
 		assets.load("lib/sun.obj", Model.class);
+		modelBatch = new ModelBatch();
 	    controller = new ClientController(this.host,1234);
 	    Thread controlWorker = new Thread(controller);
 	    controlWorker.start();
-		//camController = new CameraInputController(camera);
-        //Gdx.input.setInputProcessor(camController);
         
         
 		try 
@@ -126,7 +125,7 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 	public void render() {
 		
 		gameState.update(); 
-		
+		camera.update();
 //		//angle, x, y, z
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
 			controller.left();
@@ -142,7 +141,7 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 			controller.forward();
 		if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
 			controller.backward();
-		
+//		
 		
 		camera.update();
 		
@@ -157,10 +156,11 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 				ModelInstance instance = o.draw();
 				if(instance != null) instances.add(instance); 
 		}
-		
-		modelBatch.begin(camera);
-		modelBatch.render(instances, environment);
-		modelBatch.end();
+		if(instances.size > 0){
+			modelBatch.begin(camera);
+			modelBatch.render(instances, environment);
+			modelBatch.end();
+		}
 		//float deltaTime = Gdx.graphics.getDeltaTime();
 		
 //		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
