@@ -37,7 +37,7 @@ public abstract class ServerCollidableObject extends CollidableObject
 		distance = distance - that.radius; 
 		if (distance <= 0)
 		{
-			System.out.println("collission!");
+			//System.out.println("collission!");
 			return true; 
 		}
 		return false; 

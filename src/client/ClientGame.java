@@ -115,7 +115,7 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 	
 		}
 		
-		float deltaTime = Gdx.graphics.getDeltaTime();
+		//float deltaTime = Gdx.graphics.getDeltaTime();
 		
 //		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
 //			cam.yaw(-90.0f * deltaTime);

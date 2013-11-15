@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 
 
@@ -38,15 +39,11 @@ class ClientAsteroid extends CollidableObject
 		
 		modelBatch = new ModelBatch();
 		ModelLoader loader = new ObjLoader();
-        model = loader.loadModel(Gdx.files.internal("lib/ast1.obj"));
-        instance = new ModelInstance(model);
-        //texture = new Texture(Gdx.files.internal("lib/RockSmoothErosion0042_3_M.png"));
-
-		//if(id % 2 == 0)	model = loader.load(Gdx.files.internal("lib/ast2.obj"));
-		//else if(id%2 == 1) model = loader.loadObj(Gdx.files.internal("lib/ast3.obj"));
-		//else model = loader.loadObj(Gdx.files.internal("lib/asteroid.obj"));
-	    //texture = new Texture(Gdx.files.internal("lib/RockSmoothErosion0042_3_M.png"));
-		
+		if(id%4 == 0) model = loader.loadModel(Gdx.files.internal("lib/ast1.obj"));
+		else if(id%4 == 1) model = loader.loadModel(Gdx.files.internal("lib/ast3.obj"));
+		else if(id%4 == 2) model = loader.loadModel(Gdx.files.internal("lib/ast4.obj"));
+		else model = loader.loadModel(Gdx.files.internal("lib/ast5.obj"));
+        instance = new ModelInstance(model);	
 	}
 	
 	/**
@@ -63,9 +60,8 @@ class ClientAsteroid extends CollidableObject
 	@Override
 	public void draw(){ 
 		modelBatch.begin(cam);
-		instance.transform.setToScaling(0.1f, 0.1f, 0.1f);
-		instance.transform.setToScaling((float)this.radius, (float)this.radius, (float)this.radius);
-		instance.transform.setToTranslation(location.x, location.y, location.z);
+
+	    instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, radius*0.2f, radius*0.2f, radius*0.2f);
 		modelBatch.render(instance, environment);
 		
 	    modelBatch.end();
