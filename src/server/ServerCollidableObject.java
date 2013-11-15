@@ -32,18 +32,22 @@ public abstract class ServerCollidableObject extends CollidableObject
 	@Override
 	public boolean hasCollided(CollidableObject that)
 	{
-		float distance = Vector3D.distanceBetween(this.location, that.location); 
-		distance = distance - this.radius; 
-		distance = distance - that.radius; 
-		if (distance <= 0)
+		if (!this.hasCollided && !that.hasCollided)
 		{
-			//System.out.println("collission!");
-			this.hasCollided = true; 
-			that.hasCollided = true; 
-			collisionResponse(that); 
-			return true; 
+			float distance = Vector3D.distanceBetween(this.location, that.location); 
+			distance = distance - this.radius; 
+			distance = distance - that.radius; 
+			if (distance <= 0)
+			{
+				//System.out.println("collission!");
+				this.hasCollided = true; 
+				that.hasCollided = true; 
+				collisionResponse(that); 
+				return true; 
+			}
+			return false; 
 		}
-		return false; 
+		return true; 
 	}
 	
 	private void collisionResponse(CollidableObject that)
