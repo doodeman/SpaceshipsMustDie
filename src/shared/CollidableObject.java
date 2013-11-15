@@ -1,5 +1,7 @@
 package shared;
 
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
+
 
 /**
  * @author matti
@@ -33,8 +35,9 @@ public class CollidableObject{
 		
 	}
 	
-	public void draw()
+	public ModelInstance draw()
 	{
+		return null;
 		
 	}
 	

@@ -1,10 +1,7 @@
 package client;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 
 
@@ -22,19 +19,11 @@ class ClientSun extends CollidableObject
 {
 		private Model model;
 		private ModelInstance instance;
-		private ModelBatch modelBatch;
-		private Environment environment;
-		private Camera cam;	
 		private AssetManager assets;
 		
-	ClientSun(int id, int radius, Environment env, Camera cam, AssetManager assets){
+	ClientSun(int id, int radius, AssetManager assets){
 		super(id, 1, new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), radius); 
-		this.assets = assets;
-		//Drawing stuff
-		this.environment = env;
-		this.cam = cam;
-		modelBatch = new ModelBatch();
-	
+		this.assets = assets;	
 	}
 	private boolean loading = true;
 	
@@ -47,9 +36,10 @@ class ClientSun extends CollidableObject
 	}
 	/**
 	 * Draws the object
+	 * @return 
 	 */
 	@Override
-	public void draw(){ 
+	public ModelInstance draw(){ 
 		
 		boolean updateBool = assets.update();
 		System.out.println(updateBool);
@@ -58,15 +48,11 @@ class ClientSun extends CollidableObject
 			doneLoading();
 		}
 		else if(loading){
-			return;
+			return null;
 		}
 		
-		modelBatch.begin(cam);
-
-	    instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, radius*1.25f, radius*1.25f, radius*1.25f);
-		modelBatch.render(instance, environment);
-//		
-	    modelBatch.end();
+		 instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, radius*1.25f, radius*1.25f, radius*1.25f);
+		return instance;
 
 	}
 

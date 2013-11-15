@@ -18,10 +18,12 @@ import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
+import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
-import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.utils.Array;
 
 public class ClientGame implements ApplicationListener, InputProcessor {
 
@@ -33,9 +35,10 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 	ClientUDPClient udpClient; 
 	ClientGameState gameState; 
     private Environment environment;
-	private CameraInputController camController;
+	private ModelBatch modelBatch;
 	String host;
 	private AssetManager assets; 
+	private Array<ModelInstance> instances = new Array<ModelInstance>();
 	
 	public ClientGame(String host)
 	{
@@ -104,7 +107,7 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 			e.printStackTrace();
 		}
 		
-		gameState = new ClientGameState(udpClient, environment, camera, assets);
+		gameState = new ClientGameState(udpClient, assets);
 	}
 
 	@Override
@@ -147,12 +150,17 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         
+        instances.clear();
+        
 		for (CollidableObject o : gameState.objects)
 		{
-				o.draw();
-	
+				ModelInstance instance = o.draw();
+				if(instance != null) instances.add(instance); 
 		}
-
+		
+		modelBatch.begin(camera);
+		modelBatch.render(instances, environment);
+		modelBatch.end();
 		//float deltaTime = Gdx.graphics.getDeltaTime();
 		
 //		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 

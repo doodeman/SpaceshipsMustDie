@@ -1,10 +1,7 @@
 package client;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 
 
@@ -21,21 +18,13 @@ class ClientAsteroid extends CollidableObject
 {
 	private Model model;
 	private ModelInstance instance;
-	private ModelBatch modelBatch;
-	private Environment environment;
-	private Camera cam;	
+
 	private AssetManager assets;
 
 	
-	ClientAsteroid(int id, Vector3D location, Vector3D direction, Vector3D velocity, int radius, Environment env, Camera cam, AssetManager assets){
+	ClientAsteroid(int id, Vector3D location, Vector3D direction, Vector3D velocity, int radius, AssetManager assets){
 		super(id, 3, location, direction, velocity, radius); 
 		this.assets = assets;
-		//Drawing stuff
-		this.environment = env;
-		this.cam = cam;
-		
-		modelBatch = new ModelBatch();
-
 	}
 	
 	/**
@@ -60,9 +49,10 @@ class ClientAsteroid extends CollidableObject
 	
 	/**
 	 * Draws the object
+	 * @return 
 	 */
 	@Override
-	public void draw(){ 
+	public ModelInstance draw(){ 
 		boolean updateBool = assets.update();
 		System.out.println(updateBool);
 		if(loading && updateBool){
@@ -70,15 +60,12 @@ class ClientAsteroid extends CollidableObject
 			doneLoading();
 		}
 		else if(loading){
-			return;
+			return null;
 		}
 		
-		modelBatch.begin(cam);
 
 	    instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, radius*1.25f, radius*1.25f, radius*1.25f);
-		modelBatch.render(instance, environment);
-//		
-	    modelBatch.end();
+		return instance;
 	}
 
 }
