@@ -28,7 +28,11 @@ public class GameEngine implements Runnable
 	public GameEngine(int port) throws IOException
 	{
 		gameState = new ServerGameState(); 
+<<<<<<< HEAD
 		for (int i = 0; i < 10; i++)
+=======
+		for (int i = 0; i < 3; i++)
+>>>>>>> branch 'master' of https://github.com/doodeman/SpaceshipsMustDie.git
 		{
 			gameState.addAsteroid((float)Math.random()*25, (float)Math.random()*25, (float)Math.random()*25); 
 		}

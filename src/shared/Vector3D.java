@@ -69,4 +69,5 @@ public class Vector3D {
 	{
 		return Vector3D.difference2(v1, v2).length();
 	}
+	
 }

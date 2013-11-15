@@ -37,9 +37,50 @@ public abstract class ServerCollidableObject extends CollidableObject
 		distance = distance - that.radius; 
 		if (distance <= 0)
 		{
+<<<<<<< HEAD
 			//System.out.println("collission!");
+=======
+			System.out.println("collission!");
+			this.hasCollided = true; 
+			that.hasCollided = true; 
+			collisionResponse(that); 
+>>>>>>> branch 'master' of https://github.com/doodeman/SpaceshipsMustDie.git
 			return true; 
 		}
 		return false; 
+	}
+	
+	private void collisionResponse(CollidableObject that)
+	{
+		//Sphere-sphere collision response courtesy of http://studiofreya.com/blog/3d-math-and-physics/simple-sphere-sphere-collision-detection-and-collision-response/
+		//First, find the vector which will serve as a basis vector (x-axis), in an arbiary direction. It have to be normalized to get realistic results.
+		Vector3D x = Vector3D.unitVector(Vector3D.difference2(this.location, that.location)); 
+		//Then we calculate the x-direction velocity vector and the perpendicular y-vector.
+		float x1 = Vector3D.dot(x, this.velocity);
+		Vector3D v1x = Vector3D.mult(x1, x);
+		Vector3D v1y = Vector3D.difference2(this.velocity, v1x);
+		float m1 = this.radius;
+		
+		x = Vector3D.mult(-1, x); 
+		Vector3D v2 = that.velocity; 
+		float x2 = Vector3D.dot(x, v2);
+		Vector3D v2x = Vector3D.mult(x2, x);
+		Vector3D v2y = Vector3D.difference2(v2, v2x); 
+		float m2 = that.radius; 
+		
+		//v1x*(m1-m2)/(m1+m2)
+		Vector3D a = Vector3D.mult((m1-m2)/(m1+m2), v1x); 
+		//v2x*(2*m2)/(m1+m2)
+		Vector3D b = Vector3D.mult((2*m2)/(m1+m2), v2x);
+		//( v1x*(m1-m2)/(m1+m2) + v2x*(2*m2)/(m1+m2) + v1y )
+		this.velocity = Vector3D.sum(v1y, Vector3D.sum(a, b));
+		
+		//v1x*(2*m1)/(m1+m2)
+		a = Vector3D.mult((2*m1)/(m1+m2), v1x); 
+		//v2x*(m2-m1)/(m1+m2)
+		b = Vector3D.mult((m2-m1)/(m1+m2),v2x); 
+		//v1x*(2*m1)/(m1+m2) + v2x*(m2-m1)/(m1+m2) + v2y
+		that.velocity = Vector3D.sum(v2y, Vector3D.sum(a, b));
+		
 	}
 }
