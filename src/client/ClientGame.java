@@ -33,6 +33,12 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 	ClientGameState gameState; 
     private Environment environment;
 	private CameraInputController camController;
+	String host; 
+	
+	public ClientGame(String host)
+	{
+		this.host = host; 
+	}
 	
 	@Override
 	public void create() {
@@ -65,7 +71,7 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 		ClientTCPClient client;
 		try 
 		{
-			client = new ClientTCPClient("localhost", 1234);
+			client = new ClientTCPClient(host, 1234);
 			Thread clientWorker = new Thread(client); 
 			clientWorker.start();
 		} catch (IOException e2) 
