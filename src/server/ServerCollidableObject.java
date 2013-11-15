@@ -37,14 +37,10 @@ public abstract class ServerCollidableObject extends CollidableObject
 		distance = distance - that.radius; 
 		if (distance <= 0)
 		{
-<<<<<<< HEAD
-			//System.out.println("collission!");
-=======
 			System.out.println("collission!");
 			this.hasCollided = true; 
 			that.hasCollided = true; 
 			collisionResponse(that); 
->>>>>>> branch 'master' of https://github.com/doodeman/SpaceshipsMustDie.git
 			return true; 
 		}
 		return false; 
