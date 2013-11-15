@@ -33,7 +33,7 @@ public class ServerGameState extends GameState
 		Vector3D location = new Vector3D(x, y, z);
 		Vector3D direction = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random()); 
 		//Vector3D velocity = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random()); 
-		Vector3D velocity = new Vector3D((float)0,(float)0.1,0); 
+		Vector3D velocity = new Vector3D((float)0.5,(float)0,0); 
 
 		int id = objects.size(); 
 		this.objects.add(new ServerAsteroid(id, location, direction, velocity, 10, sun));
@@ -56,6 +56,10 @@ public class ServerGameState extends GameState
 	//The greatest function name in the world 
 	private void checkForCollisionsAndThenFixThem()
 	{
+		for (CollidableObject o : objects)
+		{
+			o.hasCollided = false; 
+		}
 		for (CollidableObject o : objects)
 		{
 			for (CollidableObject o1 : objects)

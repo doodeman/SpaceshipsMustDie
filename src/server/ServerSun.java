@@ -5,7 +5,6 @@ import shared.Vector3D;
 
 public class ServerSun extends ServerCollidableObject
 {
-
 	protected ServerSun(int id, Vector3D location, Vector3D direction, Vector3D velocity, int radius) 
 	{
 		super(id, 1, location, direction, velocity, radius, null);

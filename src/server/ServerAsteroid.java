@@ -18,7 +18,7 @@ public class ServerAsteroid extends ServerCollidableObject
 		 */
 		//Gets debris position
 		//I need to know the mass of the planet because the bigger the mass, the more intense the gravity attraction. 
-		float gravity = 1; 
+		float gravity = 10; 
 		//Gets planet position
 		//Creates a new b2Vec2 variable which will store the distance between the planet and the debris
 		//Calculates the distance between the planet and the debris

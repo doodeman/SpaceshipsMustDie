@@ -17,8 +17,8 @@ public abstract class ServerCollidableObject extends CollidableObject
 	@Override
 	public void update()
 	{
-		this.location = Vector3D.sum(this.location, velocity);
 		orbit(); 
+		this.location = Vector3D.sum(this.location, velocity);
 	}
 	
 	public abstract void orbit();
@@ -39,7 +39,7 @@ public abstract class ServerCollidableObject extends CollidableObject
 			distance = distance - that.radius; 
 			if (distance <= 0)
 			{
-				//System.out.println("collission!");
+				System.out.println("collission!");
 				this.hasCollided = true; 
 				that.hasCollided = true; 
 				collisionResponse(that); 
@@ -73,14 +73,22 @@ public abstract class ServerCollidableObject extends CollidableObject
 		//v2x*(2*m2)/(m1+m2)
 		Vector3D b = Vector3D.mult((2*m2)/(m1+m2), v2x);
 		//( v1x*(m1-m2)/(m1+m2) + v2x*(2*m2)/(m1+m2) + v1y )
-		this.velocity = Vector3D.sum(v1y, Vector3D.sum(a, b));
+		if (this.type != 1)
+		{
+			this.velocity = Vector3D.sum(v1y, Vector3D.sum(a, b));
+			this.location = Vector3D.sum(this.velocity, this.location);
+		}
 		
 		//v1x*(2*m1)/(m1+m2)
 		a = Vector3D.mult((2*m1)/(m1+m2), v1x); 
 		//v2x*(m2-m1)/(m1+m2)
 		b = Vector3D.mult((m2-m1)/(m1+m2),v2x); 
 		//v1x*(2*m1)/(m1+m2) + v2x*(m2-m1)/(m1+m2) + v2y
-		that.velocity = Vector3D.sum(v2y, Vector3D.sum(a, b));
+		if (that.type != 1)
+		{
+			that.velocity = Vector3D.sum(v2y, Vector3D.sum(a, b));
+			that.location = Vector3D.sum(that.velocity, that.location);
+		}
 		
 	}
 }

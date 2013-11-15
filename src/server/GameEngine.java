@@ -29,10 +29,11 @@ public class GameEngine implements Runnable
 	{
 		gameState = new ServerGameState(); 
 
-		for (int i = 0; i < 1; i++)
-		{
-			gameState.addAsteroid((float)Math.random()*25, (float)Math.random()*25, (float)Math.random()*25); 
-		}
+		//for (int i = 0; i < 1; i++)
+		//{
+			gameState.addAsteroid(0, 50, 0); 
+		//}
+		gameState.addAsteroid(0, -50, 0);
 			
 		tcpServer = new TCPServer(1234, gameState, this);
 		clients = new ArrayList<Client>();
