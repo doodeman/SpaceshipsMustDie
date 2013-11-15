@@ -12,6 +12,7 @@ import network.ClientUDPClient;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
@@ -24,10 +25,12 @@ import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector3;
 
 public class ClientGame implements ApplicationListener, InputProcessor {
 
 	private Camera camera;
+	private ClientController controller;
 	ClientAsteroid asteroid;
 	ClientSun sun;
 	Logger log; 
@@ -57,9 +60,18 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 	    camera.near = 0.1f;
 	    camera.far = 300f;
 	    camera.update();
+	    
+	    controller = new ClientController(this.host,1234);
+	    Thread controlWorker = new Thread(controller);
+	    controlWorker.start();
 		//this.cam = new Camera1(new Point3D(3.5f, 1.0f, 2.0f), new Point3D(2.0f, 1.0f, 3.0f), new Vector3D(0.0f, 1.0f, 0.0f), this);
-	    camController = new CameraInputController(camera);
-        Gdx.input.setInputProcessor(camController);
+//	    camController = new CameraInputController(camera);
+//        camController.forwardButton = Keys.SHIFT_LEFT;
+//        
+//        camController.rotateLeftKey = Keys.A;
+//        camController.rotateRightKey = Keys.D;
+//        Gdx.input.setInputProcessor(camController);
+        
         
 		try 
 		{
@@ -110,9 +122,39 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 
 	@Override
 	public void render() {
-		camController.update();
+		//camController.update();
         
 		gameState.update(); 
+		
+		if(Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
+			camera.rotate(2f, 1f,0f,0f);
+			//camera.rotate(2f, -1f,0f,0f);
+//			camera.rotate(2f, 0f,1f,0f);
+//			camera.rotate(2f, 0f,-1f,0f);
+//			camera.rotate(2f, 0f,0f,1f);
+			camera.rotate(2f, 0f,0f,-1f);
+				
+		}
+		
+		//angle, x, y, z
+		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
+			controller.left();
+		if(Gdx.input.isKeyPressed(Input.Keys.D))
+			controller.right();
+		if(Gdx.input.isKeyPressed(Input.Keys.W))
+			controller.up();
+		if(Gdx.input.isKeyPressed(Input.Keys.S))
+			controller.down();
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
+			controller.fire();
+		if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
+			controller.forward();
+		if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
+			controller.backward();
+		
+		
+		camera.update();
+		
 		
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
