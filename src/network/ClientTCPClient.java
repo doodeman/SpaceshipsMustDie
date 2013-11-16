@@ -45,15 +45,16 @@ public class ClientTCPClient implements Runnable
 		try 
 		{
 			socket = new Socket(address, port);
-			log.log("TCP CLIENT: Connected, receiving gamestate..."); 
+			System.out.println("TCP CLIENT: Connected, receiving gamestate..."); 
 			BufferedReader fromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String in = fromServer.readLine();
-			log.log("TCP CLIENT: Received gamestate. Closing connection.");
+			System.out.println("TCP CLIENT: Received gamestate. Closing connection.");
 			socket.close();
 			Gson gson = new Gson(); 
 			InitialConnection init = gson.fromJson(in, InitialConnection.class);
 			gameState = init.state;
 			clientGame.setCurrentPlayer(init.playerId);
+			clientGame.startUDP(init.port);
 			System.out.println(gameState);
 			done = true;
 		} 

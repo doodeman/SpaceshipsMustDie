@@ -98,8 +98,6 @@ public class ClientGame implements ApplicationListener {
 			e2.printStackTrace();
 		} 
 		
-		
-		gameState = new ClientGameState(udpClient, assets);
 	}
 
 	@Override
@@ -116,7 +114,10 @@ public class ClientGame implements ApplicationListener {
 
 	@Override
 	public void render() {
-		gameState.update(); 
+		if (gameState != null)
+		{
+			gameState.update(); 
+		}
 		update();
 		display();
 	}
@@ -128,11 +129,15 @@ public class ClientGame implements ApplicationListener {
         
         instances.clear();
         
-		for (CollidableObject o : gameState.objects)
-		{
+        if (gameState != null)
+        {
+    		for (CollidableObject o : gameState.objects)
+    		{
+    			System.out.println("rendering");
 				ModelInstance instance = o.draw();
 				if(instance != null) instances.add(instance); 
-		}
+    		}
+        }
 		if(instances.size > 0){
 			modelBatch.begin(camera);
 			modelBatch.render(instances, environment);
@@ -202,16 +207,18 @@ public class ClientGame implements ApplicationListener {
 		return this.assignedPort;
 	}
 	
-	public synchronized void startUDP()
+	public synchronized void startUDP(int port)
 	{
 		try 
 		{
-			udpClient = new ClientUDPClient(getPort());
+			System.out.println("Starting client UDP Client on port " + port);
+			udpClient = new ClientUDPClient(port);
 			Thread udpclientworker = new Thread(udpClient); 
 			udpclientworker.start();
+			gameState = new ClientGameState(udpClient, assets);
 		} catch (IOException e) 
 		{
-			log.log("Failed to launch UDP Client");
+			System.out.println("Failed to launch UDP Client");
 			e.printStackTrace();
 		}
 	}

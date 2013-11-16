@@ -29,6 +29,7 @@ public class ClientUDPClient implements Runnable
 	
 	public ClientUDPClient(int port) throws IOException
 	{
+		System.out.println(port);
 		socket = new DatagramSocket(port); 
 		gson = new Gson(); 
 		log = new Logger("Client.log", false);

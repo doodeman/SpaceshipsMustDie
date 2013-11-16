@@ -81,7 +81,7 @@ public class ClientController implements Runnable
 		{
 			try 
 			{
-				ClientUDPSender sender = new ClientUDPSender(serverAddress, serverPort, toJson());
+				ClientUDPSender sender = new ClientUDPSender(serverAddress, 1233, toJson());
 				Thread worker = new Thread(sender); 
 				worker.start(); 
 				Thread.sleep(15);
