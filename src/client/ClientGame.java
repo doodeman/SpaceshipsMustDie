@@ -42,6 +42,7 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 	private ClientPlayer currentPlayer;
 	private boolean thirdPerson = false;
 	private boolean pressedP = false;
+	public int playerId; 
 	
 	public ClientGame(String host)
 	{
@@ -89,7 +90,7 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 		ClientTCPClient client;
 		try 
 		{
-			client = new ClientTCPClient(host, 1234);
+			client = new ClientTCPClient(host, 1234, this);
 			Thread clientWorker = new Thread(client); 
 			clientWorker.start();
 		} catch (IOException e2) 
@@ -126,7 +127,6 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 
 	@Override
 	public void render() {
-		
 		gameState.update(); 
 		camera.update();
 //		//angle, x, y, z
@@ -262,6 +262,11 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 	public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public void setCurrentPlayer(int playerId)
+	{
+		//MATTI DO DIS
 	}
 
 }
