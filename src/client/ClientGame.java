@@ -98,16 +98,6 @@ public class ClientGame implements ApplicationListener {
 			e2.printStackTrace();
 		} 
 		
-		try 
-		{
-			udpClient = new ClientUDPClient(1234);
-			Thread udpclientworker = new Thread(udpClient); 
-			udpclientworker.start();
-		} catch (IOException e) 
-		{
-			log.log("Failed to launch UDP Client");
-			e.printStackTrace();
-		}
 		
 		gameState = new ClientGameState(udpClient, assets);
 	}
@@ -210,5 +200,19 @@ public class ClientGame implements ApplicationListener {
 	public synchronized int getPort()
 	{
 		return this.assignedPort;
+	}
+	
+	public synchronized void startUDP()
+	{
+		try 
+		{
+			udpClient = new ClientUDPClient(getPort());
+			Thread udpclientworker = new Thread(udpClient); 
+			udpclientworker.start();
+		} catch (IOException e) 
+		{
+			log.log("Failed to launch UDP Client");
+			e.printStackTrace();
+		}
 	}
 }
