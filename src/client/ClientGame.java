@@ -42,6 +42,7 @@ public class ClientGame implements ApplicationListener {
 	private boolean thirdPerson = false;
 	private boolean pressedP = false;
 	public int playerId; 
+	public int assignedPort; 
 	
 	public ClientGame(String host)
 	{
@@ -189,5 +190,25 @@ public class ClientGame implements ApplicationListener {
 	public void resume() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public synchronized void setCurrentPlayer(int id)
+	{
+		this.playerId = id; 
+	}
+	
+	public synchronized int getCurrentPlayer()
+	{
+		return this.playerId;
+	}
+	
+	public synchronized void setPort(int port)
+	{
+		this.assignedPort = port; 
+	}
+	
+	public synchronized int getPort()
+	{
+		return this.assignedPort;
 	}
 }
