@@ -63,7 +63,7 @@ public class TCPServer implements Runnable
 				InetAddress clientaddr; 
 				clientaddr = connectionSocket.getInetAddress();
 				String str = clientaddr.toString();
-				newClients.add(new Client(str, lastPlayerId));
+				newClients.add(new Client(str, lastPlayerId, lastPort));
 				newPlayer = true; 
 				lastPort++; 
 				lastPlayerId++; 

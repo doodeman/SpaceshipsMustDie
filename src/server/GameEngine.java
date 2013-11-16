@@ -99,7 +99,7 @@ public class GameEngine implements Runnable
 			//System.out.println("Sending packet to " + client.toString()); 
 			UDPSender sender;
 			try {
-				sender = new UDPSender(client, port, gameString, sequenceNo);
+				sender = new UDPSender(client, client.port, gameString, sequenceNo);
 				Thread worker = new Thread(sender);
 				worker.start();
 			} catch (IOException e) {

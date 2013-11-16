@@ -10,13 +10,15 @@ public class Client
 {
 	public InetAddress address; 
 	public int playerId; 
+	public int port; 
 	public boolean isThrusting; 
 	public Vector3D facing; 
 	public boolean isFiring; 
 	
-	public Client(String address, int playerId) throws UnknownHostException
+	public Client(String address, int playerId, int port) throws UnknownHostException
 	{
 		this.playerId = playerId; 
+		this.port = port; 
 		address = address.trim();
 		if (address.startsWith("/"))
 		{
