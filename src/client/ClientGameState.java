@@ -21,26 +21,29 @@ public class ClientGameState extends GameState
 	public void update()
 	{
 		//Add new objects
-		for (CollidableObject o:  client.getState().objects)
+		if (client != null)
 		{
-			if (!this.contains(o))
+			//System.out.println("Gamestate updating through udp client");
+			for (CollidableObject o:  client.getState().objects)
 			{
-				if (o.type == 1)
+				if (!this.contains(o))
 				{
-					objects.add(new ClientSun(o.id,  o.radius, assets));
-				}
-				if (o.type == 3)
-				{
-					objects.add(new ClientAsteroid(o.id, o.location, o.direction, o.velocity, o.radius,assets));
+					if (o.type == 1)
+					{
+						objects.add(new ClientSun(o.id,  o.radius, assets));
+					}
+					if (o.type == 3)
+					{
+						objects.add(new ClientAsteroid(o.id, o.location, o.direction, o.velocity, o.radius,assets));
+					}
 				}
 			}
-		}
-		
-		//update old objects
-		for (CollidableObject o: client.getState().objects)
-		{
-			CollidableObject oldObject = this.getById(o.id);
-			oldObject.copy(o); 
+			//update old objects
+			for (CollidableObject o: client.getState().objects)
+			{
+				CollidableObject oldObject = this.getById(o.id);
+				oldObject.copy(o); 
+			}
 		}
 	}
 }

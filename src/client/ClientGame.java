@@ -98,8 +98,6 @@ public class ClientGame implements ApplicationListener {
 			e2.printStackTrace();
 		} 
 		
-		
-		gameState = new ClientGameState(udpClient, assets);
 	}
 
 	@Override
@@ -116,7 +114,10 @@ public class ClientGame implements ApplicationListener {
 
 	@Override
 	public void render() {
-		gameState.update(); 
+		if (gameState != null)
+		{
+			gameState.update(); 
+		}
 		update();
 		display();
 	}
@@ -125,17 +126,19 @@ public class ClientGame implements ApplicationListener {
 		// TODO Auto-generated method stub
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-        
+        if(gameState == null) return;
         instances.clear();
         if(playerId != null && currentPlayer == null){
 			for (CollidableObject o : gameState.objects)
 			{
+		    	System.out.println("rendering");
 				ModelInstance instance = o.draw();
 				if(instance != null) instances.add(instance); 
 				if(o.id == playerId){
 					currentPlayer = o;
 				}
-			}
+	
+		    }
         }
         else{
         	for (CollidableObject o : gameState.objects)
@@ -143,6 +146,7 @@ public class ClientGame implements ApplicationListener {
 				ModelInstance instance = o.draw();
 				if(instance != null) instances.add(instance); 
 			}
+
         }
 		if(instances.size > 0){
 			modelBatch.begin(camera);
@@ -213,16 +217,18 @@ public class ClientGame implements ApplicationListener {
 		return this.assignedPort;
 	}
 	
-	public synchronized void startUDP()
+	public synchronized void startUDP(int port)
 	{
 		try 
 		{
-			udpClient = new ClientUDPClient(getPort());
+			System.out.println("Starting client UDP Client on port " + port);
+			udpClient = new ClientUDPClient(port);
 			Thread udpclientworker = new Thread(udpClient); 
 			udpclientworker.start();
+			gameState = new ClientGameState(udpClient, assets);
 		} catch (IOException e) 
 		{
-			log.log("Failed to launch UDP Client");
+			System.out.println("Failed to launch UDP Client");
 			e.printStackTrace();
 		}
 	}
