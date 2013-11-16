@@ -38,10 +38,10 @@ public class ClientGame implements ApplicationListener {
 	String host;
 	private AssetManager assets; 
 	private Array<ModelInstance> instances = new Array<ModelInstance>();
-	private ClientPlayer currentPlayer;
+	private CollidableObject currentPlayer;
 	private boolean thirdPerson = false;
 	private boolean pressedP = false;
-	public int playerId; 
+	public Integer playerId = null; 
 	public int assignedPort; 
 	
 	public ClientGame(String host)
@@ -127,12 +127,23 @@ public class ClientGame implements ApplicationListener {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         
         instances.clear();
-        
-		for (CollidableObject o : gameState.objects)
-		{
+        if(playerId != null && currentPlayer == null){
+			for (CollidableObject o : gameState.objects)
+			{
 				ModelInstance instance = o.draw();
 				if(instance != null) instances.add(instance); 
-		}
+				if(o.id == playerId){
+					currentPlayer = o;
+				}
+			}
+        }
+        else{
+        	for (CollidableObject o : gameState.objects)
+			{
+				ModelInstance instance = o.draw();
+				if(instance != null) instances.add(instance); 
+			}
+        }
 		if(instances.size > 0){
 			modelBatch.begin(camera);
 			modelBatch.render(instances, environment);
