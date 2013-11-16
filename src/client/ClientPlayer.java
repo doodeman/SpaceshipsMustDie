@@ -22,7 +22,7 @@ class ClientPlayer extends CollidableObject
 
 	
 	ClientPlayer(int id, Vector3D location, Vector3D direction, Vector3D velocity, int radius, AssetManager assets){
-		super(id, 3, location, direction, velocity, radius); 
+		super(id, 2, location, direction, velocity, radius); 
 		this.assets = assets;
 	}
 	

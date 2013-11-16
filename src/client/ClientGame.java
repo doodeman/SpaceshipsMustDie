@@ -178,12 +178,11 @@ public class ClientGame implements ApplicationListener {
 		else if(!pressedP){
 			pressedP = false;
 		}
-		/*if(currentPlayer != null){ 
+		if(currentPlayer != null){ 
 			camera.position.set(currentPlayer.location.toVector3());
 			camera.direction.set(currentPlayer.direction.toVector3());
-			camera.lookAt(0,0,0);
 			camera.update();
-		}	*/	
+		}	
 	}
 
 	@Override

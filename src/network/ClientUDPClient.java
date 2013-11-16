@@ -5,6 +5,7 @@ import java.io.StringReader;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
+import shared.CollidableObject;
 import shared.GameState;
 import shared.Logger;
 
@@ -105,9 +106,16 @@ public class ClientUDPClient implements Runnable
 			//Logger.log("Clientchunks.txt", i + " " + chunks[i].chunkMsg);
 			json = json + chunks[i].chunkMsg; 
 		}
+		//System.out.println(json);
 		JsonReader reader = new JsonReader(new StringReader(json));
 		reader.setLenient(true);
 		gameState = new Gson().fromJson(reader, GameState.class); 
+		for (CollidableObject o : gameState.objects){
+			if (o.type == 2)
+			{
+				System.out.println("IN CLIENTUDPCLIENT " +o.id);
+			}
+		}
 	}
 	
 	public synchronized GameState getState()

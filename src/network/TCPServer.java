@@ -37,7 +37,7 @@ public class TCPServer implements Runnable
 		newPlayer = false; 
 		log = new Logger("Server.log", false);
 		lastPort = 1234; 
-		lastPlayerId = 0; 
+		lastPlayerId = -1; 
 	}
 	
 	@Override
@@ -66,7 +66,7 @@ public class TCPServer implements Runnable
 				newClients.add(new Client(str, lastPlayerId, lastPort));
 				newPlayer = true; 
 				lastPort++; 
-				lastPlayerId++; 
+				lastPlayerId--;
 				log.log("TCP SERVER: Gamestate sent, closing connection"); 
 				
 				connectionSocket.close();

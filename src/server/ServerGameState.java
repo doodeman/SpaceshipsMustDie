@@ -11,7 +11,7 @@ import shared.Vector3D;
 public class ServerGameState extends GameState
 {
 	ServerSun sun; 
-	
+	int playerCount = -1; 
 	public ServerGameState() throws IOException
 	{
 		super();
@@ -25,12 +25,12 @@ public class ServerGameState extends GameState
 	
 	public void addPlayer(Client client)
 	{
-		int id = objects.size(); 
-		Vector3D location = new Vector3D((float)Math.random()*client.playerId,(float)Math.random()*client.playerId,(float)Math.random()*client.playerId);
+		Vector3D location = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random());
 		Vector3D direction = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random()); 
 		//Vector3D velocity = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random()); 
 		Vector3D velocity = new Vector3D(0,0,0); 
-		CollidableObject player = new ServerPlayer(client.playerId, id, location, direction, velocity, 1);
+		CollidableObject player = new ServerPlayer(playerCount, playerCount, location, direction, velocity, 1);
+		playerCount--; 
 		objects.add(player);
 		player.direction = (player.vectorTo(sun, 1));
 	}
