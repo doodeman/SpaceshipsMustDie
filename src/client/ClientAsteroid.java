@@ -41,7 +41,6 @@ class ClientAsteroid extends CollidableObject
 		else if(id % 4 == 1) model = assets.get("lib/ast3.obj", Model.class);
 		else if(id % 4 == 2) model = assets.get("lib/ast4.obj", Model.class);
 		else model = assets.get("lib/ast5.obj", Model.class);
-		System.out.println("Here2");
 		instance = new ModelInstance(model);
 		instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, radius*0.1f, radius*0.1f, radius*0.1f);
 		loading = false;
@@ -54,7 +53,6 @@ class ClientAsteroid extends CollidableObject
 	@Override
 	public ModelInstance draw(){ 
 		boolean updateBool = assets.update();
-		System.out.println(updateBool);
 		if(loading && updateBool){
 			//System.out.println("Here");
 			doneLoading();

@@ -68,6 +68,7 @@ public class GameEngine implements Runnable
 			gameState.update();
 			
 			String gameString = gameState.toJson();
+			//System.out.println(gameString);
 			//System.out.println("gameString length: " + gameString.length());
 			try {
 				sendUpdate(gameString, gameState.sequenceNumber);

@@ -131,7 +131,7 @@ public class ClientGame implements ApplicationListener {
         if(playerId != null && currentPlayer == null){
 			for (CollidableObject o : gameState.objects)
 			{
-		    	System.out.println("rendering");
+		    	//System.out.println("rendering");
 				ModelInstance instance = o.draw();
 				if(instance != null) instances.add(instance); 
 				if(o.id == playerId){
@@ -178,11 +178,12 @@ public class ClientGame implements ApplicationListener {
 		else if(!pressedP){
 			pressedP = false;
 		}
-		if(currentPlayer != null){ 
+		/*if(currentPlayer != null){ 
 			camera.position.set(currentPlayer.location.toVector3());
 			camera.direction.set(currentPlayer.direction.toVector3());
+			camera.lookAt(0,0,0);
 			camera.update();
-		}		
+		}	*/	
 	}
 
 	@Override

@@ -42,7 +42,7 @@ class ClientSun extends CollidableObject
 	public ModelInstance draw(){ 
 		
 		boolean updateBool = assets.update();
-		System.out.println(updateBool);
+		//System.out.println(updateBool);
 		if(loading && updateBool){
 			//System.out.println("Here");
 			doneLoading();

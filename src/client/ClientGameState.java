@@ -31,10 +31,13 @@ public class ClientGameState extends GameState
 			{
 				if (!this.contains(o))
 				{
-					System.out.println("adding objects with id " + o.id);
 					if (o.type == 1)
 					{
 						this.objects.add(new ClientSun(o.id,  o.radius, assets));
+					}
+					if (o.type == 2)
+					{
+						this.objects.add(new ClientPlayer(o.id, o.location, o.direction, o.velocity, 1, assets));
 					}
 					if (o.type == 3)
 					{
@@ -45,7 +48,7 @@ public class ClientGameState extends GameState
 			
 			
 			//update old objects
-			for (CollidableObject o: this.objects)
+			for (CollidableObject o: client.getState().objects)
 			{
 				CollidableObject oldObject = this.getById(o.id);
 				try {
