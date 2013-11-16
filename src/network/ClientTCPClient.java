@@ -47,7 +47,8 @@ public class ClientTCPClient implements Runnable
 			log.log("TCP CLIENT: Received gamestate. Closing connection.");
 			socket.close();
 			Gson gson = new Gson(); 
-			gameState = gson.fromJson(in, GameState.class);
+			InitialConnection init = gson.fromJson(in, InitialConnection.class);
+			gameState = init.state;
 			System.out.println(gameState);
 			done = true;
 		} 

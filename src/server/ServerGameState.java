@@ -25,7 +25,12 @@ public class ServerGameState extends GameState
 	
 	public void addPlayer(Client client)
 	{
-		
+		int id = objects.size(); 
+		Vector3D location = new Vector3D((float)Math.random()*client.playerId,(float)Math.random()*client.playerId,(float)Math.random()*client.playerId);
+		Vector3D direction = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random()); 
+		//Vector3D velocity = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random()); 
+		Vector3D velocity = new Vector3D(0,0,0); 
+		objects.add(new ServerPlayer(client.playerId, id, location, direction, velocity, 1));
 	}
 
 	public void addAsteroid(float x, float y, float z) {

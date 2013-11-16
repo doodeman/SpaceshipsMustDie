@@ -59,7 +59,6 @@ public class GameEngine implements Runnable
 				for (Client client : newClients)
 				{
 					log.log("GameEngine: Adding new client #" + clients.size());
-					client.id = clients.size(); 
 					gameState.addPlayer(client); 
 					clients.add(client); 
 				}

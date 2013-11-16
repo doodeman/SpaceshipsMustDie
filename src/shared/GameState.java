@@ -3,21 +3,13 @@ package shared;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.google.gson.Gson;
 
-public class GameState 
+public class GameState extends Jsonable
 {
 	public List<CollidableObject> objects;
 	public int sequenceNumber; 
 
-	public String toJson()
-	{
-		Gson gson = new Gson();
-		String json =  gson.toJson(this);
-		return json; 
-	}
-	
 	public void update()
 	{
 		
