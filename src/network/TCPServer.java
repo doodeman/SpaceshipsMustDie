@@ -23,8 +23,10 @@ public class TCPServer implements Runnable
 	GameState state; 
 	GameEngine engine; 
 	List<Client> newClients; 
+	int lastPort;
 	private Logger log; 
 	boolean newPlayer; 
+	int lastPlayerId; 
 	
 	public TCPServer(int port, GameState state, GameEngine engine) throws IOException
 	{
@@ -34,6 +36,8 @@ public class TCPServer implements Runnable
 		newClients = new ArrayList<Client>();
 		newPlayer = false; 
 		log = new Logger("Server.log", false);
+		lastPort = 1234; 
+		lastPlayerId = 0; 
 	}
 	
 	@Override
@@ -51,14 +55,18 @@ public class TCPServer implements Runnable
 				DataOutputStream outStream = new DataOutputStream(connectionSocket.getOutputStream());
 				
 				//Send gamestate
-				log.log("TCP SERVER: Connection received, sending gamestate..."); 
-				outStream.writeBytes(state.toJson());
+				log.log("TCP SERVER: Connection received, sending gamestate and port..."); 
+				InitialConnection initialConnection = new InitialConnection(state, lastPort, lastPlayerId);
+				
+				outStream.writeBytes(initialConnection.toJson());
 				//Add client to list of new clients
 				InetAddress clientaddr; 
 				clientaddr = connectionSocket.getInetAddress();
 				String str = clientaddr.toString();
-				newClients.add(new Client(str));
+				newClients.add(new Client(str, lastPlayerId));
 				newPlayer = true; 
+				lastPort++; 
+				lastPlayerId++; 
 				log.log("TCP SERVER: Gamestate sent, closing connection"); 
 				
 				connectionSocket.close();

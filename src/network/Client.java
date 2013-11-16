@@ -9,14 +9,14 @@ import shared.Vector3D;
 public class Client 
 {
 	public InetAddress address; 
-	public int id; 
-	
+	public int playerId; 
 	public boolean isThrusting; 
 	public Vector3D facing; 
 	public boolean isFiring; 
 	
-	public Client(String address) throws UnknownHostException
+	public Client(String address, int playerId) throws UnknownHostException
 	{
+		this.playerId = playerId; 
 		address = address.trim();
 		if (address.startsWith("/"))
 		{

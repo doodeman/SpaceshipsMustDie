@@ -41,6 +41,7 @@ public class ClientGame implements ApplicationListener {
 	private ClientPlayer currentPlayer;
 	private boolean thirdPerson = false;
 	private boolean pressedP = false;
+	public int playerId; 
 	
 	public ClientGame(String host)
 	{
@@ -87,7 +88,7 @@ public class ClientGame implements ApplicationListener {
 		ClientTCPClient client;
 		try 
 		{
-			client = new ClientTCPClient(host, 1234);
+			client = new ClientTCPClient(host, 1234, this);
 			Thread clientWorker = new Thread(client); 
 			clientWorker.start();
 		} catch (IOException e2) 
@@ -150,8 +151,6 @@ public class ClientGame implements ApplicationListener {
 
 	private void update() {
 		camera.update();
-		
-//		//angle, x, y, z
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
 			controller.left();
 		if(Gdx.input.isKeyPressed(Input.Keys.D))
@@ -177,9 +176,7 @@ public class ClientGame implements ApplicationListener {
 			camera.position.set(currentPlayer.location.toVector3());
 			camera.direction.set(currentPlayer.direction.toVector3());
 			camera.update();
-		}
-
-		
+		}		
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import java.net.UnknownHostException;
 
 import shared.GameState;
 import shared.Logger;
+import client.ClientGame;
 
 import com.google.gson.Gson;
 
@@ -18,12 +19,15 @@ public class ClientTCPClient implements Runnable
 	GameState gameState; 
 	boolean done; 
 	Logger log; 
+	int player; 
+	ClientGame clientGame; 
 	
-	public ClientTCPClient(String address, int port) throws IOException
+	public ClientTCPClient(String address, int port, ClientGame clientGame) throws IOException
 	{
 		this.address = address; 
 		this.port = port; 
 		log = new Logger("Client.log", false);
+		this.clientGame = clientGame; 
 	}
 	
 	/**
@@ -47,7 +51,9 @@ public class ClientTCPClient implements Runnable
 			log.log("TCP CLIENT: Received gamestate. Closing connection.");
 			socket.close();
 			Gson gson = new Gson(); 
-			gameState = gson.fromJson(in, GameState.class);
+			InitialConnection init = gson.fromJson(in, InitialConnection.class);
+			gameState = init.state;
+			clientGame.setCurrentPlayer(init.playerId);
 			System.out.println(gameState);
 			done = true;
 		} 
