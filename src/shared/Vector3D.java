@@ -1,5 +1,7 @@
 package shared;
 
+import com.badlogic.gdx.math.Vector3;
+
 
 
 public class Vector3D {
@@ -68,6 +70,10 @@ public class Vector3D {
 	public static float distanceBetween(Vector3D v1, Vector3D v2)
 	{
 		return Vector3D.difference2(v1, v2).length();
+	}
+
+	public Vector3 toVector3() {
+		return new Vector3(this.x, this.y, this.z);
 	}
 	
 }

@@ -39,6 +39,9 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 	String host;
 	private AssetManager assets; 
 	private Array<ModelInstance> instances = new Array<ModelInstance>();
+	private ClientPlayer currentPlayer;
+	private boolean thirdPerson = false;
+	private boolean pressedP = false;
 	
 	public ClientGame(String host)
 	{
@@ -141,8 +144,16 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 			controller.forward();
 		if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
 			controller.backward();
+		if(Gdx.input.isKeyPressed(Input.Keys.P) && !pressedP ){
+			thirdPerson = !thirdPerson;
+			pressedP = true;
+		}
+		else if(!pressedP){
+			pressedP = false;
+		}
 //		
-		
+		camera.position.set(currentPlayer.location.toVector3());
+		camera.direction.set(currentPlayer.direction.toVector3());
 		camera.update();
 		
 		
