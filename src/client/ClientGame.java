@@ -10,7 +10,6 @@ import network.ClientUDPClient;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
@@ -25,7 +24,7 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.utils.Array;
 
-public class ClientGame implements ApplicationListener, InputProcessor {
+public class ClientGame implements ApplicationListener {
 
 	private Camera camera;
 	private ClientController controller;
@@ -82,7 +81,6 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 			log = new Logger("Client.log", true);
 		} catch (IOException e1) 
 		{
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} 
 		
@@ -126,9 +124,33 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 
 	@Override
 	public void render() {
-		
 		gameState.update(); 
+		update();
+		display();
+	}
+
+	private void display() {
+		// TODO Auto-generated method stub
+		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+        
+        instances.clear();
+        
+		for (CollidableObject o : gameState.objects)
+		{
+				ModelInstance instance = o.draw();
+				if(instance != null) instances.add(instance); 
+		}
+		if(instances.size > 0){
+			modelBatch.begin(camera);
+			modelBatch.render(instances, environment);
+			modelBatch.end();
+		}
+	}
+
+	private void update() {
 		camera.update();
+		
 //		//angle, x, y, z
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
 			controller.left();
@@ -151,56 +173,12 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 		else if(!pressedP){
 			pressedP = false;
 		}
-//		
-		camera.position.set(currentPlayer.location.toVector3());
-		camera.direction.set(currentPlayer.direction.toVector3());
-		camera.update();
-		
-		
-		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-        
-        instances.clear();
-        
-		for (CollidableObject o : gameState.objects)
-		{
-				ModelInstance instance = o.draw();
-				if(instance != null) instances.add(instance); 
+		if(currentPlayer != null){ 
+			camera.position.set(currentPlayer.location.toVector3());
+			camera.direction.set(currentPlayer.direction.toVector3());
+			camera.update();
 		}
-		if(instances.size > 0){
-			modelBatch.begin(camera);
-			modelBatch.render(instances, environment);
-			modelBatch.end();
-		}
-		//float deltaTime = Gdx.graphics.getDeltaTime();
-		
-//		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) 
-//			cam.yaw(-90.0f * deltaTime);
-//		
-//		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) 
-//			cam.yaw(90.0f * deltaTime);
-//		if(Gdx.input.isKeyPressed(Input.Keys.UP)) 
-//			cam.pitch(-90.0f * deltaTime);
-//		
-//		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) 
-//			cam.pitch(90.0f * deltaTime);
-//		
-//		if(Gdx.input.isKeyPressed(Input.Keys.W)) 
-//			cam.slide(0.0f, 0.0f, -40.0f * deltaTime);
-//		
-//		if(Gdx.input.isKeyPressed(Input.Keys.S)) 
-//			cam.slide(0.0f, 0.0f, 40.0f * deltaTime);
-//		
-//		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
-//			cam.slide(-20.0f * deltaTime, 0.0f, 0.0f);
-//		
-//		if(Gdx.input.isKeyPressed(Input.Keys.D)) 
-//			cam.slide(20.0f * deltaTime, 0.0f, 0.0f);
-//		if(Gdx.input.isKeyPressed(Input.Keys.R)) 
-//			cam.slide(0.0f, 10.0f * deltaTime, 0.0f);
-//		
-//		if(Gdx.input.isKeyPressed(Input.Keys.F)) 
-//			cam.slide(0.0f, -10.0f * deltaTime, 0.0f);
+
 		
 	}
 
@@ -215,53 +193,4 @@ public class ClientGame implements ApplicationListener, InputProcessor {
 		// TODO Auto-generated method stub
 
 	}
-
-	@Override
-	public boolean keyDown(int arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyUp(int arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }
