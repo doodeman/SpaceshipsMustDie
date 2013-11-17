@@ -15,24 +15,23 @@ public class ServerPlayer extends ServerCollidableObject
 	protected ServerPlayer(int playerId, int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerSun sun) 
 	{
 		super(id, 2, location, direction, velocity, up, radius, sun);
-		forwardThrust = (float) 0.05; 
-		backwardThrust = (float) -0.025; 
-		spinThrust = (float) 0.025;
+		forwardThrust = (float) 1; 
+		spinThrust = (float) 5;
 		// TODO Auto-generated constructor stub
 	}
 	
 	public void update(ClientUpdate update)
 	{
-		System.out.println(this.location.x + " " + this.location.y + " " + this.location.z);
-
+		//System.out.println(this.location.x + " " + this.location.y + " " + this.location.z);
+		//System.out.println(this.direction.x + " " + this.direction.y + " " + this.direction.z);
 		if (update.forward)
 		{
-			System.out.println("thrusting");
-			applyForce(direction, forwardThrust);
+			//System.out.println("thrusting");
+			applyForce(this.direction.reverseZ(), forwardThrust);
 		}
 		if (update.backward)
 		{
-			applyForce(direction, backwardThrust);
+			applyForce(this.direction.reverseZ(), -forwardThrust);
 		}
 		if (update.left)
 		{
@@ -54,8 +53,15 @@ public class ServerPlayer extends ServerCollidableObject
 		{
 			//TODO: make the player fire a projectile
 		}
+		
+		if (this.velocity.length() > 0.5)
+		{
+			this.velocity = Vector3D.setLength(this.velocity, 0.5f);
+		}
+		//System.out.println(this.velocity.length());
 	}
 
+	
 	@Override
 	public void orbit() {
 		// TODO Auto-generated method stub

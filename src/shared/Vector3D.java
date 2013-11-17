@@ -15,6 +15,25 @@ public class Vector3D {
 		z = zz;
 	}
 	
+	public Vector3D(Vector3D v)
+	{
+		this.x = v.x; 
+		this.y = v.y; 
+		this.z = v.z; 
+	}
+	
+	public Vector3D(Vector3 v)
+	{
+		this.x = v.x; 
+		this.y = v.y; 
+		this.z = v.z; 
+	}
+	
+	public Vector3D reverseZ()
+	{
+		return new Vector3D(this.x, this.y, -this.z); 
+	}
+	
 	public void set(float xx, float yy, float zz) {
 		x = xx;
 		y = yy;
@@ -70,6 +89,11 @@ public class Vector3D {
 	public static float distanceBetween(Vector3D v1, Vector3D v2)
 	{
 		return Vector3D.difference2(v1, v2).length();
+	}
+	
+	public static Vector3D setLength(Vector3D v, float length)
+	{
+		return mult(length, divide(v, v.length()));
 	}
 
 	public Vector3 toVector3() {

@@ -63,7 +63,7 @@ public class ClientGame implements ApplicationListener {
 		camera.position.set(1f, 0f, 0f);
 	    camera.lookAt(0,0,0);
 	    camera.near = 0.1f;
-	    camera.far = 300f;
+	    camera.far = 1000f;
 	    camera.update();
 	    
 	    assets = new AssetManager();
