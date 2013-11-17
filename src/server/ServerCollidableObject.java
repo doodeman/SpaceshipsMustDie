@@ -7,12 +7,10 @@ import shared.Vector3D;
 public abstract class ServerCollidableObject extends CollidableObject
 {
 	ServerSun sun; 
-	ServerGameState state; 
-	protected ServerCollidableObject(int id, int type, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerSun sun, ServerGameState state) 
+	protected ServerCollidableObject(int id, int type, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerSun sun) 
 	{
 		super(id, type, location, direction, velocity, up, radius);
 		this.sun = sun; 
-		this.state = state; 
 		// TODO Auto-generated constructor stub
 	}
 	

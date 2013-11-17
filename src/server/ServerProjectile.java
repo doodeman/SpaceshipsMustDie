@@ -8,9 +8,9 @@ public class ServerProjectile extends ServerCollidableObject
 
 	protected ServerProjectile(int id, int type, Vector3D location,
 			Vector3D direction, Vector3D velocity, Vector3D up, int radius,
-			ServerSun sun, ServerGameState state) 
+			ServerSun sun) 
 	{
-		super(id, type, location, direction, velocity, up, radius, sun, state);
+		super(id, type, location, direction, velocity, up, radius, sun);
 		// TODO Auto-generated constructor stub
 	}
 

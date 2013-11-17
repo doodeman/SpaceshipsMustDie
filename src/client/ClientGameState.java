@@ -44,6 +44,10 @@ public class ClientGameState extends GameState
 					{
 						this.objects.add(new ClientAsteroid(o.id, o.location, o.direction, o.velocity, o.up, o.radius,assets));
 					}
+					if (o.type == 4)
+					{
+						this.objects.add(new ClientProjectile(o.id, o.location, o.direction, o.velocity, o.up, o.radius, assets));
+					}
 				}
 			}
 			
