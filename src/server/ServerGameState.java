@@ -58,7 +58,7 @@ public class ServerGameState extends GameState
 	
 	public void addProjectile(ServerPlayer player)
 	{
-		Vector3D pLocation = Vector3D.sum(player.location, player.direction);
+		Vector3D pLocation = Vector3D.sum(player.location, Vector3D.setLength(player.direction, 6));
 		Vector3D pVelocity = Vector3D.mult(1.5f, player.velocity);
 		ServerProjectile projectile = new ServerProjectile(idcounter, 4, pLocation, player.direction, pVelocity, player.up, 5, this.sun);
 		idcounter++;
