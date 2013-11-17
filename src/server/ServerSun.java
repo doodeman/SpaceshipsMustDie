@@ -5,9 +5,9 @@ import shared.Vector3D;
 
 public class ServerSun extends ServerCollidableObject
 {
-	protected ServerSun(int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius) 
+	protected ServerSun(int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerGameState state) 
 	{
-		super(id, 1, location, direction, velocity, up, radius, null);
+		super(id, 1, location, direction, velocity, up, radius, null, state);
 		// TODO Auto-generated constructor stub
 	}
 

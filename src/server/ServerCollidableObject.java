@@ -7,10 +7,12 @@ import shared.Vector3D;
 public abstract class ServerCollidableObject extends CollidableObject
 {
 	ServerSun sun; 
-	protected ServerCollidableObject(int id, int type, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerSun sun) 
+	ServerGameState state; 
+	protected ServerCollidableObject(int id, int type, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerSun sun, ServerGameState state) 
 	{
 		super(id, type, location, direction, velocity, up, radius);
 		this.sun = sun; 
+		this.state = state; 
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -89,6 +91,7 @@ public abstract class ServerCollidableObject extends CollidableObject
 			that.velocity = Vector3D.sum(v2y, Vector3D.sum(a, b));
 			that.location = Vector3D.sum(that.velocity, that.location);
 		}
-		
 	}
+	
+	
 }

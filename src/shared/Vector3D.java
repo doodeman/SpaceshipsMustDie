@@ -100,4 +100,9 @@ public class Vector3D {
 		return new Vector3(this.x, this.y, this.z);
 	}
 	
+	public static Vector3D numSum(float num, Vector3D v)
+	{
+		return new Vector3D(v.x + num, v.y + num, v.z + num); 
+	}
+	
 }

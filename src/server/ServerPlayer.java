@@ -12,9 +12,9 @@ public class ServerPlayer extends ServerCollidableObject
 {
 	private float forwardThrust, backwardThrust, spinThrust; 
 	int playerId; 
-	protected ServerPlayer(int playerId, int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerSun sun) 
+	protected ServerPlayer(int playerId, int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerSun sun, ServerGameState state) 
 	{
-		super(id, 2, location, direction, velocity, up, radius, sun);
+		super(id, 2, location, direction, velocity, up, radius, sun, state);
 		forwardThrust = (float) 1; 
 		spinThrust = (float) 5;
 		// TODO Auto-generated constructor stub
@@ -51,7 +51,7 @@ public class ServerPlayer extends ServerCollidableObject
 		}
 		if (update.fire)
 		{
-			//TODO: make the player fire a projectile
+			fire();
 		}
 		
 		if (this.velocity.length() > 0.5)
@@ -61,6 +61,10 @@ public class ServerPlayer extends ServerCollidableObject
 		//System.out.println(this.velocity.length());
 	}
 
+	private void fire()
+	{
+		state.addProjectile(this);
+	}
 	
 	@Override
 	public void orbit() {

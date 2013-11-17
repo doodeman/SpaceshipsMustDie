@@ -94,4 +94,9 @@ public class CollidableObject{
 		System.out.println(side3.x + " " + side3.y + " " + side3.z);
 		this.direction = new Vector3D(direction3); 
 	}
+	
+	public void destroy()
+	{
+		
+	}
 }

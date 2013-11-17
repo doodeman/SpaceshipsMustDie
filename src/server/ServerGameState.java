@@ -21,7 +21,7 @@ public class ServerGameState extends GameState
 		Vector3D direction = new Vector3D(0,0,0); 
 		Vector3D velocity = new Vector3D(0,0,0); 
 		Vector3D up = new Vector3D(0,0,0);
-		sun = new ServerSun(0, location, direction, velocity, up, 20);
+		sun = new ServerSun(0, location, direction, velocity, up, 20, this);
 		objects.add(sun); 
 	}
 	
@@ -32,7 +32,7 @@ public class ServerGameState extends GameState
 		//Vector3D velocity = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random()); 
 		Vector3D velocity = new Vector3D(0,0,0); 
 		Vector3D up = new Vector3D(0,0,0);
-		CollidableObject player = new ServerPlayer(playerCount, playerCount, location, direction, velocity, up, 1, this.sun);
+		CollidableObject player = new ServerPlayer(playerCount, playerCount, location, direction, velocity, up, 1, this.sun, this);
 		playerCount--; 
 		//player.direction = (player.vectorTo(sun, 1));
 		objects.add(player);
@@ -47,7 +47,15 @@ public class ServerGameState extends GameState
 		Vector3D up = new Vector3D(0,0,0);
 
 		int id = objects.size(); 
-		this.objects.add(new ServerAsteroid(id, location, direction, velocity, up, 10, sun));
+		this.objects.add(new ServerAsteroid(id, location, direction, velocity, up, 10, sun, this));
+	}
+	
+	public void addProjectile(ServerPlayer player)
+	{
+		Vector3D pLocation = Vector3D.numSum(10f, player.location); 
+		Vector3D pVelocity = Vector3D.numSum(0.5f, player.velocity); 
+		ServerProjectile projectile = new ServerProjectile(objects.size(), 4, pLocation, player.direction, pVelocity, player.up, 5, this.sun, this);
+		objects.add(projectile);
 	}
 	
 	@Override

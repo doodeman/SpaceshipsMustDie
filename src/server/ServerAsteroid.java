@@ -5,9 +5,9 @@ import shared.Vector3D;
 
 public class ServerAsteroid extends ServerCollidableObject
 {
-	protected ServerAsteroid(int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerSun sun) 
+	protected ServerAsteroid(int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerSun sun, ServerGameState state) 
 	{
-		super(id, 3, location, direction, velocity, up, radius, sun);
+		super(id, 3, location, direction, velocity, up, radius, sun, state);
 	}
 	
 	@Override
