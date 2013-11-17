@@ -112,4 +112,9 @@ public class CollidableObject{
 		direction.fromVector3(newDir);
 		
 	}
+	
+	public void destroy()
+	{
+		
+	}
 }

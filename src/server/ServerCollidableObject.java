@@ -89,6 +89,7 @@ public abstract class ServerCollidableObject extends CollidableObject
 			that.velocity = Vector3D.sum(v2y, Vector3D.sum(a, b));
 			that.location = Vector3D.sum(that.velocity, that.location);
 		}
-		
 	}
+	
+	
 }

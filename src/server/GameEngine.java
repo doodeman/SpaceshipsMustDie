@@ -72,6 +72,7 @@ public class GameEngine implements Runnable
 				newClients.clear();
 			}
 			
+			gameState.updatePlayers(clientManager.getPending()); 
 			gameState.update();
 			
 			String gameString = gameState.toJson();

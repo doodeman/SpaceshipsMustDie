@@ -1,6 +1,7 @@
 package server;
 
 import java.io.IOException;
+import java.util.List;
 
 import client.ClientUpdate;
 import network.Client;
@@ -50,6 +51,14 @@ public class ServerGameState extends GameState
 		this.objects.add(new ServerAsteroid(id, location, direction, velocity, up, 10, sun));
 	}
 	
+	public void addProjectile(ServerPlayer player)
+	{
+		Vector3D pLocation = Vector3D.numSum(10f, player.location); 
+		Vector3D pVelocity = Vector3D.numSum(0.5f, player.velocity); 
+		ServerProjectile projectile = new ServerProjectile(objects.size(), 4, pLocation, player.direction, pVelocity, player.up, 5, this.sun);
+		objects.add(projectile);
+	}
+	
 	@Override
 	public void update()
 	{
@@ -95,9 +104,21 @@ public class ServerGameState extends GameState
 		return null; 
 	}
 	
+	public void updatePlayers(List<ClientUpdate> updates)
+	{
+		for (ClientUpdate update : updates)
+		{
+			updatePlayer(update); 
+		}
+	}
+	
 	public void updatePlayer(ClientUpdate update)
 	{
 		ServerPlayer player = (ServerPlayer) getObject(update.clientId);
 		player.update(update); 
+		if (player.firing)
+		{
+			addProjectile(player);
+		}
 	}
 }
