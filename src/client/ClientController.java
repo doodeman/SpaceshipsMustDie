@@ -1,17 +1,15 @@
 package client;
 
-import shared.Jsonable;
-
 /**
  * A class that handles communication from client to server. 
  * @author kristleifur
  *
  */
-public class ClientController extends Jsonable implements Runnable
+public class ClientController implements Runnable
 {
 	private String serverAddress;
 	int serverPort;
-	Integer clientId;
+	volatile Integer clientId;
 	@SuppressWarnings("unused")
 	private boolean forward, backward, left, right, fire, up, down; 
 	
@@ -76,22 +74,23 @@ public class ClientController extends Jsonable implements Runnable
 		System.out.println("ClientController thread is running");
 		while (true)
 		{
-			System.out.println("tick");
-			if (clientId != null)
+			try 
 			{
-				try 
-				{
+				Thread.sleep(15);
+				if (clientId != null)
+				{			
+				
 					ClientUpdate update = new ClientUpdate(forward, backward, left, right, fire, up, down, clientId); 
 					ClientUDPSender sender = new ClientUDPSender(serverAddress, 1233, update.toJson());
 					Thread worker = new Thread(sender); 
 					worker.start(); 
-					Thread.sleep(15);
 					reset(); 
-				} catch (Exception e) 
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				} 
+			}
+			catch (Exception e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
