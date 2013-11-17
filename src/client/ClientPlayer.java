@@ -58,6 +58,7 @@ class ClientPlayer extends CollidableObject
 		else if(loading){
 			return null;
 		}
+		instance.transform.setToScaling(this.radius*2, this.radius*2, this.radius*2);
 	    instance.transform.setToWorld(this.location.toVector3(), this.direction.toVector3(), this.up.toVector3());
 		return instance;
 	}

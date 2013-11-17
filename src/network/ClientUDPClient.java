@@ -110,12 +110,6 @@ public class ClientUDPClient implements Runnable
 		JsonReader reader = new JsonReader(new StringReader(json));
 		reader.setLenient(true);
 		gameState = new Gson().fromJson(reader, GameState.class); 
-		for (CollidableObject o : gameState.objects){
-			if (o.type == 2)
-			{
-				System.out.println("IN CLIENTUDPCLIENT " +o.id);
-			}
-		}
 	}
 	
 	public synchronized GameState getState()

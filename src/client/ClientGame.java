@@ -186,27 +186,21 @@ public class ClientGame implements ApplicationListener {
 			pressedP = false;
 		}
 		if(currentPlayer != null){ 
-			System.out.println(currentPlayer.location.z);
+			camera.position.set(currentPlayer.location.x, currentPlayer.location.y, currentPlayer.location.z);
+			Vector3 up = currentPlayer.up.toVector3();
+			up.z = -up.z; // This may be stupid
+			
 			if(thirdPerson){
-				camera.position.set(currentPlayer.location.x, currentPlayer.location.y, currentPlayer.location.z);
 				camera.position.sub(new Vector3(currentPlayer.direction.x, currentPlayer.direction.y,-currentPlayer.direction.z).nor().scl(10));
-				camera.position.add(currentPlayer.up.toVector3());
-				
-				Vector3 dir = currentPlayer.direction.toVector3();
-				dir.z = -dir.z;
-				camera.direction.set(dir);
-				camera.up.set(currentPlayer.up.toVector3());
 			}
 			else{
-				camera.position.set(currentPlayer.location.x, currentPlayer.location.y, currentPlayer.location.z);
 				camera.position.add(new Vector3(currentPlayer.direction.x, currentPlayer.direction.y,-currentPlayer.direction.z).nor().scl(-0.2f));
-				camera.position.add(currentPlayer.up.toVector3());
-				Vector3 dir = currentPlayer.direction.toVector3();
-				dir.z = -dir.z;
-				camera.direction.set(dir);
-				camera.up.set(currentPlayer.up.toVector3());
 			}
-			camera.normalizeUp();
+			camera.position.add(up);
+			Vector3 dir = currentPlayer.direction.toVector3();
+			dir.z = -dir.z;
+			camera.direction.set(dir);
+			camera.up.set(up);
 			camera.update();
 		}	
 	}
