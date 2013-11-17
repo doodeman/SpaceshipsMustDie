@@ -22,8 +22,8 @@ class ClientAsteroid extends CollidableObject
 	private AssetManager assets;
 
 	
-	ClientAsteroid(int id, Vector3D location, Vector3D direction, Vector3D velocity, int radius, AssetManager assets){
-		super(id, 3, location, direction, velocity, radius); 
+	ClientAsteroid(int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, AssetManager assets){
+		super(id, 3, location, direction, velocity, up, radius); 
 		this.assets = assets;
 	}
 	

@@ -22,7 +22,7 @@ class ClientSun extends CollidableObject
 		private AssetManager assets;
 		
 	ClientSun(int id, int radius, AssetManager assets){
-		super(id, 1, new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), radius); 
+		super(id, 1, new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), radius); 
 		this.assets = assets;	
 	}
 	private boolean loading = true;

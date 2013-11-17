@@ -21,7 +21,7 @@ public class CollidableObject{
 	public boolean hasCollided;
 	public Vector3D up; 
 	
-	protected CollidableObject(int id, int type, Vector3D location, Vector3D direction, Vector3D velocity, int radius){
+	protected CollidableObject(int id, int type, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius){
 		this.id = id; 
 		this.location = location;
 		this.direction = direction;
@@ -29,6 +29,7 @@ public class CollidableObject{
 		this.velocity = velocity; 
 		this.type = type; 
 		hasCollided = false; 
+		this.up = up; 
 	}
 	
 	public void update()

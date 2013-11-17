@@ -38,11 +38,11 @@ public class ClientGameState extends GameState
 					if (o.type == 2)
 					{
 						System.out.println("o.id" + o.id);
-						this.objects.add(new ClientPlayer(o.id, o.location, o.direction, o.velocity, 1, assets));
+						this.objects.add(new ClientPlayer(o.id, o.location, o.direction, o.velocity, o.up, 1, assets));
 					}
 					if (o.type == 3)
 					{
-						this.objects.add(new ClientAsteroid(o.id, o.location, o.direction, o.velocity, o.radius,assets));
+						this.objects.add(new ClientAsteroid(o.id, o.location, o.direction, o.velocity, o.up, o.radius,assets));
 					}
 				}
 			}

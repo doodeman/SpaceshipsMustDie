@@ -20,7 +20,8 @@ public class ServerGameState extends GameState
 		Vector3D location = new Vector3D(0,0,0);
 		Vector3D direction = new Vector3D(0,0,0); 
 		Vector3D velocity = new Vector3D(0,0,0); 
-		sun = new ServerSun(0, location, direction, velocity, 20);
+		Vector3D up = new Vector3D(0,0,0);
+		sun = new ServerSun(0, location, direction, velocity, up, 20);
 		objects.add(sun); 
 	}
 	
@@ -30,7 +31,8 @@ public class ServerGameState extends GameState
 		Vector3D direction = new Vector3D((float)Math.random(),0,(float)Math.random()); 
 		//Vector3D velocity = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random()); 
 		Vector3D velocity = new Vector3D(0,0,0); 
-		CollidableObject player = new ServerPlayer(playerCount, playerCount, location, direction, velocity, 1);
+		Vector3D up = new Vector3D(0,0,0);
+		CollidableObject player = new ServerPlayer(playerCount, playerCount, location, direction, velocity, up, 1, this.sun);
 		playerCount--; 
 		objects.add(player);
 		player.direction = (player.vectorTo(sun, 1));
@@ -42,9 +44,10 @@ public class ServerGameState extends GameState
 		Vector3D direction = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random()); 
 		//Vector3D velocity = new Vector3D((float)Math.random(),(float)Math.random(),(float)Math.random()); 
 		Vector3D velocity = new Vector3D((float)0.5,(float)0,0); 
+		Vector3D up = new Vector3D(0,0,0);
 
 		int id = objects.size(); 
-		this.objects.add(new ServerAsteroid(id, location, direction, velocity, 10, sun));
+		this.objects.add(new ServerAsteroid(id, location, direction, velocity, up, 10, sun));
 	}
 	
 	@Override
