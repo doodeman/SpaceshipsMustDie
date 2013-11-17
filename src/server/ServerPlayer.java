@@ -15,8 +15,8 @@ public class ServerPlayer extends ServerCollidableObject
 	protected ServerPlayer(int playerId, int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerSun sun) 
 	{
 		super(id, 2, location, direction, velocity, up, radius, sun);
-		forwardThrust = (float) 1; 
-		spinThrust = (float) 5;
+		forwardThrust = 1f; 
+		spinThrust = 1f;
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -27,11 +27,11 @@ public class ServerPlayer extends ServerCollidableObject
 		if (update.forward)
 		{
 			//System.out.println("thrusting");
-			applyForce(this.direction.reverseZ(), forwardThrust);
+			applyForce(this.direction, forwardThrust);
 		}
 		if (update.backward)
 		{
-			applyForce(this.direction.reverseZ(), -forwardThrust);
+			applyForce(this.direction, -forwardThrust);
 		}
 		if (update.left)
 		{

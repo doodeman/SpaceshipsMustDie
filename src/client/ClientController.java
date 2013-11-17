@@ -92,7 +92,7 @@ public class ClientController implements Runnable
 				if (clientId != null)
 				{			
 				
-					ClientUpdate update = new ClientUpdate(forward, backward, left, right, fire, up, down, clientId); 
+					ClientUpdate update = new ClientUpdate(forward, backward, left, right, fire, up, down, rollLeft, rollRight, clientId); 
 					ClientUDPSender sender = new ClientUDPSender(serverAddress, 1233, update.toJson());
 					Thread worker = new Thread(sender); 
 					worker.start(); 

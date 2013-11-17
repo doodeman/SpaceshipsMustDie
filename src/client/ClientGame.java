@@ -68,6 +68,8 @@ public class ClientGame implements ApplicationListener {
 	    
 	    assets = new AssetManager();
 		assets.load("lib/spaceship.g3db", Model.class);
+		assets.load("lib/spaceship2.g3db", Model.class);
+		
 		assets.load("lib/ast1.obj", Model.class);
 		assets.load("lib/ast3.obj", Model.class);
 		assets.load("lib/ast4.obj", Model.class);
@@ -165,17 +167,17 @@ public class ClientGame implements ApplicationListener {
 	private void update() {
 		camera.update();
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
-			controller.left();
+			controller.rollLeft();
 		if(Gdx.input.isKeyPressed(Input.Keys.D))
-			controller.right();
+			controller.rollRight();
 		if(Gdx.input.isKeyPressed(Input.Keys.W))
 			controller.up();
 		if(Gdx.input.isKeyPressed(Input.Keys.S))
 			controller.down();
 		if (Gdx.input.isKeyPressed(Input.Keys.Q))
-			controller.rollLeft();
+			controller.left();
 		if (Gdx.input.isKeyPressed(Input.Keys.E))
-			controller.rollRight();
+			controller.right();
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
 			controller.fire();
 		if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
@@ -192,17 +194,15 @@ public class ClientGame implements ApplicationListener {
 		if(currentPlayer != null){ 
 			camera.position.set(currentPlayer.location.x, currentPlayer.location.y, currentPlayer.location.z);
 			Vector3 up = currentPlayer.up.toVector3();
-			up.z = -up.z; // This may be stupid
 			
 			if(thirdPerson){
-				camera.position.sub(new Vector3(currentPlayer.direction.x, currentPlayer.direction.y,-currentPlayer.direction.z).nor().scl(10));
+				camera.position.sub(new Vector3(currentPlayer.direction.x, currentPlayer.direction.y,currentPlayer.direction.z).nor().scl(10));
 			}
 			else{
-				camera.position.add(new Vector3(currentPlayer.direction.x, currentPlayer.direction.y,-currentPlayer.direction.z).nor().scl(-0.2f));
+				camera.position.add(new Vector3(currentPlayer.direction.x, currentPlayer.direction.y,currentPlayer.direction.z).nor().scl(-0.2f));
 			}
 			camera.position.add(up);
 			Vector3 dir = currentPlayer.direction.toVector3();
-			dir.z = -dir.z;
 			camera.direction.set(dir);
 			camera.up.set(up);
 			camera.update();

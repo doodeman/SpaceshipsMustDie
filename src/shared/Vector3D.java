@@ -50,8 +50,7 @@ public class Vector3D {
 		y = y / len;
 		z = z / len;
 	}
-	
-	
+
 	public static Vector3D difference(Point3D P1, Point3D P2) {
 		return new Vector3D(P1.x - P2.x, P1.y - P2.y, P1.z - P2.z);
 	}
@@ -98,6 +97,15 @@ public class Vector3D {
 
 	public Vector3 toVector3() {
 		return new Vector3(this.x, this.y, this.z);
+	}
+	public void print(){
+		System.out.println("[" + this.x + " , " + this.y + " , " + this.z + "]");
+	}
+
+	public void fromVector3(Vector3 that) {
+		this.x = that.x;
+		this.y = that.y;
+		this.z = that.z;		
 	}
 	
 }
