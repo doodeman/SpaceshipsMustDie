@@ -54,6 +54,14 @@ public class ServerPlayer extends ServerCollidableObject
 		{
 			fire();
 		}
+		if (update.rollLeft)
+		{
+			roll(spinThrust); 
+		}
+		if (update.rollRight)
+		{
+			roll(-spinThrust);
+		}
 		
 		if (this.velocity.length() > 0.5)
 		{
