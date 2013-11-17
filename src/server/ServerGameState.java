@@ -119,6 +119,7 @@ public class ServerGameState extends GameState
 		if (player.firing)
 		{
 			addProjectile(player);
+			player.firing = false; 
 		}
 	}
 }
