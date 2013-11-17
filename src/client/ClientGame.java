@@ -172,6 +172,10 @@ public class ClientGame implements ApplicationListener {
 			controller.up();
 		if(Gdx.input.isKeyPressed(Input.Keys.S))
 			controller.down();
+		if (Gdx.input.isKeyPressed(Input.Keys.Q))
+			controller.rollLeft();
+		if (Gdx.input.isKeyPressed(Input.Keys.E))
+			controller.rollRight();
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
 			controller.fire();
 		if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))

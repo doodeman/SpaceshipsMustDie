@@ -15,16 +15,19 @@ public class ServerPlayer extends ServerCollidableObject
 	protected ServerPlayer(int playerId, int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerSun sun) 
 	{
 		super(id, 2, location, direction, velocity, up, radius, sun);
-		forwardThrust = (float) 0.5; 
-		backwardThrust = (float) -0.25; 
-		spinThrust = (float) 0.25;
+		forwardThrust = (float) 0.05; 
+		backwardThrust = (float) -0.025; 
+		spinThrust = (float) 0.025;
 		// TODO Auto-generated constructor stub
 	}
 	
 	public void update(ClientUpdate update)
 	{
+		System.out.println(this.location.x + " " + this.location.y + " " + this.location.z);
+
 		if (update.forward)
 		{
+			System.out.println("thrusting");
 			applyForce(direction, forwardThrust);
 		}
 		if (update.backward)
@@ -33,19 +36,19 @@ public class ServerPlayer extends ServerCollidableObject
 		}
 		if (update.left)
 		{
-			//TODO: make the player spin left
+			yaw(-spinThrust); 
 		}
 		if (update.right)
 		{
-			//TODO: make the player spin right
+			yaw(spinThrust); 
 		}
 		if (update.down)
 		{
-			//TODO: make the player spin down
+			pitch(-spinThrust); 
 		}
 		if (update.up)
 		{
-			//TODO: make the player spin up
+			pitch(spinThrust); 
 		}
 		if (update.fire)
 		{

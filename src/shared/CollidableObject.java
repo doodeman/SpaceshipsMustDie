@@ -14,12 +14,13 @@ public class CollidableObject{
 	public Vector3D location;
 	public Vector3D direction;
 	public Vector3D velocity; 
+	public Vector3D up; 
+	public Vector3D side; 
 	//ID is shared on client and server
 	public int id; 
 	//1 - sun, 2 - player, 3 - asteroid
 	public int type; 
 	public boolean hasCollided;
-	public Vector3D up; 
 	
 	protected CollidableObject(int id, int type, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius){
 		this.id = id; 
@@ -30,6 +31,7 @@ public class CollidableObject{
 		this.type = type; 
 		hasCollided = false; 
 		this.up = up; 
+		this.side = Vector3D.cross(up, direction);
 	}
 	
 	public void update()
@@ -71,5 +73,20 @@ public class CollidableObject{
 	public boolean hasCollided(CollidableObject o)
 	{
 		return false; 
+	}
+	
+	public void yaw(float degrees)
+	{
+		
+	}
+	
+	public void roll(float degrees)
+	{
+		
+	}
+	
+	public void pitch (float degrees)
+	{
+		
 	}
 }

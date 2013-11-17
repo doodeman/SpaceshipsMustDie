@@ -11,7 +11,7 @@ public class ClientController implements Runnable
 	int serverPort;
 	volatile Integer clientId;
 	@SuppressWarnings("unused")
-	private boolean forward, backward, left, right, fire, up, down; 
+	private boolean forward, backward, left, right, fire, up, down, rollLeft, rollRight; 
 	
 	public ClientController (String serverAddress, int serverPort)
 	{
@@ -57,6 +57,16 @@ public class ClientController implements Runnable
 		down = true; 
 	}
 	
+	public synchronized void rollLeft()
+	{
+		rollLeft = true; 
+	}
+	
+	public synchronized void rollRight()
+	{
+		rollRight = true; 
+	}
+	
 	private synchronized void reset()
 	{
 		forward = false; 
@@ -66,6 +76,8 @@ public class ClientController implements Runnable
 		fire = false; 
 		up = false; 
 		down = false; 
+		rollLeft = false; 
+		rollRight = false; 
 	}
 
 	@Override
