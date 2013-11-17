@@ -2,6 +2,7 @@ package server;
 
 import java.io.IOException;
 
+import client.ClientUpdate;
 import network.Client;
 import shared.CollidableObject;
 import shared.GameState;
@@ -77,5 +78,23 @@ public class ServerGameState extends GameState
 				}
 			}
 		}
+	}
+	
+	public CollidableObject getObject(int objectId)
+	{
+		for (CollidableObject o : objects)
+		{
+			if (o.id == objectId)
+			{
+				return o; 
+			}
+		}
+		return null; 
+	}
+	
+	public void updatePlayer(ClientUpdate update)
+	{
+		ServerPlayer player = (ServerPlayer) getObject(update.clientId);
+		player.update(update); 
 	}
 }
