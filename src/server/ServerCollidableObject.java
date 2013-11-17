@@ -37,8 +37,15 @@ public abstract class ServerCollidableObject extends CollidableObject
 			float distance = Vector3D.distanceBetween(this.location, that.location); 
 			distance = distance - this.radius; 
 			distance = distance - that.radius; 
+
 			if (distance <= 0)
 			{
+				if (this.type == 4 || that.type == 4)
+				{
+					this.destroy();
+					that.destroy();
+					return true; 
+				}
 				//System.out.println("collission!");
 				this.hasCollided = true; 
 				that.hasCollided = true; 
