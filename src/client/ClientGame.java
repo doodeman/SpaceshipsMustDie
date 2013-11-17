@@ -42,6 +42,7 @@ public class ClientGame implements ApplicationListener {
 	private CollidableObject currentPlayer;
 	private boolean thirdPerson = false;
 	private boolean pressedP = false;
+	private boolean firing = false; 
 	public Integer playerId = null; 
 	public int assignedPort; 
 	
@@ -178,8 +179,15 @@ public class ClientGame implements ApplicationListener {
 			controller.left();
 		if (Gdx.input.isKeyPressed(Input.Keys.E))
 			controller.right();
-		if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
+		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && !firing)
+		{
 			controller.fire();
+			firing = true; 
+		}
+		else if (!Gdx.input.isKeyPressed(Input.Keys.SPACE) && firing)
+		{
+			firing = false; 
+		}
 		if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
 			controller.forward();
 		if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
