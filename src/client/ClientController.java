@@ -17,6 +17,7 @@ public class ClientController extends Jsonable implements Runnable
 	
 	public ClientController (String serverAddress, int serverPort)
 	{
+		System.out.println("ClientController started");
 		this.serverAddress = serverAddress; 
 		this.serverPort = serverPort; 
 		clientId = null; 
@@ -72,8 +73,10 @@ public class ClientController extends Jsonable implements Runnable
 	@Override
 	public void run() 
 	{ 
+		System.out.println("ClientController thread is running");
 		while (true)
 		{
+			System.out.println("tick");
 			if (clientId != null)
 			{
 				try 

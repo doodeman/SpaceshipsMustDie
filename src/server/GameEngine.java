@@ -4,15 +4,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import shared.Logger;
 import network.Client;
+import network.ServerClientManager;
 import network.TCPServer;
 import network.UDPSender;
+import shared.Logger;
 
 public class GameEngine implements Runnable
 {
 	int port; 
 	TCPServer tcpServer; 
+	ServerClientManager clientManager; 
 	
 	List<Client> clients; 
 	List<Client> newClients;
@@ -39,6 +41,8 @@ public class GameEngine implements Runnable
 		clients = new ArrayList<Client>();
 		this.port = port; 
 		
+		clientManager = new ServerClientManager(1233, gameState);
+		
 		log = new Logger("Server.log", true);
 	}
 	
@@ -50,6 +54,9 @@ public class GameEngine implements Runnable
 	{
 		Thread serverWorker = new Thread(tcpServer); 
 		serverWorker.start(); 
+		
+		Thread clientManagerWorker = new Thread(clientManager);
+		clientManagerWorker.start();
 		
 		while(true)
 		{
