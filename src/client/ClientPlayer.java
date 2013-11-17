@@ -3,6 +3,7 @@ package client;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.math.Vector3;
 
 
 import shared.CollidableObject;
@@ -23,6 +24,7 @@ class ClientPlayer extends CollidableObject
 	
 	ClientPlayer(int id, Vector3D location, Vector3D direction, Vector3D velocity, int radius, AssetManager assets){
 		super(id, 2, location, direction, velocity, radius); 
+		this.up = new Vector3D(0,1,0);
 		this.assets = assets;
 	}
 	
@@ -56,8 +58,7 @@ class ClientPlayer extends CollidableObject
 		else if(loading){
 			return null;
 		}
-		
-	    instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, radius, radius, radius);
+	    instance.transform.setToWorld(this.location.toVector3(), this.direction.toVector3(), this.up.toVector3());
 		return instance;
 	}
 

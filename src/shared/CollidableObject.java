@@ -18,7 +18,8 @@ public class CollidableObject{
 	public int id; 
 	//1 - sun, 2 - player, 3 - asteroid
 	public int type; 
-	public boolean hasCollided; 
+	public boolean hasCollided;
+	public Vector3D up; 
 	
 	protected CollidableObject(int id, int type, Vector3D location, Vector3D direction, Vector3D velocity, int radius){
 		this.id = id; 
@@ -63,6 +64,7 @@ public class CollidableObject{
 		this.location = that.location; 
 		this.velocity = that.velocity; 
 		this.direction = that.direction; 
+		this.direction.normalize();
 	}
 	
 	public boolean hasCollided(CollidableObject o)

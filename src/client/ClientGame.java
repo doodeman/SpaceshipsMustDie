@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 public class ClientGame implements ApplicationListener {
@@ -55,11 +56,11 @@ public class ClientGame implements ApplicationListener {
 		environment = new Environment();
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
         environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
-        environment.add(new PointLight().set(1f, 1f, 1f, 0, 0, 0, 1000));
+       // environment.add(new PointLight().set(1f, 1f, 1f, 0, 0, 0, 1000));
         
 		Gdx.gl11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 		camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.position.set(40f, 40f, 40f);
+		camera.position.set(1f, 0f, 0f);
 	    camera.lookAt(0,0,0);
 	    camera.near = 0.1f;
 	    camera.far = 300f;
@@ -126,6 +127,11 @@ public class ClientGame implements ApplicationListener {
 		// TODO Auto-generated method stub
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+		if(thirdPerson)
+			environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
+		else 
+			environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0f, 1f));
+		
         if(gameState == null) return;
         instances.clear();
         if(playerId != null && currentPlayer == null){
@@ -153,6 +159,7 @@ public class ClientGame implements ApplicationListener {
 			modelBatch.render(instances, environment);
 			modelBatch.end();
 		}
+
 	}
 
 	private void update() {
@@ -175,12 +182,31 @@ public class ClientGame implements ApplicationListener {
 			thirdPerson = !thirdPerson;
 			pressedP = true;
 		}
-		else if(!pressedP){
+		else if(!Gdx.input.isKeyPressed(Input.Keys.P) && pressedP){
 			pressedP = false;
 		}
 		if(currentPlayer != null){ 
-			camera.position.set(currentPlayer.location.toVector3());
-			camera.direction.set(currentPlayer.direction.toVector3());
+			System.out.println(currentPlayer.location.z);
+			if(thirdPerson){
+				camera.position.set(currentPlayer.location.x, currentPlayer.location.y, currentPlayer.location.z);
+				camera.position.sub(new Vector3(currentPlayer.direction.x, currentPlayer.direction.y,-currentPlayer.direction.z).nor().scl(10));
+				camera.position.add(currentPlayer.up.toVector3());
+				
+				Vector3 dir = currentPlayer.direction.toVector3();
+				dir.z = -dir.z;
+				camera.direction.set(dir);
+				camera.up.set(currentPlayer.up.toVector3());
+			}
+			else{
+				camera.position.set(currentPlayer.location.x, currentPlayer.location.y, currentPlayer.location.z);
+				camera.position.add(new Vector3(currentPlayer.direction.x, currentPlayer.direction.y,-currentPlayer.direction.z).nor().scl(-0.2f));
+				camera.position.add(currentPlayer.up.toVector3());
+				Vector3 dir = currentPlayer.direction.toVector3();
+				dir.z = -dir.z;
+				camera.direction.set(dir);
+				camera.up.set(currentPlayer.up.toVector3());
+			}
+			camera.normalizeUp();
 			camera.update();
 		}	
 	}

@@ -40,6 +40,7 @@ class ClientSun extends CollidableObject
 	 */
 	@Override
 	public ModelInstance draw(){ 
+		if(true)return null;
 		
 		boolean updateBool = assets.update();
 		//System.out.println(updateBool);

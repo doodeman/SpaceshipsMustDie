@@ -53,12 +53,7 @@ public class ClientGameState extends GameState
 				CollidableObject oldObject = this.getById(o.id);
 				try {
 					oldObject.copy(o); 
-					if (o.type == 2)
-					{
-						System.out.println("IN CLIENTGAMESTATE O" + o.location.x);
-						System.out.println("OLDOBJECT " + oldObject.location.x);
-						System.out.println(oldObject.type + " " + oldObject.id);
-					}
+					
 						
 				}
 				catch (NullPointerException e)
