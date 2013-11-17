@@ -73,7 +73,7 @@ public class ClientGame implements ApplicationListener {
 		assets.load("lib/ast5.obj", Model.class);
 		assets.load("lib/sun.obj", Model.class);
 		modelBatch = new ModelBatch();
-	    controller = new ClientController(this.host,1234);
+		controller = new ClientController(host,1233); 
 	    Thread controlWorker = new Thread(controller);
 	    controlWorker.start();
         
@@ -222,6 +222,7 @@ public class ClientGame implements ApplicationListener {
 		try 
 		{
 			System.out.println("Starting client UDP Client on port " + port);
+			controller.setClientId(playerId);
 			udpClient = new ClientUDPClient(port);
 			Thread udpclientworker = new Thread(udpClient); 
 			udpclientworker.start();

@@ -1,23 +1,25 @@
 package client;
 
-import com.google.gson.Gson;
+import shared.Jsonable;
 
 /**
  * A class that handles communication from client to server. 
  * @author kristleifur
  *
  */
-public class ClientController implements Runnable
+public class ClientController extends Jsonable implements Runnable
 {
 	private String serverAddress;
-	int serverPort; 
+	int serverPort;
+	Integer clientId;
 	@SuppressWarnings("unused")
 	private boolean forward, backward, left, right, fire, up, down; 
 	
-	public ClientController(String serverAddress, int serverPort)
+	public ClientController (String serverAddress, int serverPort)
 	{
 		this.serverAddress = serverAddress; 
 		this.serverPort = serverPort; 
+		clientId = null; 
 		reset(); 
 	}
 	
@@ -56,13 +58,6 @@ public class ClientController implements Runnable
 		down = true; 
 	}
 	
-	private String toJson()
-	{
-		Gson gson = new Gson();
-		String json =  gson.toJson(this);
-		return json; 
-	}
-	
 	private synchronized void reset()
 	{
 		forward = false; 
@@ -79,18 +74,27 @@ public class ClientController implements Runnable
 	{ 
 		while (true)
 		{
-			try 
+			if (clientId != null)
 			{
-				ClientUDPSender sender = new ClientUDPSender(serverAddress, 1233, toJson());
-				Thread worker = new Thread(sender); 
-				worker.start(); 
-				Thread.sleep(15);
-				reset(); 
-			} catch (Exception e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				try 
+				{
+					ClientUpdate update = new ClientUpdate(forward, backward, left, right, fire, up, down, clientId); 
+					ClientUDPSender sender = new ClientUDPSender(serverAddress, 1233, update.toJson());
+					Thread worker = new Thread(sender); 
+					worker.start(); 
+					Thread.sleep(15);
+					reset(); 
+				} catch (Exception e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
+	}
+	
+	public synchronized void setClientId(int clientId)
+	{
+		this.clientId = clientId; 
 	}
 }
