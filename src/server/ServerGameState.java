@@ -1,6 +1,7 @@
 package server;
 
 import java.io.IOException;
+import java.util.List;
 
 import client.ClientUpdate;
 import network.Client;
@@ -101,6 +102,14 @@ public class ServerGameState extends GameState
 			}
 		}
 		return null; 
+	}
+	
+	public void updatePlayers(List<ClientUpdate> updates)
+	{
+		for (ClientUpdate update : updates)
+		{
+			updatePlayer(update); 
+		}
 	}
 	
 	public void updatePlayer(ClientUpdate update)

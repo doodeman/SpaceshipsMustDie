@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 
 public class Jsonable 
 {
-	public String toJson()
+	public synchronized String toJson()
 	{
 		GsonBuilder gsonBuilder = new GsonBuilder().serializeSpecialFloatingPointValues();
 		Gson gson = gsonBuilder.create();
