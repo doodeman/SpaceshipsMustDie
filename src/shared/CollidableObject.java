@@ -24,6 +24,7 @@ public class CollidableObject{
 	public int type; 
 	public boolean hasCollided;
 	public boolean destroyed = false; 
+	public int collidedWith; 
 	
 	
 	protected CollidableObject(int id, int type, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius){

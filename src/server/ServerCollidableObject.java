@@ -40,17 +40,21 @@ public abstract class ServerCollidableObject extends CollidableObject
 
 			if (distance <= 0)
 			{
-				if (this.type == 4 || that.type == 4)
+				if (this.type == 3 && that.type == 3)
+				{
+					//If two asteroids are colliding, bounce
+					this.hasCollided = true; 
+					that.hasCollided = true; 
+					collisionResponse(that); 
+					return true; 
+				}
+				else
 				{
 					this.destroy();
 					that.destroy();
 					return true; 
 				}
-				//System.out.println("collission!");
-				this.hasCollided = true; 
-				that.hasCollided = true; 
-				collisionResponse(that); 
-				return true; 
+				
 			}
 			return false; 
 		}

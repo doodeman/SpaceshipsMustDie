@@ -3,6 +3,7 @@ package server;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import client.ClientUpdate;
 import network.Client;
@@ -17,6 +18,9 @@ public class ServerGameState extends GameState
 	int playerCount = -1; 
 	int idcounter = 0; 
 	List<CollidableObject> addQueue; 
+	List<RespawnPoint> respawnPoints; 
+	private Random random; 
+	
 	public ServerGameState() throws IOException
 	{
 		super();
@@ -29,6 +33,8 @@ public class ServerGameState extends GameState
 		idcounter++;
 		objects.add(sun); 
 		addQueue = new ArrayList<CollidableObject>();
+		respawnPoints = makeRespawnPoints(); 
+		random = new Random(); 
 	}
 	
 	public void addPlayer(Client client)
@@ -63,7 +69,7 @@ public class ServerGameState extends GameState
 		Vector3D pVelocity = Vector3D.unitVector(player.direction);
 		//Vector3D pVelocity = new Vector3D(0f,0f,0f);
 	
-		ServerProjectile projectile = new ServerProjectile(idcounter, 4, pLocation, player.direction, pVelocity, player.up, 4, this.sun);
+		ServerProjectile projectile = new ServerProjectile(idcounter, 4, pLocation, player.direction, pVelocity, player.up, 4, this.sun, player.id);
 		idcounter++;
 		objects.add(projectile);
 		System.out.println("added " + projectile);
@@ -139,11 +145,14 @@ public class ServerGameState extends GameState
 	
 	private void removeDestroyed()
 	{
+
 		List<CollidableObject> toRemove = new ArrayList<CollidableObject>(); 
 		for (CollidableObject o : objects)
 		{
 			if (o.destroyed == true)
 			{
+				//System.out.println(o.id);
+
 				//if o is a asteroid
 				if (o.type == 3)
 				{
@@ -151,6 +160,11 @@ public class ServerGameState extends GameState
 					{
 						toRemove.add(o);
 					}
+				}
+				//if o is a player
+				if (o.type == 2)
+				{
+					killPlayer((ServerPlayer) o);
 				}
 				else if(o.type == 1)
 				{
@@ -197,4 +211,74 @@ public class ServerGameState extends GameState
 		}
 		addQueue.clear();
 	}
+	
+	private void killPlayer(ServerPlayer player)
+	{
+		System.out.println("player died");
+		CollidableObject collidedWith = getById(player.collidedWith); 
+		//If he collided with a projectile
+		if (collidedWith.type == 4)
+		{
+			ServerProjectile projectile = (ServerProjectile) collidedWith; 
+			if (projectile.owner == player.id)
+			{
+				System.out.println("player died to his own projectile"); 
+
+				player.score--; 
+			}
+			else
+			{
+				System.out.println("player died to another player's projectile"); 
+				ServerPlayer killingPlayer = (ServerPlayer) getById(projectile.owner);
+				killingPlayer.score++; 
+			}
+		}
+		else if (collidedWith.type == 2)
+		{
+			//If two players killed each other via collision
+			System.out.println("player died by colliding with another player "); 
+			ServerPlayer killingPlayer = (ServerPlayer) collidedWith; 
+			killingPlayer.score++; 
+			player.score++; 
+		}
+		else
+		{
+			System.out.println("player died by colliding scenery (lol)"); 
+			//If player is dumb and killed himself via collision with asteroid or the sun
+			player.score--; 
+		}
+		respawnPlayer(player); 
+	}
+	
+	private void respawnPlayer(CollidableObject player)
+	{
+		player.destroyed = false; 
+		RespawnPoint point = respawnPoints.get(random.nextInt(respawnPoints.size()));
+		player.velocity = new Vector3D(point.velocity);
+		player.direction = new Vector3D(point.direction); 
+		player.location = new Vector3D(point.location);
+	}
+	
+	private List<RespawnPoint> makeRespawnPoints()
+	{
+		List<RespawnPoint> points = new ArrayList<RespawnPoint>(); 
+		points.add(new RespawnPoint(new Vector3D(-100, 0, 100), new Vector3D(0,0,0), new Vector3D(1,0,0))); 
+		points.add(new RespawnPoint(new Vector3D(100, 0, 100), new Vector3D(0,0,0), new Vector3D(1,0,0))); 
+		points.add(new RespawnPoint(new Vector3D(50, 0, 50), new Vector3D(0,0,0), new Vector3D(1,0,0))); 
+		points.add(new RespawnPoint(new Vector3D(-50, 0, 50), new Vector3D(0,0,0), new Vector3D(1,0,0))); 
+		return points; 
+	}
+	
+	private class RespawnPoint
+	{
+		public Vector3D location, velocity, direction; 
+		public RespawnPoint(Vector3D location, Vector3D velocity, Vector3D direction)
+		{
+			this.location = location; 
+			this.velocity = velocity; 
+			this.direction = direction; 
+		}
+	}
 }
+
+

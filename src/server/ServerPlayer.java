@@ -12,12 +12,14 @@ public class ServerPlayer extends ServerCollidableObject
 {
 	private float forwardThrust, backwardThrust, spinThrust; 
 	int playerId; 
+	public int score; 
 	boolean firing = false; 
 	protected ServerPlayer(int playerId, int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerSun sun) 
 	{
 		super(id, 2, location, direction, velocity, up, radius, sun);
 		forwardThrust = 1f; 
 		spinThrust = 1f;
+		score = 0; 
 		// TODO Auto-generated constructor stub
 	}
 	
