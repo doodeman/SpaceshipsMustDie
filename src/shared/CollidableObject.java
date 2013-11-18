@@ -29,18 +29,16 @@ public class CollidableObject{
 	
 	protected CollidableObject(int id, int type, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius){
 		this.id = id; 
-		this.location = location;
-		this.direction = direction;
+
 		this.radius = radius;
 		this.velocity = velocity; 
 		this.type = type; 
+		this.location = location;
 		hasCollided = false; 
+		this.direction = direction;
+		this.velocity = velocity;
 		this.up = up; 
-		this.up.normalize();
-		this.direction.normalize();
-		this.side = Vector3D.cross(up, direction);
-		this.side.normalize();
-		
+		this.side = Vector3D.cross(up, direction);		
 	}
 	
 	public void update()
@@ -78,9 +76,6 @@ public class CollidableObject{
 		this.direction = that.direction; 
 		this.up = that.up;
 		this.side = that.side;
-		this.direction.normalize();
-		this.up.normalize();
-		this.side.normalize();
 	}
 	
 	public boolean hasCollided(CollidableObject o)
@@ -92,21 +87,32 @@ public class CollidableObject{
 	{
 		Vector3 newSide = side.toVector3();
 		Vector3 newDir = direction.toVector3();
-		newSide.rotate(up.toVector3(), -degrees);
-		newDir.rotate(up.toVector3(), -degrees);
+		newSide.rotate(this.up.toVector3(), degrees);
+		newDir.rotate(this.up.toVector3(), degrees);
 		direction.fromVector3(newDir);
 		side.fromVector3(newSide);
+		System.out.println(this.up.length());
+		System.out.println(this.direction.length());
+		System.out.println(this.side.length());
+		System.out.println(this.up.toVector3().dot(this.side.toVector3()));
+		System.out.println(this.up.toVector3().dot(this.direction.toVector3()));
+		System.out.println(this.direction.toVector3().dot(this.side.toVector3()));
 	}
+	
 	
 	public void roll(float degrees)
 	{
 		Vector3 newUp = up.toVector3();
 		Vector3 newSide = side.toVector3();
 		
-		newUp.rotate( direction.toVector3(), degrees);
+		newUp.rotate( direction.toVector3(),degrees);
 		newSide.rotate(direction.toVector3(), degrees);
-		up.fromVector3(newUp);
-		side.fromVector3(newSide);
+		up.fromVector3(newUp.nor());
+		side.fromVector3(newSide.nor());
+		System.out.println(this.up.toVector3().dot(this.side.toVector3()));
+		System.out.println(this.up.toVector3().dot(this.direction.toVector3()));
+		System.out.println(this.direction.toVector3().dot(this.side.toVector3()));
+
 	}
 	
 	public void pitch (float degrees)
@@ -120,6 +126,10 @@ public class CollidableObject{
 		
 		up.fromVector3(newUp);
 		direction.fromVector3(newDir);
+		System.out.println(this.up.toVector3().dot(this.side.toVector3()));
+		System.out.println(this.up.toVector3().dot(this.direction.toVector3()));
+		System.out.println(this.direction.toVector3().dot(this.side.toVector3()));
+		
 		
 	}
 	

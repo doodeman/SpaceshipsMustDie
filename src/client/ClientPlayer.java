@@ -24,27 +24,22 @@ class ClientPlayer extends CollidableObject
 	
 	ClientPlayer(int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, AssetManager assets){
 		super(id, 2, location, direction, velocity, up, radius); 
-		this.up = new Vector3D(0,1,0);
+
 		this.assets = assets;
 	}
 	
-	/**
-	 * Changes the position, velocity and acceleration of the object.
-	 */
-	public void changePosition(Vector3D location, Vector3D direction, Vector3D velocity){
-		this.location = location;
-		this.direction = direction;
-	}
+
 	private boolean loading = true;
 	
 	private void doneLoading(){
 		model = assets.get("lib/spaceship.g3db", Model.class);
 		instance = new ModelInstance(model);
-		instance.transform.setToWorld(this.location.toVector3(), this.direction.toVector3(), up.toVector3());
+		instance.transform.setToWorld(this.location.toVector3(), this.direction.toVector3(), this.up.toVector3());
 		loading = false;
+		
 	}
 	
-	
+	private float degrees = 1;
 	/**
 	 * Draws the object
 	 * @return 
@@ -59,14 +54,17 @@ class ClientPlayer extends CollidableObject
 			return null;
 		}
 		/*
-		camera.position.add(up);
+		
 		Vector3 dir = currentPlayer.direction.toVector3();
 		camera.direction.set(dir);
 		camera.up.set(up);
 		camera.update();
 		 */
+		//instance.transform.setToTranslation(location.toVector3());
+       // view.setToLookAt(position, location.toVector3().add(direction), up);  
 		instance.transform.setToWorld(this.location.toVector3(), this.direction.toVector3(), up.toVector3());		
-		//instance.calculateTransforms();
+		//instance.calculateTransforms();values
+		//System.out.println(Vector3.dot(side.x, side.y, side.z, direction.x, direction.y, direction.z));
 		return instance;
 	}
 

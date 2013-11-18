@@ -215,6 +215,7 @@ public class ClientGame implements ApplicationListener {
 				camera.position.add(new Vector3(currentPlayer.direction.x, currentPlayer.direction.y,currentPlayer.direction.z).nor().scl(-0.2f));
 			}
 			camera.position.add(up);
+			
 			Vector3 dir = currentPlayer.direction.toVector3();
 			camera.direction.set(dir);
 			camera.up.set(up);
