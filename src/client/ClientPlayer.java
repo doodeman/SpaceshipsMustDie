@@ -58,7 +58,13 @@ class ClientPlayer extends CollidableObject
 		else if(loading){
 			return null;
 		}
-
+		/*
+		camera.position.add(up);
+		Vector3 dir = currentPlayer.direction.toVector3();
+		camera.direction.set(dir);
+		camera.up.set(up);
+		camera.update();
+		 */
 		instance.transform.setToWorld(this.location.toVector3(), this.direction.toVector3(), up.toVector3());		
 		//instance.calculateTransforms();
 		return instance;
