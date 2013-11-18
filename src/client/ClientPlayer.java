@@ -1,6 +1,7 @@
 package client;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
@@ -20,7 +21,6 @@ class ClientPlayer extends CollidableObject
 	private Model model;
 	private ModelInstance instance;
 	private AssetManager assets;
-
 	
 	ClientPlayer(int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, AssetManager assets){
 		super(id, 2, location, direction, velocity, up, radius); 
@@ -40,8 +40,10 @@ class ClientPlayer extends CollidableObject
 	private void doneLoading(){
 		model = assets.get("lib/spaceship.g3db", Model.class);
 		instance = new ModelInstance(model);
+		instance.transform.setToWorld(this.location.toVector3(), this.direction.toVector3(), up.toVector3());
 		loading = false;
 	}
+	
 	
 	/**
 	 * Draws the object
@@ -50,16 +52,15 @@ class ClientPlayer extends CollidableObject
 	@Override
 	public ModelInstance draw(){ 
 		boolean updateBool = assets.update();
-		//System.out.println(updateBool);
-		if(loading && updateBool){
-			//System.out.println("Here");
+		if(updateBool && loading){
 			doneLoading();
 		}
 		else if(loading){
 			return null;
 		}
-		instance.transform.setToScaling(this.radius*2, this.radius*2, this.radius*2);
-	    instance.transform.setToWorld(this.location.toVector3(), this.direction.toVector3(), this.up.toVector3());
+
+		instance.transform.setToWorld(this.location.toVector3(), this.direction.toVector3(), up.toVector3());		
+		//instance.calculateTransforms();
 		return instance;
 	}
 

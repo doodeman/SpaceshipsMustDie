@@ -46,12 +46,14 @@ class ClientAsteroid extends CollidableObject
 		loading = false;
 	}
 	
+	private float degrees = 5;
 	/**
 	 * Draws the object
 	 * @return 
 	 */
 	@Override
-	public ModelInstance draw(){ 
+	public ModelInstance draw(){
+		degrees = degrees + 20 % 360;
 		boolean updateBool = assets.update();
 		if(loading && updateBool){
 			//System.out.println("Here");
@@ -60,8 +62,6 @@ class ClientAsteroid extends CollidableObject
 		else if(loading){
 			return null;
 		}
-		
-
 	    instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, radius*1.25f, radius*1.25f, radius*1.25f);
 		return instance;
 	}

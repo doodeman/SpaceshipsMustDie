@@ -59,7 +59,6 @@ public class ClientGame implements ApplicationListener {
         environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
        // environment.add(new PointLight().set(1f, 1f, 1f, 0, 0, 0, 1000));
         
-		Gdx.gl11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 		camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.position.set(1f, 0f, 0f);
 	    camera.lookAt(0,0,0);
@@ -76,6 +75,7 @@ public class ClientGame implements ApplicationListener {
 		assets.load("lib/ast4.obj", Model.class);
 		assets.load("lib/ast5.obj", Model.class);
 		assets.load("lib/sun.obj", Model.class);
+		assets.load("lib/ship.obj", Model.class);
 		modelBatch = new ModelBatch();
 		controller = new ClientController(host,1233); 
 	    Thread controlWorker = new Thread(controller);
@@ -128,15 +128,10 @@ public class ClientGame implements ApplicationListener {
 
 	private void display() {
 		// TODO Auto-generated method stub
-		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-		if(thirdPerson)
-			environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-		else 
-			environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0f, 1f));
 		
         if(gameState == null) return;
         instances.clear();
+  
         if(playerId != null && currentPlayer == null){
 			for (CollidableObject o : gameState.objects)
 			{
@@ -158,7 +153,15 @@ public class ClientGame implements ApplicationListener {
 
         }
 		if(instances.size > 0){
+			Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	        Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+			if(thirdPerson)
+				environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
+			else 
+				environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0f, 1f));
+			
 			modelBatch.begin(camera);
+			
 			modelBatch.render(instances, environment);
 			modelBatch.end();
 		}
@@ -168,17 +171,19 @@ public class ClientGame implements ApplicationListener {
 	private void update() {
 		camera.update();
 		if(Gdx.input.isKeyPressed(Input.Keys.A)) 
-			controller.rollLeft();
+			controller.left();
+			
 		if(Gdx.input.isKeyPressed(Input.Keys.D))
-			controller.rollRight();
+			controller.right();
+			
 		if(Gdx.input.isKeyPressed(Input.Keys.W))
 			controller.up();
 		if(Gdx.input.isKeyPressed(Input.Keys.S))
 			controller.down();
 		if (Gdx.input.isKeyPressed(Input.Keys.Q))
-			controller.left();
+			controller.rollLeft();
 		if (Gdx.input.isKeyPressed(Input.Keys.E))
-			controller.right();
+			controller.rollRight();
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && !firing)
 		{
 			controller.fire();

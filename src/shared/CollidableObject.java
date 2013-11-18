@@ -1,5 +1,6 @@
 package shared;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
 
@@ -86,6 +87,12 @@ public class CollidableObject{
 	
 	public void yaw(float degrees)
 	{
+		Vector3 newSide = side.toVector3();
+		Vector3 newDir = direction.toVector3();
+		newSide.rotate(up.toVector3(), -degrees);
+		newDir.rotate(up.toVector3(), -degrees);
+		direction.fromVector3(newDir);
+		side.fromVector3(newSide);
 	}
 	
 	public void roll(float degrees)
