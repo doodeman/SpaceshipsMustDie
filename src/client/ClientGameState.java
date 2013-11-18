@@ -51,14 +51,31 @@ public class ClientGameState extends GameState
 				}
 			}
 			
+			//Remove destroyed objects
+			List<CollidableObject> toRemove = new ArrayList<CollidableObject>(); 
+			for (CollidableObject o: objects)
+			{
+				boolean found = false; 
+				for (CollidableObject o2 : client.getState().objects)
+				{
+					if (o2.id == o.id)
+						found = true;
+				}
+				if (!found)
+				{
+					toRemove.add(o);
+				}
+			}
+			for (CollidableObject o: toRemove)
+			{
+				objects.remove(o);
+			}
 			//update old objects
 			for (CollidableObject o: client.getState().objects)
 			{
 				CollidableObject oldObject = this.getById(o.id);
 				try {
 					oldObject.copy(o); 
-					
-						
 				}
 				catch (NullPointerException e)
 				{

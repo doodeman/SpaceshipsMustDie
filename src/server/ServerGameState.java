@@ -1,6 +1,7 @@
 package server;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import client.ClientUpdate;
@@ -14,6 +15,8 @@ public class ServerGameState extends GameState
 {
 	ServerSun sun; 
 	int playerCount = -1; 
+	int idcounter = 0; 
+	List<CollidableObject> addQueue; 
 	public ServerGameState() throws IOException
 	{
 		super();
@@ -22,8 +25,10 @@ public class ServerGameState extends GameState
 		Vector3D direction = new Vector3D(0,0,0); 
 		Vector3D velocity = new Vector3D(0,0,0); 
 		Vector3D up = new Vector3D(0,0,0);
-		sun = new ServerSun(0, location, direction, velocity, up, 20);
+		sun = new ServerSun(idcounter, location, direction, velocity, up, 20);
+		idcounter++;
 		objects.add(sun); 
+		addQueue = new ArrayList<CollidableObject>();
 	}
 	
 	public void addPlayer(Client client)
@@ -47,16 +52,23 @@ public class ServerGameState extends GameState
 		Vector3D velocity = new Vector3D((float)0.5,(float)0,0); 
 		Vector3D up = new Vector3D(0,0,0);
 
-		int id = objects.size(); 
-		this.objects.add(new ServerAsteroid(id, location, direction, velocity, up, 10, sun));
+		this.objects.add(new ServerAsteroid(idcounter, location, direction, velocity, up, 12, sun));
+		idcounter++;
 	}
 	
 	public void addProjectile(ServerPlayer player)
 	{
-		Vector3D pLocation = Vector3D.sum(player.location, player.direction);
-		Vector3D pVelocity = Vector3D.mult(1.5f, player.velocity);
-		ServerProjectile projectile = new ServerProjectile(objects.size(), 4, pLocation, player.direction, pVelocity, player.up, 5, this.sun);
+		Vector3D pLocation = Vector3D.sum(player.location, Vector3D.setLength(player.direction, 6));
+		//pLocation = Vector3D.mult(-1f, pLocation);
+		Vector3D pVelocity = Vector3D.unitVector(player.direction);
+		//Vector3D pVelocity = new Vector3D(0f,0f,0f);
+	
+		ServerProjectile projectile = new ServerProjectile(idcounter, 4, pLocation, player.direction, pVelocity, player.up, 4, this.sun);
+		idcounter++;
 		objects.add(projectile);
+		System.out.println("added " + projectile);
+		projectile.location.print(); 
+		player.location.print();
 	}
 	
 	@Override
@@ -71,6 +83,8 @@ public class ServerGameState extends GameState
 			//Logger.log("Server.log", "GAMESTATE: New values: " + o.location.x + " " + o.location.y + " " + o.location.z);
 		}
 		checkForCollisionsAndThenFixThem();
+		removeDestroyed();
+		addSplits(); 
 	}
 	
 	//The greatest function name in the world 
@@ -121,5 +135,66 @@ public class ServerGameState extends GameState
 			addProjectile(player);
 			player.firing = false; 
 		}
+	}
+	
+	private void removeDestroyed()
+	{
+		List<CollidableObject> toRemove = new ArrayList<CollidableObject>(); 
+		for (CollidableObject o : objects)
+		{
+			if (o.destroyed == true)
+			{
+				//if o is a asteroid
+				if (o.type == 3)
+				{
+					if (splitAsteroid(o));
+					{
+						toRemove.add(o);
+					}
+				}
+				else if(o.type == 1)
+				{
+					//do nothing, can't kill the sun
+				}
+				else
+				{
+					toRemove.add(o); 
+				}
+			}
+		}
+		for(CollidableObject o : toRemove)
+		{
+			System.out.println("removing " +  o);
+			objects.remove(o);
+		}
+	}
+	
+	private boolean splitAsteroid(CollidableObject asteroid)
+	{
+		if (asteroid.radius >= 3)
+		{
+			return true; 
+		}
+		else
+		{
+			Vector3D a1Location = new Vector3D(asteroid.location.x + asteroid.radius, asteroid.location.y + asteroid.radius, asteroid.location.z + asteroid.radius); 
+			Vector3D a1Velocity = Vector3D.mult(-1, asteroid.velocity);
+			ServerAsteroid a1 = new ServerAsteroid(idcounter, a1Location, asteroid.direction, a1Velocity, asteroid.up, asteroid.radius/2, this.sun); 
+			idcounter++; 
+			ServerAsteroid a2 = new ServerAsteroid(idcounter, asteroid.location, asteroid.direction, asteroid.velocity, asteroid.up, asteroid.radius/2, this.sun); 
+			idcounter++; 
+			addQueue.add(a1); 
+			addQueue.add(a2);
+		}
+		return false; 
+	}
+	
+	private void addSplits()
+	{
+		for (CollidableObject o : addQueue)
+		{
+			objects.add(o); 
+		}
+		addQueue.clear();
 	}
 }
