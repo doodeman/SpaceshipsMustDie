@@ -171,7 +171,7 @@ public class ServerGameState extends GameState
 	
 	private boolean splitAsteroid(CollidableObject asteroid)
 	{
-		if (asteroid.radius >= 3)
+		if (asteroid.radius <= 3)
 		{
 			return true; 
 		}
