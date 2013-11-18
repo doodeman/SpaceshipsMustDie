@@ -10,13 +10,15 @@ public class ClientController implements Runnable
 	private String serverAddress;
 	int serverPort;
 	volatile Integer clientId;
+	public String playerName;
 	@SuppressWarnings("unused")
 	private boolean forward, backward, left, right, fire, up, down, rollLeft, rollRight; 
 	
-	public ClientController (String serverAddress, int serverPort)
+	public ClientController (String serverAddress, int serverPort, String playerName)
 	{
 		System.out.println("ClientController started");
 		this.serverAddress = serverAddress; 
+		this.playerName = playerName;
 		this.serverPort = serverPort; 
 		clientId = null; 
 		reset(); 
@@ -92,7 +94,7 @@ public class ClientController implements Runnable
 				if (clientId != null)
 				{			
 				
-					ClientUpdate update = new ClientUpdate(forward, backward, left, right, fire, up, down, rollLeft, rollRight, clientId); 
+					ClientUpdate update = new ClientUpdate(forward, backward, left, right, fire, up, down, rollLeft, rollRight, clientId, playerName); 
 					ClientUDPSender sender = new ClientUDPSender(serverAddress, 1233, update.toJson());
 					Thread worker = new Thread(sender); 
 					worker.start(); 

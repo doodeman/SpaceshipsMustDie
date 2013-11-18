@@ -233,7 +233,7 @@ public class ServerGameState extends GameState
 	
 	private void killPlayer(ServerPlayer player)
 	{
-		System.out.println("player died");
+		System.out.println(player.name + " died");
 		CollidableObject collidedWith = getById(player.collidedWith); 
 		//If he collided with a projectile
 		if (collidedWith.type == 4)
@@ -262,7 +262,7 @@ public class ServerGameState extends GameState
 		}
 		else
 		{
-			System.out.println("player died by colliding scenery (lol)"); 
+			//System.out.println(player.name + "  died by colliding scenery (lol)"); 
 			//If player is dumb and killed himself via collision with asteroid or the sun
 			player.score--; 
 		}

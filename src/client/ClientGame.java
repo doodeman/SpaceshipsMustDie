@@ -36,7 +36,7 @@ public class ClientGame implements ApplicationListener {
 	ClientGameState gameState; 
     private Environment environment;
 	private ModelBatch modelBatch;
-	String host;
+	String host, playername; 
 	private AssetManager assets; 
 	private Array<ModelInstance> instances = new Array<ModelInstance>();
 	private CollidableObject currentPlayer;
@@ -46,9 +46,10 @@ public class ClientGame implements ApplicationListener {
 	public Integer playerId = null; 
 	public int assignedPort; 
 	
-	public ClientGame(String host)
+	public ClientGame(String host, String playername)
 	{
 		this.host = host; 
+		this.playername = playername; 
 	}
 	
 	@Override
@@ -77,7 +78,7 @@ public class ClientGame implements ApplicationListener {
 		assets.load("lib/sun.obj", Model.class);
 		assets.load("lib/ship.obj", Model.class);
 		modelBatch = new ModelBatch();
-		controller = new ClientController(host,1233); 
+		controller = new ClientController(host,1233, playername); 
 	    Thread controlWorker = new Thread(controller);
 	    controlWorker.start();
         

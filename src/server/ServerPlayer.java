@@ -14,12 +14,14 @@ public class ServerPlayer extends ServerCollidableObject
 	int playerId; 
 	public int score; 
 	boolean firing = false; 
+	public String name; 
 	protected ServerPlayer(int playerId, int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerSun sun) 
 	{
 		super(id, 2, location, direction, velocity, up, radius, sun);
 		forwardThrust = 1f; 
 		spinThrust = 1f;
 		score = 0; 
+		name = ""; 
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -64,11 +66,16 @@ public class ServerPlayer extends ServerCollidableObject
 		{
 			roll(-spinThrust);
 		}
-		
+
+		if (update.playerName != null)
+		{
+			this.name = update.playerName;
+		}
 		if (this.velocity.length() > 0.5)
 		{
 			this.velocity = Vector3D.setLength(this.velocity, 0.5f);
 		}
+		
 		//System.out.println(this.velocity.length());
 	}
 

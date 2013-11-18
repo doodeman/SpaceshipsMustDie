@@ -18,11 +18,11 @@ public class Runner
 			Thread gameWorker = new Thread(ge); 
 			gameWorker.start();
 			
-			new LwjglApplication(new ClientGame("localhost"), "Asteroids", 800, 600, false);
+			new LwjglApplication(new ClientGame("localhost", arg[1]), "Asteroids", 800, 600, false);
 		}
 		else
 		{
-			new LwjglApplication(new ClientGame(arg[0]), "Asteroids", 800, 600, false);
+			new LwjglApplication(new ClientGame(arg[0], arg[1]), "Asteroids", 800, 600, false);
 		}
 
 		//ClientUDPClient udpclient2 = new ClientUDPClient(1234);
