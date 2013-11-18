@@ -72,7 +72,7 @@ public class ClientGameState extends GameState
 							player.exploding = 0; 
 							if (player.exploding%10 == 0)
 							{
-								explosions.add(new ClientExplosion());
+								explosions.add(new ClientExplosion(assets));
 							}
 						}
 					}
