@@ -49,6 +49,10 @@ public class ClientGameState extends GameState
 					{
 						this.objects.add(new ClientProjectile(o.id, o.location, o.direction, o.velocity, o.up, o.radius, assets));
 					}
+					if (o.type == 5)
+					{
+						this.objects.add(new ClientExplosion(o.id, o.location, o.direction, o.velocity, o.up, o.radius, assets));
+					}
 				}
 			}
 			
@@ -64,21 +68,7 @@ public class ClientGameState extends GameState
 				}
 				if (!found)
 				{
-					if (o.type == 2)
-					{
-						ClientPlayer player = (ClientPlayer) o; 
-						if (player.exploding == -1)
-						{
-							player.exploding = 0; 
-							if (player.exploding%10 == 0)
-							{
-								explosions.add(new ClientExplosion(assets));
-							}
-						}
-					}
-					{
-						toRemove.add(o);
-					}
+					toRemove.add(o);
 				}
 			}
 			for (CollidableObject o: toRemove)

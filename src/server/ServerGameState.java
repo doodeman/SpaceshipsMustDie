@@ -20,6 +20,7 @@ public class ServerGameState extends GameState
 	List<CollidableObject> addQueue; 
 	List<RespawnPoint> respawnPoints; 
 	private Random random; 
+	List<CollidableObject> toRemove;
 	
 	public ServerGameState() throws IOException
 	{
@@ -35,6 +36,7 @@ public class ServerGameState extends GameState
 		addQueue = new ArrayList<CollidableObject>();
 		respawnPoints = makeRespawnPoints(); 
 		random = new Random(); 
+		toRemove = new ArrayList<CollidableObject>(); 
 	}
 	
 	public void addPlayer(Client client)
@@ -87,6 +89,14 @@ public class ServerGameState extends GameState
 			//Logger.log("Server.log", "GAMESTATe: Updating: " + o);
 			//Logger.log("Server.log", "GAMESTATE: Old values: " + o.location.x + " " + o.location.y + " " + o.location.z);
 			o.update(); 			
+			if (o.type == 5)
+			{
+				ServerExplosion explosion = (ServerExplosion) o; 
+				if (explosion.lifetime > 20)
+				{
+					toRemove.add(explosion);
+				}
+			}
 			//Logger.log("Server.log", "GAMESTATE: New values: " + o.location.x + " " + o.location.y + " " + o.location.z);
 		}
 		checkForCollisionsAndThenFixThem();
@@ -146,8 +156,6 @@ public class ServerGameState extends GameState
 	
 	private void removeDestroyed()
 	{
-
-		List<CollidableObject> toRemove = new ArrayList<CollidableObject>(); 
 		for (CollidableObject o : objects)
 		{
 			if (o.destroyed == true)
@@ -167,6 +175,14 @@ public class ServerGameState extends GameState
 				{
 					killPlayer((ServerPlayer) o);
 				}
+				//if it's a projectile we want it to explode
+				else if (o.type == 4)
+				{
+					addQueue.add(new ServerExplosion(idcounter, new Vector3D(o.location), new Vector3D(o.direction),
+							new Vector3D(o.velocity), new Vector3D(o.up), 10));
+					idcounter++; 
+					toRemove.add(o); 
+				}
 				else if(o.type == 1)
 				{
 					//do nothing, can't kill the sun
@@ -182,6 +198,7 @@ public class ServerGameState extends GameState
 			System.out.println("removing " +  o);
 			objects.remove(o);
 		}
+		toRemove.clear();
 	}
 	
 	private boolean splitAsteroid(CollidableObject asteroid)
@@ -208,6 +225,7 @@ public class ServerGameState extends GameState
 	{
 		for (CollidableObject o : addQueue)
 		{
+			System.out.println("Adding " + o);
 			objects.add(o); 
 		}
 		addQueue.clear();
@@ -223,13 +241,13 @@ public class ServerGameState extends GameState
 			ServerProjectile projectile = (ServerProjectile) collidedWith; 
 			if (projectile.owner == player.id)
 			{
-				System.out.println("player died to his own projectile"); 
+				//System.out.println("player died to his own projectile"); 
 
 				player.score--; 
 			}
 			else
 			{
-				System.out.println("player died to another player's projectile"); 
+				//System.out.println("player died to another player's projectile"); 
 				ServerPlayer killingPlayer = (ServerPlayer) getById(projectile.owner);
 				killingPlayer.score++; 
 			}
@@ -237,7 +255,7 @@ public class ServerGameState extends GameState
 		else if (collidedWith.type == 2)
 		{
 			//If two players killed each other via collision
-			System.out.println("player died by colliding with another player "); 
+			//System.out.println("player died by colliding with another player "); 
 			ServerPlayer killingPlayer = (ServerPlayer) collidedWith; 
 			killingPlayer.score++; 
 			player.score++; 
@@ -248,6 +266,9 @@ public class ServerGameState extends GameState
 			//If player is dumb and killed himself via collision with asteroid or the sun
 			player.score--; 
 		}
+		addQueue.add(new ServerExplosion(idcounter, new Vector3D(player.location), new Vector3D(player.direction),
+				new Vector3D(player.velocity), new Vector3D(player.up), 10));
+		idcounter++;
 		respawnPlayer(player); 
 	}
 	

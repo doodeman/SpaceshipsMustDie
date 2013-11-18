@@ -32,6 +32,11 @@ public abstract class ServerCollidableObject extends CollidableObject
 	@Override
 	public boolean hasCollided(CollidableObject that)
 	{
+		//Explosions don't collide
+		if (this.type == 5 || that.type == 5)
+		{
+			return false; 
+		}
 		if (!this.hasCollided && !that.hasCollided)
 		{
 			float distance = Vector3D.distanceBetween(this.location, that.location); 
