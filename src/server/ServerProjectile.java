@@ -19,4 +19,10 @@ public class ServerProjectile extends ServerCollidableObject
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void update()
+	{
+		this.location = Vector3D.sum(this.location, velocity);
+	}
 }

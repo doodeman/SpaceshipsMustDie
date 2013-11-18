@@ -59,10 +59,16 @@ public class ServerGameState extends GameState
 	public void addProjectile(ServerPlayer player)
 	{
 		Vector3D pLocation = Vector3D.sum(player.location, Vector3D.setLength(player.direction, 6));
-		Vector3D pVelocity = Vector3D.mult(1.5f, player.velocity);
-		ServerProjectile projectile = new ServerProjectile(idcounter, 4, pLocation, player.direction, pVelocity, player.up, 5, this.sun);
+		//pLocation = Vector3D.mult(-1f, pLocation);
+		Vector3D pVelocity = Vector3D.unitVector(player.direction);
+		//Vector3D pVelocity = new Vector3D(0f,0f,0f);
+	
+		ServerProjectile projectile = new ServerProjectile(idcounter, 4, pLocation, player.direction, pVelocity, player.up, 4, this.sun);
 		idcounter++;
 		objects.add(projectile);
+		System.out.println("added " + projectile);
+		projectile.location.print(); 
+		player.location.print();
 	}
 	
 	@Override
@@ -146,6 +152,10 @@ public class ServerGameState extends GameState
 						toRemove.add(o);
 					}
 				}
+				else if(o.type == 1)
+				{
+					//do nothing, can't kill the sun
+				}
 				else
 				{
 					toRemove.add(o); 
@@ -154,6 +164,7 @@ public class ServerGameState extends GameState
 		}
 		for(CollidableObject o : toRemove)
 		{
+			System.out.println("removing " +  o);
 			objects.remove(o);
 		}
 	}
