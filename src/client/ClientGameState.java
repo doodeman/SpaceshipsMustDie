@@ -7,19 +7,23 @@ import network.ClientUDPClient;
 import shared.CollidableObject;
 import shared.GameState;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 
 public class ClientGameState extends GameState 
 {
 	ClientUDPClient client;
 	private AssetManager assets;
-	private List<ClientExplosion> explosions; 
+	public List<Sound> sounds; 
 	public ClientGameState(ClientUDPClient client, AssetManager assets)
 	{
 		super(); 
 		this.assets = assets;
 		this.client = client; 
-		explosions = new ArrayList<ClientExplosion>(); 
+		sounds = new ArrayList<Sound>(); 
+		sounds.add(Gdx.audio.newSound(Gdx.files.internal("lib/dspistol.mp3")));
+		sounds.add(Gdx.audio.newSound(Gdx.files.internal("lib/dsbarexp.mp3")));
 	}
 	
 	public void update()
@@ -48,6 +52,7 @@ public class ClientGameState extends GameState
 					if (o.type == 4)
 					{
 						this.objects.add(new ClientProjectile(o.id, o.location, o.direction, o.velocity, o.up, o.radius, assets));
+						sounds.get(0).play(); 
 					}
 					if (o.type == 5)
 					{
@@ -73,6 +78,10 @@ public class ClientGameState extends GameState
 			}
 			for (CollidableObject o: toRemove)
 			{
+				if (o.type == 4)
+				{
+					sounds.get(1).play();
+				}
 				objects.remove(o);
 			}
 			//update old objects
