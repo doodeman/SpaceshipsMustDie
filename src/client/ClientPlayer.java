@@ -22,6 +22,8 @@ class ClientPlayer extends CollidableObject
 	private ModelInstance instance;
 	private AssetManager assets;
 	
+	public int exploding = -1; 
+	
 	ClientPlayer(int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, AssetManager assets){
 		super(id, 2, location, direction, velocity, up, radius); 
 		this.up = new Vector3D(0,1,0);
@@ -69,5 +71,4 @@ class ClientPlayer extends CollidableObject
 		//instance.calculateTransforms();
 		return instance;
 	}
-
 }

@@ -13,12 +13,13 @@ public class ClientGameState extends GameState
 {
 	ClientUDPClient client;
 	private AssetManager assets;
-	
+	private List<ClientExplosion> explosions; 
 	public ClientGameState(ClientUDPClient client, AssetManager assets)
 	{
 		super(); 
 		this.assets = assets;
 		this.client = client; 
+		explosions = new ArrayList<ClientExplosion>(); 
 	}
 	
 	public void update()
@@ -63,7 +64,21 @@ public class ClientGameState extends GameState
 				}
 				if (!found)
 				{
-					toRemove.add(o);
+					if (o.type == 2)
+					{
+						ClientPlayer player = (ClientPlayer) o; 
+						if (player.exploding == -1)
+						{
+							player.exploding = 0; 
+							if (player.exploding%10 == 0)
+							{
+								explosions.add(new ClientExplosion());
+							}
+						}
+					}
+					{
+						toRemove.add(o);
+					}
 				}
 			}
 			for (CollidableObject o: toRemove)

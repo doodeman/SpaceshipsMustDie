@@ -150,7 +150,6 @@ public class ClientGame implements ApplicationListener {
 				ModelInstance instance = o.draw();
 				if(instance != null) instances.add(instance); 
 			}
-
         }
 		if(instances.size > 0){
 			Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

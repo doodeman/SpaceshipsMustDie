@@ -45,6 +45,7 @@ public class ServerGameState extends GameState
 		Vector3D velocity = new Vector3D(0,0,0); 
 		Vector3D up = new Vector3D(0,1,0);
 		CollidableObject player = new ServerPlayer(playerCount, playerCount, location, direction, velocity, up, 1, this.sun);
+		player.side = new Vector3D(0,0,1);
 		playerCount--; 
 		//player.direction = (player.vectorTo(sun, 1));
 		objects.add(player);
@@ -66,7 +67,7 @@ public class ServerGameState extends GameState
 	{
 		Vector3D pLocation = Vector3D.sum(player.location, Vector3D.setLength(player.direction, 6));
 		//pLocation = Vector3D.mult(-1f, pLocation);
-		Vector3D pVelocity = Vector3D.unitVector(player.direction);
+		Vector3D pVelocity = Vector3D.setLength(Vector3D.unitVector(player.direction), 4f);
 		//Vector3D pVelocity = new Vector3D(0f,0f,0f);
 	
 		ServerProjectile projectile = new ServerProjectile(idcounter, 4, pLocation, player.direction, pVelocity, player.up, 4, this.sun, player.id);
