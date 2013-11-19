@@ -3,8 +3,6 @@ package shared;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.Gson;
-
 public class GameState extends Jsonable
 {
 	public List<CollidableObject> objects;

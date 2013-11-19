@@ -1,10 +1,8 @@
 package client;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.badlogic.gdx.math.Vector3;
 
 
 import shared.CollidableObject;
@@ -41,7 +39,6 @@ class ClientPlayer extends CollidableObject
 		
 	}
 	
-	private float degrees = 1;
 	/**
 	 * Draws the object
 	 * @return 

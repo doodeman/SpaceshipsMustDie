@@ -11,7 +11,6 @@ public class ClientController implements Runnable
 	int serverPort;
 	volatile Integer clientId;
 	public String playerName;
-	@SuppressWarnings("unused")
 	private boolean forward, backward, left, right, fire, up, down, rollLeft, rollRight; 
 	
 	public ClientController (String serverAddress, int serverPort, String playerName)

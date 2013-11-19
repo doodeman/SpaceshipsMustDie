@@ -2,8 +2,6 @@ package shared;
 
 import java.io.IOException;
 
-import client.ClientGame;
-
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 
 import server.GameEngine;
@@ -18,11 +16,11 @@ public class Runner
 			Thread gameWorker = new Thread(ge); 
 			gameWorker.start();
 			
-			new LwjglApplication(new ClientGame("localhost", arg[1]), "Asteroids", 800, 600, false);
+			new LwjglApplication(new SpaceshipsMustDie("localhost", arg[1]), "Asteroids", 800, 600, false);
 		}
 		else
 		{
-			new LwjglApplication(new ClientGame(arg[0], arg[1]), "Asteroids", 800, 600, false);
+			new LwjglApplication(new SpaceshipsMustDie(arg[0], arg[1]), "Asteroids", 800, 600, false);
 		}
 
 		//ClientUDPClient udpclient2 = new ClientUDPClient(1234);

@@ -17,9 +17,9 @@ public class Camera1
 	Box lastClosest = null;
 	
 	Point3D old; 
-	ClientGame core; 
+	MainScreen core; 
 
-	public Camera1(Point3D pEye, Point3D pCenter, Vector3D up, ClientGame core) {
+	public Camera1(Point3D pEye, Point3D pCenter, Vector3D up, MainScreen core) {
 		eye = pEye;
 		n = Vector3D.difference(pEye, pCenter);
 		n.normalize();

@@ -7,12 +7,11 @@ import shared.Logger;
 import network.ClientTCPClient;
 import network.ClientUDPClient;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL11;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.Environment;
@@ -21,11 +20,10 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
-import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-public class ClientGame implements ApplicationListener {
+public class MainScreen implements Screen {
 
 	private Camera camera;
 	private ClientController controller;
@@ -46,13 +44,13 @@ public class ClientGame implements ApplicationListener {
 	public Integer playerId = null; 
 	public int assignedPort; 
 	
-	public ClientGame(String host, String playername)
+	public MainScreen(String host, String playername)
 	{
 		this.host = host; 
 		this.playername = playername; 
+		create();
 	}
 	
-	@Override
 	public void create() {
 
 		environment = new Environment();
@@ -118,7 +116,7 @@ public class ClientGame implements ApplicationListener {
 	}
 
 	@Override
-	public void render() {
+	public void render(float arg0) {
 		if (gameState != null)
 		{
 			gameState.update(); 
@@ -270,5 +268,17 @@ public class ClientGame implements ApplicationListener {
 			System.out.println("Failed to launch UDP Client");
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		
 	}
 }

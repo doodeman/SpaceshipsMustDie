@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
 
 import shared.GameState;
 import shared.Logger;
-import client.ClientGame;
+import client.MainScreen;
 
 import com.google.gson.Gson;
 
@@ -20,9 +20,9 @@ public class ClientTCPClient implements Runnable
 	boolean done; 
 	Logger log; 
 	int player; 
-	ClientGame clientGame; 
+	MainScreen clientGame; 
 	
-	public ClientTCPClient(String address, int port, ClientGame clientGame) throws IOException
+	public ClientTCPClient(String address, int port, MainScreen clientGame) throws IOException
 	{
 		this.address = address; 
 		this.port = port; 
