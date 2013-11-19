@@ -6,28 +6,19 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
-public class Menu implements Screen
+public class MenuScreen implements Screen
 {
-	private static final float BUTTON_WIDTH = 300f; 
-	private static final float BUTTON_HEIGHT = 60f; 
-	private static final float BUTTON_SPACING = 10f;
-	private final Stage stage; 
-	private Table table; 
-	int viewPortWidth, viewPortHeight; 
-	
-	public Menu(int viewPortWidth, int viewPortHeight)
-	{
-		stage = new Stage(viewPortWidth, viewPortHeight, true);
-		table = new Table(); 
-	}
 
+	public MenuScreen(int xSize, int ySize)
+	{
+		
+	}
+	
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(stage); 
-		TextButton button = new TextButton("Host", new Skin()); 
-		table.row(); 
-		table.add(button); 
 	}
 
 	@Override
@@ -51,7 +42,9 @@ public class Menu implements Screen
 	@Override
 	public void render(float arg0) {
 		// TODO Auto-generated method stub
-		
+
+        //Gdx.gl.glClearColor(0, 1, 0, 1);
+        //Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT);
 	}
 
 	@Override

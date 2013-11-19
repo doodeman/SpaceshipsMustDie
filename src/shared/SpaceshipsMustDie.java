@@ -1,5 +1,6 @@
 package shared;
 
+import menu.MenuScreen;
 import client.MainScreen;
 
 import com.badlogic.gdx.Game;
@@ -7,7 +8,8 @@ import com.badlogic.gdx.Game;
 public class SpaceshipsMustDie extends Game
 {
 	MainScreen mainScreen; 
-	String hostname; 
+	MenuScreen menuScreen; 
+	String hostname;  
 	String playerName; 
 	
 	public SpaceshipsMustDie(String hostname, String playerName)
@@ -20,6 +22,7 @@ public class SpaceshipsMustDie extends Game
 	public void create()
 	{
 		mainScreen = new MainScreen(hostname, playerName); 
-		setScreen(mainScreen); 
+		menuScreen = new MenuScreen(800,600);
+		setScreen(menuScreen); 
 	}
 }
