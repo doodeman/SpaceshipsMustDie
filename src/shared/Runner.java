@@ -12,15 +12,12 @@ public class Runner
 	{
 		if (arg[0].equals("host"))
 		{
-			GameEngine ge = new GameEngine(1234);
-			Thread gameWorker = new Thread(ge); 
-			gameWorker.start();
-			
-			new LwjglApplication(new SpaceshipsMustDie("localhost", arg[1]), "Asteroids", 800, 600, false);
+		
+			new LwjglApplication(new SpaceshipsMustDie("localhost", arg[1]), "Asteroids", 1024, 768, false);
 		}
 		else
 		{
-			new LwjglApplication(new SpaceshipsMustDie(arg[0], arg[1]), "Asteroids", 800, 600, false);
+			new LwjglApplication(new SpaceshipsMustDie(arg[0], arg[1]), "Asteroids", 1024, 768, false);
 		}
 
 		//ClientUDPClient udpclient2 = new ClientUDPClient(1234);

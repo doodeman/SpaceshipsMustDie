@@ -1,6 +1,7 @@
 package client;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import shared.CollidableObject;
 import shared.Logger;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
@@ -75,6 +77,7 @@ public class MainScreen implements Screen {
 		assets.load("lib/ast5.obj", Model.class);
 		assets.load("lib/sun.obj", Model.class);
 		assets.load("lib/ship.obj", Model.class);
+		assets.load("lib/shot.g3db", Model.class);
 		modelBatch = new ModelBatch();
 		controller = new ClientController(host,1233, playername); 
 	    Thread controlWorker = new Thread(controller);
@@ -130,8 +133,7 @@ public class MainScreen implements Screen {
 		
         if(gameState == null) return;
         instances.clear();
-  
-        if(playerId != null && currentPlayer == null){
+         if(playerId != null && currentPlayer == null){
 			for (CollidableObject o : gameState.objects)
 			{
 		    	//System.out.println("rendering");
@@ -140,6 +142,10 @@ public class MainScreen implements Screen {
 				if(o.id == playerId){
 					currentPlayer = o;
 				}
+				if(o.type == 4){
+					environment.add(((ClientProjectile)o).light);
+				}
+				
 	
 		    }
         }

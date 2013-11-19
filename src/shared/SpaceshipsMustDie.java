@@ -1,5 +1,8 @@
 package shared;
 
+import java.io.IOException;
+
+import server.GameEngine;
 import menu.MenuScreen;
 import client.MainScreen;
 
@@ -21,8 +24,21 @@ public class SpaceshipsMustDie extends Game
 	@Override 
 	public void create()
 	{
-		mainScreen = new MainScreen(hostname, playerName); 
-		menuScreen = new MenuScreen(800,600);
+		menuScreen = new MenuScreen(800,600, this);
 		setScreen(menuScreen); 
+	}
+
+	public void changeScreen(String hostname, String playerName) throws IOException {
+		// TODO Auto-generated method stub
+		this.hostname = hostname;
+		this.playerName = playerName;
+		if(this.hostname == "localhost"){
+			GameEngine ge = new GameEngine(1234);
+			Thread gameWorker = new Thread(ge); 
+			gameWorker.start();
+		}
+		
+		mainScreen = new MainScreen(hostname, playerName); 	
+		setScreen(mainScreen);
 	}
 }

@@ -4,15 +4,22 @@ import shared.CollidableObject;
 import shared.Vector3D;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.VertexAttributes.Usage;
+import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
+import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 public class ClientProjectile extends CollidableObject
 {
 	private AssetManager assets; 
 	private ModelInstance instance; 
 	private Model model; 
-	private boolean loading = true; 
+	private boolean loading = true;
+	public PointLight light; 
 	
 	protected ClientProjectile(int id, Vector3D location,
 			Vector3D direction, Vector3D velocity, Vector3D up, int radius,  AssetManager assets) {
@@ -21,12 +28,14 @@ public class ClientProjectile extends CollidableObject
 	}
 
 	private void doneLoading(){
-		if(id % 4 == 0) model = assets.get("lib/ast1.obj", Model.class);
-		else if(id % 4 == 1) model = assets.get("lib/ast3.obj", Model.class);
-		else if(id % 4 == 2) model = assets.get("lib/ast4.obj", Model.class);
-		else model = assets.get("lib/ast5.obj", Model.class);
+		model = assets.get("lib/shot.g3db", Model.class);
 		instance = new ModelInstance(model);
-		instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, radius*0.1f, radius*0.1f, radius*0.1f);
+		instance.transform.setToScaling(0.02f, 0.02f, 0.02f);
+		instance.transform.setToWorld(this.location.toVector3(), this.direction.toVector3(), this.up.toVector3());
+        
+		light = new PointLight();
+		light.set(1, 1, 1, location.toVector3(), 100000);
+		
 		loading = false;
 	}
 	
@@ -45,8 +54,9 @@ public class ClientProjectile extends CollidableObject
 			return null;
 		}
 		
-
-	    instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, radius*1.25f, radius*1.25f, radius*1.25f);
-		return instance;
+		light.position.set(location.toVector3().add(direction.toVector3().scl(-1,-1,-1)));
+	    instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, 0.25f,0.25f, 0.25f);
+	    
+	    return instance;
 	}
 }
