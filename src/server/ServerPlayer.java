@@ -18,7 +18,7 @@ public class ServerPlayer extends ServerCollidableObject
 	protected ServerPlayer(int playerId, int id, Vector3D location, Vector3D direction, Vector3D velocity, Vector3D up, int radius, ServerSun sun) 
 	{
 		super(id, 2, location, direction, velocity, up, radius, sun);
-		forwardThrust = 1f; 
+		forwardThrust = 0.1f; 
 		spinThrust = 1f;
 		score = 0; 
 		name = ""; 
