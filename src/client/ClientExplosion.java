@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.math.Vector3;
 
 public class ClientExplosion extends CollidableObject
 {
@@ -46,7 +47,7 @@ public class ClientExplosion extends CollidableObject
 			
 			batch.setTransformMatrix(cam.view);
 			batch.getTransformMatrix().translate(location.toVector3());
-			float scaling = (cam.position.dst(location.toVector3())-1000) * 0.0001f;
+			float scaling = (cam.position.dst(location.toVector3())-1000) * 0.00006f;
 			System.out.println(scaling/1000);
 		    batch.getTransformMatrix().scale(scaling,scaling,scaling);
 			float delta = Gdx.graphics.getDeltaTime();
@@ -54,9 +55,12 @@ public class ClientExplosion extends CollidableObject
 				effect.start();
 				started = true;
 			}
-			batch.begin();
-			effect.draw(batch, delta);
-			batch.end();
+			for(int i=0;i<10;i++){
+				batch.getTransformMatrix().rotate(new Vector3(0,1,0), 36);
+				batch.begin();
+				effect.draw(batch, delta);
+				batch.end();
+			}
 		}
 		batch.getTransformMatrix().idt();
 		return null;
