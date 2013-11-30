@@ -3,6 +3,8 @@ package client;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 
 
 import shared.CollidableObject;
@@ -17,7 +19,7 @@ import shared.Vector3D;
 class ClientPlayer extends CollidableObject
 {
 	private Model model;
-	private ModelInstance instance;
+	public ModelInstance instance;
 	private AssetManager assets;
 	
 	public int exploding = -1; 
@@ -52,18 +54,13 @@ class ClientPlayer extends CollidableObject
 		else if(loading){
 			return null;
 		}
-		/*
+
 		
-		Vector3 dir = currentPlayer.direction.toVector3();
-		camera.direction.set(dir);
-		camera.up.set(up);
-		camera.update();
-		 */
-		//instance.transform.setToTranslation(location.toVector3());
+//h		instance.transform.setToTranslation(location.toVector3());
        // view.setToLookAt(position, location.toVector3().add(direction), up);  
-		instance.transform.setToWorld(this.location.toVector3(), this.direction.toVector3(), up.toVector3());		
-		//instance.calculateTransforms();values
-		//System.out.println(Vector3.dot(side.x, side.y, side.z, direction.x, direction.y, direction.z));
+		
+		instance.transform.setToWorld(this.location.toVector3(), this.direction.toVector3(), up.toVector3());	
+
 		return instance;
 	}
 }

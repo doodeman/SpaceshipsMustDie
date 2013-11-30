@@ -61,8 +61,7 @@ public class MainScreen implements Screen {
        // environment.add(new PointLight().set(1f, 1f, 1f, 0, 0, 0, 1000));
         
 		camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.position.set(1f, 0f, 0f);
-	    camera.lookAt(0,0,0);
+		
 	    camera.near = 0.1f;
 	    camera.far = 1000f;
 	    camera.update();
@@ -130,14 +129,14 @@ public class MainScreen implements Screen {
 
 	private void display() {
 		// TODO Auto-generated method stub
-		
         if(gameState == null) return;
         instances.clear();
-         if(playerId != null && currentPlayer == null){
+        if(playerId != null && currentPlayer == null){
 			for (CollidableObject o : gameState.objects)
 			{
 		    	//System.out.println("rendering");
 				ModelInstance instance = o.draw();
+				
 				if(instance != null) instances.add(instance); 
 				if(o.id == playerId){
 					currentPlayer = o;
@@ -145,27 +144,29 @@ public class MainScreen implements Screen {
 				if(o.type == 4){
 					environment.add(((ClientProjectile)o).light);
 				}
-				
-	
 		    }
         }
         else{
         	for (CollidableObject o : gameState.objects)
 			{
+        		
 				ModelInstance instance = o.draw();
-				if(instance != null) instances.add(instance); 
+				if(o.id != currentPlayer.id && instance != null) instances.add(instance); 
 			}
         }
 		if(instances.size > 0){
+			
 			Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	        Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-			if(thirdPerson)
-				environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
-			else 
-				environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0f, 1f));
-			
+	        
+			environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
+			for(CollidableObject o: gameState.objects){
+				if(o.type == 5){
+					if(((ClientExplosion)o).cam == null) ((ClientExplosion)o).cam = camera;
+					o.draw();
+				}
+			}
 			modelBatch.begin(camera);
-			
 			modelBatch.render(instances, environment);
 			modelBatch.end();
 		}
@@ -208,21 +209,10 @@ public class MainScreen implements Screen {
 		else if(!Gdx.input.isKeyPressed(Input.Keys.P) && pressedP){
 			pressedP = false;
 		}
-		if(currentPlayer != null){ 
-			camera.position.set(currentPlayer.location.x, currentPlayer.location.y, currentPlayer.location.z);
-			Vector3 up = currentPlayer.up.toVector3();
-			
-			if(thirdPerson){
-				camera.position.sub(new Vector3(currentPlayer.direction.x, currentPlayer.direction.y,currentPlayer.direction.z).nor().scl(10));
-			}
-			else{
-				camera.position.add(new Vector3(currentPlayer.direction.x, currentPlayer.direction.y,currentPlayer.direction.z).nor().scl(-0.2f));
-			}
-			camera.position.add(up);
-			
-			Vector3 dir = currentPlayer.direction.toVector3();
-			camera.direction.set(dir);
-			camera.up.set(up);
+		if(currentPlayer != null){
+            camera.position.set(currentPlayer.location.toVector3());
+			camera.lookAt(currentPlayer.location.toVector3().add(currentPlayer.direction.toVector3()));
+			camera.up.set(currentPlayer.up.toVector3());
 			camera.update();
 		}	
 	}

@@ -40,19 +40,19 @@ public class ServerPlayer extends ServerCollidableObject
 		}
 		if (update.left)
 		{
-			yaw(-spinThrust); 
+			yaw(spinThrust); 
 		}
 		if (update.right)
 		{
-			yaw(spinThrust); 
+			yaw(-spinThrust); 
 		}
 		if (update.down)
 		{
-			pitch(-spinThrust); 
+			pitch(spinThrust); 
 		}
 		if (update.up)
 		{
-			pitch(spinThrust); 
+			pitch(-spinThrust); 
 		}
 		if (update.fire)
 		{
@@ -60,11 +60,11 @@ public class ServerPlayer extends ServerCollidableObject
 		}
 		if (update.rollLeft)
 		{
-			roll(spinThrust); 
+			roll(-spinThrust); 
 		}
 		if (update.rollRight)
 		{
-			roll(-spinThrust);
+			roll(spinThrust);
 		}
 
 		if (update.playerName != null)
