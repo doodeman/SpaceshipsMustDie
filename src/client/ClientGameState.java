@@ -42,7 +42,7 @@ public class ClientGameState extends GameState
 					}
 					if (o.type == 2)
 					{
-						System.out.println("o.id" + o.id);
+						//System.out.println("o.id" + o.id);
 						this.objects.add(new ClientPlayer(o.id, o.location, o.direction, o.velocity, o.up, 1, assets));
 					}
 					if (o.type == 3)

@@ -51,7 +51,6 @@ public class ClientExplosion extends CollidableObject
 			batch.setTransformMatrix(cam.view);
 			batch.getTransformMatrix().translate(location.toVector3());
 			float scaling = (cam.position.dst(location.toVector3())-1000) * 0.00006f;
-			System.out.println(scaling/1000);
 		    batch.getTransformMatrix().scale(scaling,scaling,scaling);
 			float delta = Gdx.graphics.getDeltaTime();
 			if(started == false){
