@@ -66,7 +66,10 @@ public class ServerPlayer extends ServerCollidableObject
 		{
 			roll(spinThrust);
 		}
-
+		if (update.isBreaking)
+		{
+			applyForce(this.velocity, -forwardThrust);
+		}
 		if (update.playerName != null)
 		{
 			this.name = update.playerName;

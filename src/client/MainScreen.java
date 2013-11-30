@@ -189,6 +189,8 @@ public class MainScreen implements Screen {
 			controller.rollLeft();
 		if (Gdx.input.isKeyPressed(Input.Keys.E))
 			controller.rollRight();
+		if (Gdx.input.isKeyPressed(Input.Keys.B))
+			controller.breakShip(); 
 		if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && !firing)
 		{
 			controller.fire();
