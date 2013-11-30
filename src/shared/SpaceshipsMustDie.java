@@ -37,7 +37,7 @@ public class SpaceshipsMustDie extends Game
 			Thread gameWorker = new Thread(ge); 
 			gameWorker.start();
 		}
-		
+		System.out.println(hostname);
 		mainScreen = new MainScreen(hostname, playerName); 	
 		setScreen(mainScreen);
 	}
