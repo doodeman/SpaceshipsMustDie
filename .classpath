@@ -11,5 +11,7 @@
 	<classpathentry kind="lib" path="lib/gdx-natives.jar"/>
 	<classpathentry kind="lib" path="lib/gdx.jar"/>
 	<classpathentry kind="lib" path="lib/gson-2.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-freetype-natives.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-freetype.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

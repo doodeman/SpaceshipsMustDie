@@ -13,11 +13,11 @@ public class Runner
 		if (arg[0].equals("host"))
 		{
 		
-			new LwjglApplication(new SpaceshipsMustDie("localhost", arg[1]), "Asteroids", 1024, 768, false);
+			new LwjglApplication(new SpaceshipsMustDie("localhost", arg[1]), "Asteroids", 1024, 768, true);
 		}
 		else
 		{
-			new LwjglApplication(new SpaceshipsMustDie(arg[0], arg[1]), "Asteroids", 1024, 768, false);
+			new LwjglApplication(new SpaceshipsMustDie(arg[0], arg[1]), "Asteroids", 1024, 768, true);
 		}
 
 		//ClientUDPClient udpclient2 = new ClientUDPClient(1234);

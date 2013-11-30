@@ -1,8 +1,15 @@
 package client;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL11;
+import com.badlogic.gdx.graphics.Mesh;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
 
 
@@ -20,18 +27,20 @@ class ClientSun extends CollidableObject
 		private Model model;
 		private ModelInstance instance;
 		private AssetManager assets;
+
 		
 	ClientSun(int id, int radius, AssetManager assets){
 		super(id, 1, new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), new Vector3D(0f,0f,0f), radius); 
 		this.assets = assets;	
 	}
+	
 	private boolean loading = true;
 	
 	private void doneLoading(){
 		model = assets.get("lib/sun.obj", Model.class);
 		System.out.println("HereSun" + model);
 		instance = new ModelInstance(model);
-		instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, radius*0.3f, radius*0.3f, radius*0.3f);
+		instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, radius*0.1f, radius*0.1f, radius*0.1f);
 		loading = false;
 	}
 	/**
@@ -40,8 +49,8 @@ class ClientSun extends CollidableObject
 	 */
 	@Override
 	public ModelInstance draw(){ 
-		//if(true)return null;
-		
+
+
 		boolean updateBool = assets.update();
 		//System.out.println(updateBool);
 		if(loading && updateBool){
@@ -52,7 +61,7 @@ class ClientSun extends CollidableObject
 			return null;
 		}
 		
-		 instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, radius*1.25f, radius*1.25f, radius*1.25f);
+		instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, radius*1.1f, radius*1.1f, radius*1.1f);
 		return instance;
 
 	}
