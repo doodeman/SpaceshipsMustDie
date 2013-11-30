@@ -183,7 +183,7 @@ public class MenuScreen implements Screen, InputProcessor
 				position = 4;
 				break;
 			case 4: //Type in IP
-				input.delete(0, input.length);
+				//input.delete(0, input.length);
 				position = 5;
 				break;
 			case 5: //waiting for ip

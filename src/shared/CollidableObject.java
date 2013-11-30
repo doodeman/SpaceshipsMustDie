@@ -90,12 +90,14 @@ public class CollidableObject{
 		newDir.rotate(this.up.toVector3(), degrees);
 		direction.fromVector3(newDir);
 		side.fromVector3(newSide);
+		/*
 		System.out.println(this.up.length());
 		System.out.println(this.direction.length());
 		System.out.println(this.side.length());
 		System.out.println(this.up.toVector3().dot(this.side.toVector3()));
 		System.out.println(this.up.toVector3().dot(this.direction.toVector3()));
 		System.out.println(this.direction.toVector3().dot(this.side.toVector3()));
+		*/
 	}
 	
 	
@@ -108,9 +110,11 @@ public class CollidableObject{
 		newSide.rotate(direction.toVector3(), degrees);
 		up.fromVector3(newUp.nor());
 		side.fromVector3(newSide.nor());
+		/*
 		System.out.println(this.up.toVector3().dot(this.side.toVector3()));
 		System.out.println(this.up.toVector3().dot(this.direction.toVector3()));
 		System.out.println(this.direction.toVector3().dot(this.side.toVector3()));
+		*/
 
 	}
 	
@@ -125,9 +129,11 @@ public class CollidableObject{
 		
 		up.fromVector3(newUp);
 		direction.fromVector3(newDir);
+		/*
 		System.out.println(this.up.toVector3().dot(this.side.toVector3()));
 		System.out.println(this.up.toVector3().dot(this.direction.toVector3()));
 		System.out.println(this.direction.toVector3().dot(this.side.toVector3()));
+		*/
 		
 		
 	}
