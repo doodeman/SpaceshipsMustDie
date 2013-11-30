@@ -11,7 +11,7 @@ public class ClientController implements Runnable
 	int serverPort;
 	volatile Integer clientId;
 	public String playerName;
-	private boolean forward, backward, left, right, fire, up, down, rollLeft, rollRight; 
+	private boolean forward, backward, left, right, fire, up, down, rollLeft, rollRight, breakShip; 
 	
 	public ClientController (String serverAddress, int serverPort, String playerName)
 	{
@@ -31,6 +31,11 @@ public class ClientController implements Runnable
 	public synchronized void backward()
 	{
 		backward = true; 
+	}
+	
+	public synchronized void breakShip()
+	{
+		breakShip = true; 
 	}
 	
 	public synchronized void left()
@@ -79,6 +84,7 @@ public class ClientController implements Runnable
 		down = false; 
 		rollLeft = false; 
 		rollRight = false; 
+		breakShip = false; 
 	}
 
 	@Override
@@ -93,7 +99,7 @@ public class ClientController implements Runnable
 				if (clientId != null)
 				{			
 				
-					ClientUpdate update = new ClientUpdate(forward, backward, left, right, fire, up, down, rollLeft, rollRight, clientId, playerName); 
+					ClientUpdate update = new ClientUpdate(forward, backward, left, right, fire, up, down, rollLeft, rollRight, clientId, playerName, breakShip); 
 					ClientUDPSender sender = new ClientUDPSender(serverAddress, 1233, update.toJson());
 					Thread worker = new Thread(sender); 
 					worker.start(); 
