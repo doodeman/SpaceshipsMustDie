@@ -92,7 +92,7 @@ public class ServerGameState extends GameState
 			if (o.type == 5)
 			{
 				ServerExplosion explosion = (ServerExplosion) o; 
-				if (explosion.lifetime > 20)
+				if (explosion.lifetime > 55)
 				{
 					toRemove.add(explosion);
 				}
