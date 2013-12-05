@@ -1,0 +1,30 @@
+
+ .--. .---.  .--.  .--.  .--.  .--. .-..-..-..---.  .--. 
+: .--': .; :: .; :: .--': .--': .--': :; :: :: .; :: .--'
+`. `. :  _.':    :: :   : `;  `. `. :    :: ::  _.'`. `. 
+ _`, :: :   : :: :: :__ : :__  _`, :: :: :: :: :    _`, :
+`.__.':_;   :_;:_;`.__.'`.__.'`.__.':_;:_;:_;:_;   `.__.'
+                                                         
+                                                         
+.-..-..-..-. .--. .-----.  .---. .-. .--. 
+: `' :: :: :: .--'`-. .-'  : .  :: :: .--'
+: .. :: :: :`. `.   : :    : :: :: :: `;  
+: :; :: :; : _`, :  : :    : :; :: :: :__ 
+:_;:_;`.__.'`.__.'  :_;    :___.':_;`.__.'
+                                          
+                                          
+Features:
+Multiplayer! 
+Realistic gravity pulls asteroids. Orbits aren't set, only initial position and velocity. The orbits are a result of gravity affecting asteroids. 
+Physics! Asteroids bounce realistically against each other.
+Audio! Totally Original Audio Content, Do Not Steal! (actually from Doom)
+Skybox that almost works
+Custom models for asteroids, other players
+Snazzy particle effects for explosions
+
+Controls 
+WASD - Turn ship
+Shift - Thrust forward
+Ctrl - Thrust backwards
+B - Break (thrust in reverse direction from velocity)
+spacebar - Fire nucleonic tachyon-frustrum missiles
