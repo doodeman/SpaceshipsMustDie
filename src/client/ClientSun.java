@@ -62,6 +62,7 @@ class ClientSun extends CollidableObject
 		}
 		
 		instance.transform.setToTranslationAndScaling(location.x, location.y, location.z, radius*1.1f, radius*1.1f, radius*1.1f);
+		
 		return instance;
 
 	}

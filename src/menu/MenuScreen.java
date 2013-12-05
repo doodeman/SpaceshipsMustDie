@@ -7,6 +7,8 @@ import java.util.List;
 import network.ClientUDPClient;
 import shared.SpaceshipsMustDie;
 
+import client.Skybox;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.TextInputListener;
@@ -55,6 +57,7 @@ public class MenuScreen implements Screen, InputProcessor
 	private Vector2 host_game_position;
 	private BitmapFont small_font;
 	private Vector2 join_game_position;
+	
 	
 	public MenuScreen(int xSize, int ySize, SpaceshipsMustDie spaceshipsMustDie) 
 	{
@@ -126,6 +129,7 @@ public class MenuScreen implements Screen, InputProcessor
 		// TODO Auto-generated method stub
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+       
 		batch.begin();
 		large_font.draw(batch, title, position_heading.x, position_heading.y);
 		if(position == 0 || position == 1) small_font.setColor(0.65f,0.1f,0.1f, 1);

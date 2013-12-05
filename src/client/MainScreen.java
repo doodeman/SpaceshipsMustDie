@@ -45,6 +45,7 @@ public class MainScreen implements Screen {
 	private boolean firing = false; 
 	public Integer playerId = null; 
 	public int assignedPort; 
+	private Skybox skybox;
 	
 	public MainScreen(String host, String playername)
 	{
@@ -102,6 +103,7 @@ public class MainScreen implements Screen {
 			log.log("Failed to launch TCP client");
 			e2.printStackTrace();
 		} 
+		skybox = new Skybox(camera);
 		
 	}
 
@@ -158,7 +160,7 @@ public class MainScreen implements Screen {
 			
 			Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	        Gdx.gl.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-	        
+	        skybox.draw();
 			environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
 			for(CollidableObject o: gameState.objects){
 				if(o.type == 5){
@@ -166,6 +168,7 @@ public class MainScreen implements Screen {
 					o.draw();
 				}
 			}
+			
 			modelBatch.begin(camera);
 			modelBatch.render(instances, environment);
 			modelBatch.end();
